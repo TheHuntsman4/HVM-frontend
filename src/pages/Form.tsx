@@ -85,7 +85,7 @@ export const Mainform = () => {
                   </div>
                 </div>
               )}
-              <div className="flex flex-col   justify-center items-center w-full">
+              <div className="flex flex-col  justify-center items-center w-full">
                 {imageSrc != 0 ?
                   <div className="flex flex-col justify-center items-center">
                     <img src={imageSrc} width={360} alt="Profile Picture" />
