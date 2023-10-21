@@ -1,66 +1,124 @@
+import React, { useState, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
-import React, { useState, useRef } from "react";
 
-const FormComponent = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [imageSrc, setImageSrc] = useState(0);
-  const [fullName, setFullName] = useState('');
+function FormStuff() {
+  const [formFields, setFormFields] = useState([
+    {
+      fullname: "",
+      email: "",
+      phonenumber: "",
+      imageSrc: "",
+      address1: "",
+      address2: "",
+    },
+  ]);
 
-  const webCamRef = useRef(null);
-
-  const handleNameChange = (event) => {
-    setFullName(event.target.value);
+  const handleFormChange = (event, index) => {
+    let data = [...formFields];
+    data[index][event.target.name] = event.target.value;
+    setFormFields(data);
   };
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
+  const webcamRef = useRef(0);
+
+  const capture = useCallback(
+    (index) => {
+      const imageSrc = webcamRef.current.getScreenshot();
+      let data = [...formFields];
+      data[index].imageSrc = imageSrc;
+      setFormFields(data);
+    },
+    [formFields]
+  );
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(formFields);
   };
 
-  const captureWebcam = () => {
-    setImageSrc(webCamRef.current.getScreenshot());
-    console.log(imageSrc);
+  const addFields = () => {
+    let object = {
+      fullname: "",
+      email: "",
+      phonenumber: "",
+      imageSrc: "",
+      address1: "",
+      address2: "",
+    };
+
+    setFormFields([...formFields, object]);
+  };
+
+  const removeFields = (index) => {
+    let data = [...formFields];
+    data.splice(index, 1);
+    setFormFields(data);
   };
 
   return (
-    <div className="h-screen w-full">
-      <div className="h-auto p-6 w-1/2 bg-[#E9EDFF]">
-        <div className="flex flex-col"></div>
-        <label>Full Name</label>
-        <input type="text" value={fullName} onChange={handleNameChange} />
-
-      </div>
-      {/* WEBCAM COMPONENT  */}
-      {showModal && (
-        <div
-          className="absolute h-full w-full flex flex-col justify-center items-center"
-          onClick={toggleModal}
-        >
-          <div className="h-1/2 w-1/2 bg-red-300 flex flex-col justify-center items-center">
-            <Webcam
-              ref={webCamRef}
-              audio={false}
-              height={240}
-              screenshotFormat="image/jpeg"
-              width={240}
-            ></Webcam>
-            <button
-              className="w-1/3 h-auto p-4 rounded-md bg-amber-600"
-              onClick={captureWebcam}
-            >
-              Capture image
-            </button>
-          </div>
-        </div>
-      )}
-      <img src={imageSrc} alt="Profile Picture" />
-      <button
-        className="h-auto w-1/3 p-2 rounded-lg bg-amber-600 "
-        onClick={toggleModal}
-      >
-        Show Modal
-      </button>
+    <div className="App">
+      <form onSubmit={submit}>
+        {formFields.map((form, index) => {
+          return (
+            <div key={index}>
+              <input
+                name="fullname"
+                placeholder="Full Name"
+                onChange={(event) => handleFormChange(event, index)}
+                value={form.fullname}
+              />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={(event) => handleFormChange(event, index)}
+                value={form.email}
+              />
+              <input
+                name="phonenumber"
+                type="number"
+                placeholder="Phone Number"
+                onChange={(event) => handleFormChange(event, index)}
+                value={form.phonenumber}
+              />
+              {form.imageSrc ? (
+                <img src={form.imageSrc} alt="Preview" />
+              ) : (
+                <div>
+                  <img src="placeholder.jpg" alt="Placeholder" />
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    // className="w-full h-full"
+                    height={240}
+                    width={240}
+                    screenshotFormat="image/jpeg"
+                  ></Webcam>
+                  <button onClick={() => capture(index)}>Capture Image</button>
+                </div>
+              )}
+              <input
+                name="address1"
+                placeholder="Address Line 1"
+                onChange={(event) => handleFormChange(event, index)}
+                value={form.address1}
+              />
+              <input
+                name="address2"
+                placeholder="Address Line 2"
+                onChange={(event) => handleFormChange(event, index)}
+                value={form.address2}
+              />
+              <button onClick={() => removeFields(index)}>Remove</button>
+            </div>
+          );
+        })}
+      </form>
+      <button onClick={addFields}>Add More..</button>
+      <br />
+      <button onClick={submit}>Submit</button>
     </div>
   );
-};
+}
 
-export default FormComponent;
+export default FormStuff;

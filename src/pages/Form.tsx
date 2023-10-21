@@ -6,6 +6,8 @@ import { FormComponent } from "../components";
 import addSVG from "../assets/add.svg";
 import cameraSVG from '../assets/camera.svg';
 import placeHolder from '../assets/placeholder.jpeg'
+
+
 export const Mainform = () => {
 
   // form hook definitions
@@ -21,7 +23,6 @@ export const Mainform = () => {
     leadAddress2: string;
   };
 
-  const [formComponents, setFormComponents] = useState([])
 
   const onSubmit = (data: FormValues) => {
     console.log('form submitted', data)
@@ -127,6 +128,11 @@ export const Mainform = () => {
           className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
           Submit
+        </button>
+        <button
+          className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
+        >
+          Clear
         </button>
       </form >
       <div
