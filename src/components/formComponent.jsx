@@ -1,5 +1,7 @@
 import React, { useState, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
+import placeHolder from "../assets/placeholder.jpeg";
+import cameraSVG from '../assets/camera.svg';
 
 function FormStuff() {
   const [formFields, setFormFields] = useState([
@@ -10,12 +12,19 @@ function FormStuff() {
       imageSrc: "",
       address1: "",
       address2: "",
+      showModal: false,
     },
   ]);
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
     data[index][event.target.name] = event.target.value;
+    setFormFields(data);
+  };
+
+  const toggleModal = (index) => {
+    let data = [...formFields];
+    data[index].showModal = !data[index].showModal;
     setFormFields(data);
   };
 
@@ -56,17 +65,19 @@ function FormStuff() {
   };
 
   return (
-    <div className="App">
+    <div className="h-full w-full flex flex-col justify-center items-center">
       <form onSubmit={submit}>
         {formFields.map((form, index) => {
           return (
             <div key={index}>
+              <label>Full Name</label>
               <input
                 name="fullname"
                 placeholder="Full Name"
                 onChange={(event) => handleFormChange(event, index)}
                 value={form.fullname}
               />
+              <label>Email</label>
               <input
                 name="email"
                 type="email"
@@ -74,6 +85,7 @@ function FormStuff() {
                 onChange={(event) => handleFormChange(event, index)}
                 value={form.email}
               />
+              <label>Phone Number</label>
               <input
                 name="phonenumber"
                 type="number"
@@ -85,24 +97,42 @@ function FormStuff() {
                 <img src={form.imageSrc} alt="Preview" />
               ) : (
                 <div>
-                  <img src="placeholder.jpg" alt="Placeholder" />
-                  <Webcam
-                    ref={webcamRef}
-                    audio={false}
-                    // className="w-full h-full"
-                    height={240}
-                    width={240}
-                    screenshotFormat="image/jpeg"
-                  ></Webcam>
-                  <button onClick={() => capture(index)}>Capture Image</button>
+                  <img src="placeHolder" alt="Placeholder" />
+                  <button className="" onClick={() => toggleModal(index)}>
+                    Capture Image
+                  </button>
+                  {form.showModal && (
+                    <div
+                      className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
+                      onClick={()=>toggleModal(index)}
+                    >
+                      <div className="h-auto flex flex-col justify-center items-center w-1/3 bg-slate-600 rounded-md p-4">
+                        <Webcam
+                          ref={webcamRef}
+                          audio={false}
+                          className="w-full h-full"
+                          screenshotFormat="image/jpeg"
+                        ></Webcam>
+                        <button
+                          className=" w-1/3  flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
+                          onClick={()=>capture(index)}
+                        >
+                          <img src={cameraSVG} width={40} className=""></img>
+                          Capture image
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
+              <label>Address Line 1</label>
               <input
                 name="address1"
                 placeholder="Address Line 1"
                 onChange={(event) => handleFormChange(event, index)}
                 value={form.address1}
               />
+              <label>Address Line 2</label>
               <input
                 name="address2"
                 placeholder="Address Line 2"
