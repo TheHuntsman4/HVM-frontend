@@ -114,7 +114,7 @@ function FormStuff() {
                           screenshotFormat="image/jpeg"
                         ></Webcam>
                         <button
-                          className=" w-1/3  flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
+                          className=" w-1/3 flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
                           onClick={()=>capture(index)}
                         >
                           <img src={cameraSVG} width={40} className=""></img>
