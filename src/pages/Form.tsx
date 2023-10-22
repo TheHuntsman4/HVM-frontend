@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
 import { DevTool } from "@hookform/devtools";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom'
 import addSVG from "../assets/add.svg";
 import cameraSVG from '../assets/camera.svg';
@@ -21,9 +21,9 @@ export const Mainform = () => {
     leadImage: string;
     leadAddress1: string;
     leadAddress2: string;
-    facultyFullName:string,
-    facultyDesignation:string,
-    department:string,
+    facultyFullName: string,
+    facultyDesignation: string,
+    department: string,
   };
 
   // Navigation to Printing page
@@ -32,6 +32,8 @@ export const Mainform = () => {
   const onSubmit = (data: FormValues) => {
     if (imageSrc != 0) {
       data.leadImage = imageSrc;
+      data.department = leadForm.getValues('department');
+      data.facultyDesignation = leadForm.getValues('facultyDesignation');
       console.log('form submitted', data)
       navigate('/print', { state: { data, uuid } });
     }
@@ -45,6 +47,74 @@ export const Mainform = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [imageSrc, setImageSrc] = useState('0');
+
+  const departmentOptions = [
+    'Biomedical',
+    'Clinical engineering',
+    'Dietary department',
+    'Dining services',
+    'Facilities management',
+    'Health records',
+    'Inpatient service (IP)',
+    'IT Services',
+    'Medical director department',
+    'Non-professional services',
+    'Nursing department',
+    'Nursing department (led by a director of nursing or chief nursing officer)',
+    'Operation theater complex (OT)',
+    'Outpatient department (OPD)',
+    'Paramedical department',
+    'Pharmacy department',
+    'Physical medicine',
+    'Plant operations',
+    'Radiology department (X-ray)',
+    'Rehabilitation department',
+    'Surgical department',
+    'Technical support',
+    'Disclosure of information'
+  ];
+
+  const facultyDesignationOptions = [
+    "Chief Executive Officer (CEO)",
+    "Chief Financial Officer",
+    "Chief Information Officer",
+    "Chief Medical Officer",
+    "Chief Nursing Officer",
+    "Chief Operating Officer",
+    "Chief Pharmacist",
+    "Chief Radiologist",
+    "Chief Surgeon",
+    "Chief Technology Officer",
+    "Chief Facilities Officer",
+    "Chief of Clinical Engineering",
+    "Chief of Staff",
+    "Clinical Engineer",
+    "Dietitian",
+    "Director of Medical Services",
+    "Director of Operations",
+    "Director of Patient Services",
+    "Director of Nursing",
+    "Facilities Manager",
+    "Health Records Specialist",
+    "Hospital Administrator",
+    "Information Disclosure Officer",
+    "Inpatient Care Specialist",
+    "Medical Director",
+    "Non-professional Service Provider",
+    "Nurse",
+    "Operating Room Technician",
+    "Paramedic",
+    "Pharmacist",
+    "Physical Therapist",
+    "Plant Operations Manager",
+    "Radiologist",
+    "Rehabilitation Specialist",
+    "Surgeon",
+    "Technical Support Specialist",
+    "Dining Services Manager",
+    "General Practitioner"
+  ];
+
 
   const webCamRef = useRef(null);
 
@@ -141,11 +211,35 @@ export const Mainform = () => {
               <label className="font-semibold text-md">Full Name Of Faculty</label>
               <input type="text" id="leadFullName"  {...register('facultyFullName')} className="h-10 px-2" />
               <label className="font-semibold text-md pt-6 pb-2">Department</label>
-              <input type="text" id='companyName' {...register('department')} className=" h-10 px-2" />
+              <Controller
+                name="department"
+                control={control}
+                render={({ field }) => (
+                  <select {...field} className="h-10 px-2 bg-white">
+                    {departmentOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
               <label className="font-semibold text-md pt-6 pb-2">Designation Of Faculty</label>
-              <input type="number" id='leadPhoneNumber' {...register('facultyDesignation')} className=" h-10 px-2" />
-              <label className="font-semibold text-md pt-6 pb-2">Email</label>
-              <input type="email" id='leadEmail' {...register('leadEmail')} className=" h-10 px-2" />
+              <Controller
+                name="facultyDesignation"
+                control={control}
+                render={({ field }) => (
+                  <select {...field} className="h-10 px-2 bg-white">
+                    {facultyDesignationOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+
+
             </div>
             <div className="w-1/2">
               <input type="hidden" {...register('leadImage')} />
