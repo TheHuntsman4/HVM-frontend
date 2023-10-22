@@ -21,6 +21,9 @@ export const Mainform = () => {
     leadImage: string;
     leadAddress1: string;
     leadAddress2: string;
+    facultyFullName:string,
+    facultyDesignation:string,
+    department:string,
   };
 
   // Navigation to Printing page
@@ -131,9 +134,26 @@ export const Mainform = () => {
             </div>
           </div>
         </div>
-        <span>File Upload</span>
+        <span>Visit Details</span>
         <div className="p-6 w-2/3 bg-[#E9EDFF]">
+          <div className="h-1/2 p-12 w-full flex">
+            <div className="flex flex-col w-1/2">
+              <label className="font-semibold text-md">Full Name Of Faculty</label>
+              <input type="text" id="leadFullName"  {...register('facultyFullName')} className="h-10 px-2" />
+              <label className="font-semibold text-md pt-6 pb-2">Department</label>
+              <input type="text" id='companyName' {...register('department')} className=" h-10 px-2" />
+              <label className="font-semibold text-md pt-6 pb-2">Designation Of Faculty</label>
+              <input type="number" id='leadPhoneNumber' {...register('facultyDesignation')} className=" h-10 px-2" />
+              <label className="font-semibold text-md pt-6 pb-2">Email</label>
+              <input type="email" id='leadEmail' {...register('leadEmail')} className=" h-10 px-2" />
+            </div>
+            <div className="w-1/2">
+              <input type="hidden" {...register('leadImage')} />
 
+              <div className="flex flex-col  justify-center items-center w-full">
+              </div>
+            </div>
+          </div>
         </div>
 
         <button
