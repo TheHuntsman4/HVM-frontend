@@ -1,16 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "./pages";
+import { Login, PrintPDF } from "./pages";
 import {Mainform} from'./pages/Form.tsx';
 // import { FormComponent } from "./components";
-import FormStuff from "./components/formComponent";
+import AccompanyingForm from "./components/formComponent";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/form" element={<Mainform />} />
-        <Route path="/test" element={<FormStuff/>}/>
+        <Route path="/leadform" element={<Mainform />} />
+        <Route path="/accompanyingform" element={<AccompanyingForm/>}/>
+        <Route path="/print" element={<PrintPDF/>}/>
       </Routes>
     </BrowserRouter>
   );

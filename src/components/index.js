@@ -1,1 +1,1 @@
-export {default as FormComponent} from './formComponent';
+export {default as AccompanyingForm} from './formComponent';
