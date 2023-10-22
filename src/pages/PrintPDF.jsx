@@ -24,8 +24,19 @@ const PrintPDF = () => {
         Print
       </button>
       <div ref={pdfRef} className="h-full w-full text-center font-bold bg-[#E9EDFF]">
-        This is the what the print will look like
-        <QRCode value={uuid}/>
+        {Object.entries(data).map(([key, value]) => (
+          <div key={key}>
+            {key === "leadImage" ? (
+              <img src={value} alt="Lead Image" />
+            ) : (
+              <>
+                <span>{key}: </span>
+                <span>{value}</span>
+              </>
+            )}
+          </div>
+        ))}
+        <QRCode value={uuid} />
       </div>
     </div>
   );
