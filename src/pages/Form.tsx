@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
 import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
-import { FormComponent } from "../components";
+import { useLocation, useNavigate } from 'react-router-dom'
 import addSVG from "../assets/add.svg";
 import cameraSVG from '../assets/camera.svg';
 import placeHolder from '../assets/placeholder.jpeg'
@@ -23,10 +23,19 @@ export const Mainform = () => {
     leadAddress2: string;
   };
 
-
+  // Navigation to Printing page
+  const uuid = 'somegibberish value';
+  const navigate = useNavigate();
   const onSubmit = (data: FormValues) => {
-    console.log('form submitted', data)
+    if (imageSrc != 0) {
+      data.leadImage = imageSrc;
+      console.log('form submitted', data)
+      navigate('/print', { state: { data, uuid } });
+    }
+
   };
+
+
   const addForm = () => {
     console.log('adding form')
   };
@@ -76,6 +85,7 @@ export const Mainform = () => {
                       screenshotFormat="image/jpeg"
                     ></Webcam>
                     <button
+                      type="button"
                       className=" w-1/3  flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
                       onClick={captureWebcam}
                     >
@@ -90,6 +100,7 @@ export const Mainform = () => {
                   <div className="flex flex-col justify-center items-center">
                     <img src={imageSrc} width={360} alt="Profile Picture" />
                     <button
+                      type="button"
                       className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                       onClick={toggleModal}
                     >
@@ -99,6 +110,7 @@ export const Mainform = () => {
                   <div className="flex flex-col justify-center items-center">
                     <img src={placeHolder} width={240} alt="Profile Picture" />
                     <button
+                      type="button"
                       className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                       onClick={toggleModal}
                     >
@@ -115,7 +127,7 @@ export const Mainform = () => {
             </div>
             <div className="w-1/2 flex flex-col">
               <label className="font-semibold text-md">Address Line 2</label>
-              <input type="text" {...register('leadAddress2')} className="w-3/4 h-10 px-2"/>
+              <input type="text" {...register('leadAddress2')} className="w-3/4 h-10 px-2" />
             </div>
           </div>
         </div>
@@ -125,11 +137,13 @@ export const Mainform = () => {
         </div>
 
         <button
+          type="submit"
           className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
           Submit
         </button>
         <button
+          type="button"
           className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
           Clear

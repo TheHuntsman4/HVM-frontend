@@ -1,11 +1,34 @@
-import React from 'react'
+import React, { useRef } from "react";
+import { useLocation } from "react-router-dom";
+import QRCode from "react-qr-code";
+import { useReactToPrint } from "react-to-print";
 
 const PrintPDF = () => {
-  return (
-    <div className='h-full w-full text-blue-900'>
-      
-    </div>
-  )
-}
+  const location = useLocation();
+  const data = location.state?.data;
+  const uuid = location.state?.uuid;
+  console.log(data);
 
-export default PrintPDF
+  const pdfRef = useRef(null);
+  const printPDF = useReactToPrint({
+    documentTitle: "tickets.pdf",
+    content: () => pdfRef.current,
+  });
+
+  return (
+    <div className="h-full w-full">
+      <button
+        onClick={printPDF}
+        className="px-6 py-4 bg-amber-600 text-black font-semibold"
+      >
+        Print
+      </button>
+      <div ref={pdfRef} className="h-full w-full text-center font-bold bg-[#E9EDFF]">
+        This is the what the print will look like
+        <QRCode value={uuid}/>
+      </div>
+    </div>
+  );
+};
+
+export default PrintPDF;
