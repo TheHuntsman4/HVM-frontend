@@ -1,17 +1,21 @@
 import React, { useState, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
 import placeHolder from "../assets/placeholder.jpeg";
+import addSVG from "../assets/add.svg";
+import closeSVG from '../assets/close.svg';
 import cameraSVG from "../assets/camera.svg";
 
-function FormStuff() {
+function AccompanyingForm() {
+  const leadID = "somevalue";
   const [formFields, setFormFields] = useState([
     {
+      lead_visitor_id: leadID,
       fullname: "",
       email: "",
       phonenumber: "",
       imageSrc: "",
-      address1: "",
-      address2: "",
+      // address1: "",
+      // address2: "",
       showModal: false,
     },
   ]);
@@ -66,19 +70,17 @@ function FormStuff() {
 
   return (
     <div className="h-full w-full">
-      <form
-        onSubmit={submit}
-        className="h-full w-full mt-24"
-      >
+      <form onSubmit={submit} className="h-full w-full mt-24">
         <div>
           {formFields.map((form, index) => {
             return (
               <div key={index}>
                 <div className="p-6 w-full flex flex-col items-center">
-                  <div className="h-1/2 w-2/3 p-12 flex bg-[#E9EDFF]">
+                  <div className="h-1/2 w-1/2 p-12 flex justify-between items-start bg-[#E9EDFF] rounded-md">
                     <div className="flex flex-col w-1/2">
                       <label className="font-semibold text-md">Full Name</label>
                       <input
+                        className="h-10 px-2"
                         name="fullname"
                         placeholder="Full Name"
                         onChange={(event) => handleFormChange(event, index)}
@@ -88,6 +90,7 @@ function FormStuff() {
                         Email
                       </label>
                       <input
+                        className="h-10 px-2"
                         name="email"
                         type="email"
                         placeholder="Email"
@@ -98,6 +101,7 @@ function FormStuff() {
                         Phone Number
                       </label>
                       <input
+                        className="h-10 px-2"
                         name="phonenumber"
                         type="number"
                         placeholder="Phone Number"
@@ -130,7 +134,7 @@ function FormStuff() {
                             />
                             <button
                               className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
-                              onClick={()=>toggleModal(index)}
+                              onClick={() => toggleModal(index)}
                             >
                               Take Picture
                             </button>
@@ -164,11 +168,15 @@ function FormStuff() {
                         </div>
                       )}
                     </div>
+                    <button className="" onClick={() => removeFields(index)}>
+                      <img src={closeSVG} width={30} />
+                    </button> 
                   </div>
                   {/* <label className="font-semibold text-md pt-6 pb-2">
                     Address Line 1
                   </label>
                   <input
+className="h-10 px-2"
                     name="address1"
                     placeholder="Address Line 1"
                     onChange={(event) => handleFormChange(event, index)}
@@ -178,24 +186,34 @@ function FormStuff() {
                     Address Line 2
                   </label>
                   <input
+className="h-10 px-2"
                     name="address2"
                     placeholder="Address Line 2"
                     onChange={(event) => handleFormChange(event, index)}
                     value={form.address2}
                   /> */}
-
-                  <button onClick={() => removeFields(index)}>Remove</button>
                 </div>
               </div>
             );
           })}
         </div>
       </form>
-      <button onClick={addFields}>Add More..</button>
-      <br />
-      <button onClick={submit}>Submit</button>
+      <div className="h-full w-full flex flex-col justify-center items-center">
+        <button
+          className="px-6 py-4 bg-amber-600 font-semibold text-md rounded-lg"
+          onClick={submit}
+        >
+          Submit
+        </button>
+      </div>
+      <button
+        className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-amber-600 hover:bg-black transition-colors duration-300"
+        onClick={addFields}
+      >
+        <img src={addSVG} width={50} />
+      </button>
     </div>
   );
 }
 
-export default FormStuff;
+export default AccompanyingForm;
