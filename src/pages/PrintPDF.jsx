@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import QRCode from "react-qr-code";
+import { CirclesWithBar } from "react-loader-spinner";
 import axios from "axios";
 import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
@@ -14,7 +15,9 @@ const PrintPDF = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/visitors?unique_id=351b8ac5-bbce-4a5b-a63d-da9c65e08c60`)
+      .get(
+        `http://127.0.0.1:8000/api/visitors?unique_id=351b8ac5-bbce-4a5b-a63d-da9c65e08c60`
+      )
       .then((response) => {
         console.log(response);
         setData(response.data);
@@ -38,7 +41,20 @@ const PrintPDF = () => {
   return (
     <div className="h-full w-full">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="h-screen flex flex-col justify-center items-center">
+          <CirclesWithBar
+            height="100"
+            width="100"
+            color="#F48221"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            outerCircleColor=""
+            innerCircleColor=""
+            barColor=""
+            ariaLabel="circles-with-bar-loading"
+          />
+        </div>
       ) : (
         <div>
           <button
