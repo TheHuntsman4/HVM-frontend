@@ -3,12 +3,56 @@ import { useLocation } from "react-router-dom";
 import QRCode from "react-qr-code";
 import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
+import Pass from "../components/passComponent";
 
 const PrintPDF = () => {
   const location = useLocation();
-  const data = location.state?.data;
-  const uuid = location.state?.uuid;
-  console.log(data);
+  const data = {
+    lead_visitor: [
+      {
+        id: 13,
+        full_name: "Aniketh Vijesh",
+        company_name: "something",
+        address: "Sainiketh",
+        email: "am.en.u4aie22009@am.students.amrita.edu",
+        contact_number: "123456789",
+        image: "best stuff",
+        official_documentation: null,
+        visitee: "somoene",
+        visiting_date: "2023-10-23",
+        visiting_time: "14:38:29",
+        unique_id: "351b8ac5-bbce-4a5b-a63d-da9c65e08c60",
+        valid_till: "2023-10-23T20:38:29+05:30",
+        created_by: 1,
+      },
+    ],
+    accompanying: [
+      {
+        id: 12,
+        lead_visitor_id: "351b8ac5-bbce-4a5b-a63d-da9c65e08c60",
+        full_name: "someguy",
+        email: "test@test.com",
+        contact_number: "12345678",
+        unique_id: "190cc88f-6c71-40c9-bd10-60ab21993a26",
+        image: "stu",
+        created_by: null,
+      },
+      {
+        id: 13,
+        lead_visitor_id: "351b8ac5-bbce-4a5b-a63d-da9c65e08c60",
+        full_name: "somepther guy",
+        email: "test2@test.com",
+        contact_number: "12345321234",
+        unique_id: "29cebaea-90a8-423f-87f8-ccdca67e3978",
+        image: "stuff",
+        created_by: 1,
+      },
+    ],
+  };
+
+  const leadData = data.lead_visitor[0];
+  const uuid = "351b8ac5-bbce-4a5b-a63d-da9c65e08c60";
+  console.log(data.leadImage);
 
   const pdfRef = useRef(null);
   const printPDF = useReactToPrint({
@@ -28,48 +72,30 @@ const PrintPDF = () => {
         ref={pdfRef}
         className="h-full w-full flex flex-col justify-center items-center"
       >
-        <div className="w-1/2 border-black border-2">
-          <div className="w-full p-4 bg-amritaOrange flex justify-center">
-            <img
-              src={logoSVG}
-              className="p-4 border-[2px] border-black rounded-md shadow-lg"
-            />
-          </div>
-          <p className="p-8 text-center text-3xl font-bold">Visiting Pass</p>
-          {/* part which handles the image and QR code */}
-          <div className="grid grid-cols-2 gap-4 items-center">
-            <div className="aspect-w-1 aspect-h-1 p-4">
-              <img src={data.leadImage} className="object-cover" />
-            </div>
-            <div className="aspect-w-1 aspect-h-1 flex items-center justify-center p-4">
-              <QRCode value={uuid} className="object-contain" />
-            </div>
-          </div>
-          <div className="w-full p-4 grid grid-cols-2 gap-4 text-start font-semibold text-lg"></div>
-        </div>
-
-        {/* <div className="w-full p-4 border-2 border-black">
-            <div className="grid grid-cols-4 gap-2">
-              <div className="text-black font-semibold text-start">
-                <p>Full Name</p>
-                <p>Company Name</p>
-                <p>Visitng Faculty</p>
-                <p>Department</p>
-              </div>
-              <div className="text-black font-semibold text-start">
-                <p>{data.leadFullName}</p>
-                <p>{data.companyName}</p>
-                <p>{data.FaccultyFullName}</p>
-                <p>{data.department}</p>
-              </div>
-              <div className="flex flex-col justify-center items-center">
-                
-              </div>
-              <div className="">
-                
-              </div>
-            </div>
-          </div> */}
+        <Pass
+          uuid={uuid}
+          fullName={leadData.full_name}
+          companyName={leadData.company_name}
+          validFromDate={leadData.visiting_date}
+          validFromTime={leadData.visiting_time}
+          validTill={leadData.valid_till}
+          visitee={leadData.visitee}
+          department="someplace"
+          imageSrc={leadData.image}
+        />
+        {data.accompanying.map((accompany) => (
+          <Pass
+            uuid={uuid}
+            fullName={accompany.full_name}
+            companyName={leadData.company_name}
+            validFromDate={leadData.visiting_date}
+            validFromTime={leadData.visiting_time}
+            validTill={leadData.valid_till}
+            visitee={leadData.visitee}
+            department="someplace"
+            imageSrc={accompany.image}
+          />
+        ))}
       </div>
     </div>
   );
