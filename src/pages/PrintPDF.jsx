@@ -4,6 +4,7 @@ import QRCode from "react-qr-code";
 import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 import Pass from "../components/passComponent";
+import './print.css';
 
 const PrintPDF = () => {
   const location = useLocation();
@@ -83,7 +84,7 @@ const PrintPDF = () => {
           department="someplace"
           imageSrc={leadData.image}
         />
-        {data.accompanying.map((accompany) => (
+        {data.accompanying.map((accompany, index) => (
           <Pass
             uuid={uuid}
             fullName={accompany.full_name}
@@ -94,6 +95,7 @@ const PrintPDF = () => {
             visitee={leadData.visitee}
             department="someplace"
             imageSrc={accompany.image}
+            className="page-break"
           />
         ))}
       </div>

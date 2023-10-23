@@ -12,9 +12,10 @@ const Pass = ({
   visitee,
   department,
   imageSrc,
+  className
 }) => {
   return (
-    <div className="w-1/2 border-black border-2">
+    <div className={`w-1/2 border-black border-2 ${className}`}>
       <div className="w-full p-4 bg-amritaOrange flex justify-center">
         <img
           src={logoSVG}
