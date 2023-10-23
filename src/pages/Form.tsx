@@ -3,9 +3,11 @@ import Webcam from "react-webcam";
 import { DevTool } from "@hookform/devtools";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom'
+import axios from "axios";
 import addSVG from "../assets/add.svg";
 import cameraSVG from '../assets/camera.svg';
 import placeHolder from '../assets/placeholder.jpeg'
+
 
 
 export const Mainform = () => {
@@ -29,16 +31,29 @@ export const Mainform = () => {
   // Navigation to Printing page
   const uuid = 'somegibberish value';
   const navigate = useNavigate();
-  const onSubmit = (data: FormValues) => {
-    if (imageSrc != 0) {
-      data.leadImage = imageSrc;
-      data.department = leadForm.getValues('department');
-      data.facultyDesignation = leadForm.getValues('facultyDesignation');
-      console.log('form submitted', data)
-      navigate('/print', { state: { data, uuid } });
-    }
 
+
+  const onSubmit = (data: FormValues) => {
+    if (imageSrc !== '0') {
+      data.leadImage = imageSrc;
+    }
+    const department = leadForm.getValues('department');
+    const facultyDesignation = leadForm.getValues('facultyDesignation');
+    
+    const requestData = {
+      full_name: data.leadFullName,
+      email: data.leadEmail,
+      company_name: data.companyName,
+      contact_number: data.leadPhoneNumber,
+      image: data.leadImage,
+      address: `${data.leadAddress1}, ${data.leadAddress2}`,
+    };
+    console.log(requestData)
+    handleSave(requestData); // Send the form data to the server
+    navigate('/print', { state: { data, uuid } });
   };
+  
+
 
 
   const addForm = () => {
@@ -127,6 +142,16 @@ export const Mainform = () => {
     setImageSrc(webCamRef.current.getScreenshot());
     leadForm.setValue('leadImage', imageSrc)
   };
+
+  const handleSave = (data) => {
+    axios.post('http://127.0.0.1:8000/api/leadvisitor/', data)
+    .then(response=>{
+      console.log('Success',response.data);
+    })
+    .catch(error=>{
+      console.error(error);
+    });
+  }
   return (
     <div className="h-full w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full flex flex-col items-center mt-24">
@@ -258,9 +283,10 @@ export const Mainform = () => {
         </button>
         <button
           type="button"
+          onClick={handleSave}
           className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
-          Clear
+          Save
         </button>
       </form >
       <div
