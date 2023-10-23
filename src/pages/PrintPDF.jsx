@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import QRCode from "react-qr-code";
+import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 
 const PrintPDF = () => {
@@ -23,9 +24,31 @@ const PrintPDF = () => {
       >
         Print
       </button>
-      <div ref={pdfRef} className="h-full w-full">
-        <div className="flex flex-col justify-center items-center">
-          <div className="w-full p-4 border-2 border-black">
+      <div
+        ref={pdfRef}
+        className="h-full w-full flex flex-col justify-center items-center"
+      >
+        <div className="w-1/2 border-black border-2">
+          <div className="w-full p-4 bg-amritaOrange flex justify-center">
+            <img
+              src={logoSVG}
+              className="p-4 border-[2px] border-black rounded-md shadow-lg"
+            />
+          </div>
+          <p className="p-8 text-center text-3xl font-bold">Visiting Pass</p>
+          {/* part which handles the image and QR code */}
+          <div className="grid grid-cols-2 gap-4 items-center">
+            <div className="aspect-w-1 aspect-h-1 p-4">
+              <img src={data.leadImage} className="object-cover" />
+            </div>
+            <div className="aspect-w-1 aspect-h-1 flex items-center justify-center p-4">
+              <QRCode value={uuid} className="object-contain" />
+            </div>
+          </div>
+          <div className="w-full p-4 grid grid-cols-2 gap-4 text-start font-semibold text-lg"></div>
+        </div>
+
+        {/* <div className="w-full p-4 border-2 border-black">
             <div className="grid grid-cols-4 gap-2">
               <div className="text-black font-semibold text-start">
                 <p>Full Name</p>
@@ -40,14 +63,13 @@ const PrintPDF = () => {
                 <p>{data.department}</p>
               </div>
               <div className="flex flex-col justify-center items-center">
-                <img src={data.leadImage} className="h-full w-full" />
+                
               </div>
               <div className="">
-                <QRCode value={uuid} className="h-1/2 mt-4" />
+                
               </div>
             </div>
-          </div>
-        </div>
+          </div> */}
       </div>
     </div>
   );
