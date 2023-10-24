@@ -14,8 +14,6 @@ function AccompanyingForm() {
       email: "",
       phonenumber: "",
       imageSrc: "",
-      // address1: "",
-      // address2: "",
       showModal: false,
     },
   ]);
