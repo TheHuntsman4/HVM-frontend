@@ -30,17 +30,16 @@ export const Mainform = () => {
   };
 
   // Navigation to Printing page
-  const uuid = 'somegibberish value';
   const navigate = useNavigate();
   const [responseData, setResponseData] = useState('null')
 
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, flag: number) => {
     try {
       if (imageSrc !== '0') {
         data.leadImage = imageSrc;
       }
-  
+
       const requestData = {
         full_name: data.leadFullName,
         email: data.leadEmail,
@@ -49,31 +48,34 @@ export const Mainform = () => {
         image: data.leadImage,
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
-  
+
       const url = 'http://127.0.0.1:8000/api/leadvisitor/';
-      const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MjI0MTI3LCJpYXQiOjE2OTgxMzc3MjcsImp0aSI6IjllYjNkM2FmMTUzMzQwOTRiNGJkODM5OThjOTgyM2FkIiwidXNlcl9pZCI6MTYsInVzZXJuYW1lIjoic3BlbGxzaGFycCJ9.kIQC6Itn8qu6p298qHTDxDC7q3_IJa0t3dzxcyvciZQ';
-  
+      const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MjQzMjQ4LCJpYXQiOjE2OTgxNTY4NDgsImp0aSI6IjIwZTM3MGVjN2EzZDRhOWViNThlNDlmOGU0NTMwNzI0IiwidXNlcl9pZCI6MTYsInVzZXJuYW1lIjoic3BlbGxzaGFycCJ9.YkdvboBKfh-IXgnhEVFia8gQ5H1anGZ9MvSZIQB1iO8';
+
       const response = await axios.post(url, requestData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-  
       const uniqueId = response.data.unique_id;
       console.log(uniqueId);
-  
-      navigate('/print', { state: { uuid: uniqueId } });
+
+      if (flag === 0) {
+        // navigate('/print', { state: { uuid: uniqueId } });
+        console.log(0)
+      } else {
+        // navigate('/accompanyingform', { state: { uuid: uniqueId } });
+        console.log(1)
+      }
     } catch (error) {
       console.error(error);
     }
   };
-  
 
 
-  
-  const addForm = () => {
-    navigate('/accompanyingform', { state: uuid })
+  const addForm = async (data: FormValues) => {
+    onSubmit(data, 1)
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -161,7 +163,7 @@ export const Mainform = () => {
 
   return (
     <div className="h-full w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full flex flex-col items-center mt-24">
+      <form onSubmit={handleSubmit((data) => onSubmit(data, 0))} className="h-full w-full flex flex-col items-center mt-24">
         <div className="p-6 w-2/3 bg-[#E9EDFF]">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
@@ -296,12 +298,13 @@ export const Mainform = () => {
           Save
         </button> */}
       </form >
-      <div
+      <button
+        type="button"
         className="fixed bottom-4 right-4 bg-amber-600 p-4 hover:bg-black text-white rounded-full"
-        onClick={addForm}
+        onClick={() => onSubmit(data, 1)}
       >
         <img src={associateSVG} width={50} alt={"add-image"}></img>
-      </div>
+      </button>
       <DevTool control={control} />
     </div >
 

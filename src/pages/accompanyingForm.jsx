@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback } from "react";
+import {useLocation,useNavigate} from 'react-router-dom'
 import Webcam from "react-webcam";
 import placeHolder from "../assets/placeholder.jpeg";
 import addSVG from "../assets/add.svg";
@@ -6,7 +7,9 @@ import closeSVG from '../assets/close.svg';
 import cameraSVG from "../assets/camera.svg";
 
 function AccompanyingForm() {
-  const leadID = "somevalue";
+  const location=useLocation()
+  const leadID = location.state;
+  console.log(leadID)
   const [formFields, setFormFields] = useState([
     {
       lead_visitor_id: leadID,
