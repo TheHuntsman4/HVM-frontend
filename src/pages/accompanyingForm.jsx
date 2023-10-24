@@ -1,23 +1,25 @@
 import React, { useState, useRef, useCallback } from "react";
-import {useLocation,useNavigate} from 'react-router-dom'
+import { useLocation, useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import placeHolder from "../assets/placeholder.jpeg";
 import addSVG from "../assets/add.svg";
-import closeSVG from '../assets/close.svg';
+import closeSVG from "../assets/close.svg";
 import cameraSVG from "../assets/camera.svg";
 
 function AccompanyingForm() {
-  const location=useLocation()
-  const leadID = location.state;
-  console.log(leadID)
+  const location = useLocation();
+  const leadID = location.state.uuid;
+  console.log(leadID);
   const [formFields, setFormFields] = useState([
     {
-      lead_visitor_id: leadID,
       fullname: "",
       email: "",
       phonenumber: "",
       imageSrc: "",
       showModal: false,
+      lead_visitor_id: leadID,
+      address1: "",
+      address2: "",
     },
   ]);
 
@@ -45,9 +47,21 @@ function AccompanyingForm() {
     [formFields]
   );
 
+  const [showConfirmationModal, setshowConfirmationModal] = useState(false);
+  const toggleConfirmation = () => {
+    setshowConfirmationModal(!showConfirmationModal);
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    console.log(formFields);
+    const updatedFormFields = formFields.map((form, index) => {
+      if (index === 0) {
+        const { showModal, ...rest } = form;
+        return rest;
+      }
+      return form;
+    });
+    console.log(updatedFormFields);
   };
 
   const addFields = () => {
@@ -58,6 +72,7 @@ function AccompanyingForm() {
       imageSrc: "",
       address1: "",
       address2: "",
+      lead_visitor_id: leadID,
     };
 
     setFormFields([...formFields, object]);
@@ -71,6 +86,25 @@ function AccompanyingForm() {
 
   return (
     <div className="h-full w-full">
+      {showConfirmationModal && (
+        <div className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="bg-black opacity-75 absolute inset-0"></div>
+          <div className="bg-white h-1/2 w-1/2 relative flex flex-col justify-center items-center">
+            <p>Are you sure all of the entered data is correct?</p>
+            <p className="text-red-900 font-semibold">
+              WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
+            </p>
+            <button
+              type="submit"
+              onClick={submit}
+              className="px-6 py-4 bg-amritaOrange text-center"
+            >
+              Continue To Print
+            </button>
+          </div>
+        </div>
+      )}
+
       <form onSubmit={submit} className="h-full w-full mt-24">
         <div>
           {formFields.map((form, index) => {
@@ -171,7 +205,7 @@ function AccompanyingForm() {
                     </div>
                     <button className="" onClick={() => removeFields(index)}>
                       <img src={closeSVG} width={30} />
-                    </button> 
+                    </button>
                   </div>
                   {/* <label className="font-semibold text-md pt-6 pb-2">
                     Address Line 1
@@ -202,7 +236,7 @@ className="h-10 px-2"
       <div className="h-full w-full flex flex-col justify-center items-center">
         <button
           className="px-6 py-4 bg-amber-600 font-semibold text-md rounded-lg"
-          onClick={submit}
+          onClick={toggleConfirmation}
         >
           Submit
         </button>
