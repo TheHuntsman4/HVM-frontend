@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import addSVG from "../assets/add.svg";
+import associateSVG from '../assets/associates.svg';
 import cameraSVG from '../assets/camera.svg';
 import placeHolder from '../assets/placeholder.jpeg'
 
@@ -39,7 +40,7 @@ export const Mainform = () => {
     }
     const department = leadForm.getValues('department');
     const facultyDesignation = leadForm.getValues('facultyDesignation');
-    
+
     const requestData = {
       full_name: data.leadFullName,
       email: data.leadEmail,
@@ -52,12 +53,12 @@ export const Mainform = () => {
     handleSave(requestData); // Send the form data to the server
     navigate('/print', { state: { data, uuid } });
   };
-  
+
 
 
 
   const addForm = () => {
-    console.log('adding form')
+    navigate('/accompanyingform', { state: uuid })
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -145,12 +146,12 @@ export const Mainform = () => {
 
   const handleSave = (data) => {
     axios.post('http://127.0.0.1:8000/api/leadvisitor/', data)
-    .then(response=>{
-      console.log('Success',response.data);
-    })
-    .catch(error=>{
-      console.error(error);
-    });
+      .then(response => {
+        console.log('Success', response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
   return (
     <div className="h-full w-full">
@@ -194,7 +195,7 @@ export const Mainform = () => {
                 </div>
               )}
               <div className="flex flex-col  justify-center items-center w-full">
-                {imageSrc != 0 ?
+                {imageSrc !== '0' ?
                   <div className="flex flex-col justify-center items-center">
                     <img src={imageSrc} width={360} alt="Profile Picture" />
                     <button
@@ -293,7 +294,7 @@ export const Mainform = () => {
         className="fixed bottom-4 right-4 bg-amber-600 p-4 hover:bg-black text-white rounded-full"
         onClick={addForm}
       >
-        <img src={addSVG} width={50} alt={"add-image"}></img>
+        <img src={associateSVG} width={50} alt={"add-image"}></img>
       </div>
       <DevTool control={control} />
     </div >
