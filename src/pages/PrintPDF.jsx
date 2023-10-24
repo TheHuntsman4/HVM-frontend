@@ -10,13 +10,14 @@ import "./print.css";
 
 const PrintPDF = () => {
   const location = useLocation();
+  const {uuid}=location.state
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(
-        `http://127.0.0.1:8000/api/visitors?unique_id=351b8ac5-bbce-4a5b-a63d-da9c65e08c60`
+        `http://127.0.0.1:8000/api/visitors?unique_id=${uuid}`
       )
       .then((response) => {
         console.log(response);
@@ -29,7 +30,6 @@ const PrintPDF = () => {
   }, []);
 
   const leadData = data?.lead_visitor[0];
-  const uuid = "351b8ac5-bbce-4a5b-a63d-da9c65e08c60";
   console.log(data?.leadImage);
 
   const pdfRef = useRef(null);

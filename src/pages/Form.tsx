@@ -32,31 +32,46 @@ export const Mainform = () => {
   // Navigation to Printing page
   const uuid = 'somegibberish value';
   const navigate = useNavigate();
+  const [responseData, setResponseData] = useState('null')
 
 
-  const onSubmit = (data: FormValues) => {
-    if (imageSrc !== '0') {
-      data.leadImage = imageSrc;
+  const onSubmit = async (data: FormValues) => {
+    try {
+      if (imageSrc !== '0') {
+        data.leadImage = imageSrc;
+      }
+  
+      const requestData = {
+        full_name: data.leadFullName,
+        email: data.leadEmail,
+        company_name: data.companyName,
+        contact_number: data.leadPhoneNumber,
+        image: data.leadImage,
+        address: `${data.leadAddress1}, ${data.leadAddress2}`,
+      };
+  
+      const url = 'http://127.0.0.1:8000/api/leadvisitor/';
+      const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MjI0MTI3LCJpYXQiOjE2OTgxMzc3MjcsImp0aSI6IjllYjNkM2FmMTUzMzQwOTRiNGJkODM5OThjOTgyM2FkIiwidXNlcl9pZCI6MTYsInVzZXJuYW1lIjoic3BlbGxzaGFycCJ9.kIQC6Itn8qu6p298qHTDxDC7q3_IJa0t3dzxcyvciZQ';
+  
+      const response = await axios.post(url, requestData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      const uniqueId = response.data.unique_id;
+      console.log(uniqueId);
+  
+      navigate('/print', { state: { uuid: uniqueId } });
+    } catch (error) {
+      console.error(error);
     }
-    const department = leadForm.getValues('department');
-    const facultyDesignation = leadForm.getValues('facultyDesignation');
-
-    const requestData = {
-      full_name: data.leadFullName,
-      email: data.leadEmail,
-      company_name: data.companyName,
-      contact_number: data.leadPhoneNumber,
-      image: data.leadImage,
-      address: `${data.leadAddress1}, ${data.leadAddress2}`,
-    };
-    console.log(requestData)
-    handleSave(requestData); // Send the form data to the server
-    navigate('/print', { state: { data, uuid } });
   };
+  
 
 
-
-
+  
   const addForm = () => {
     navigate('/accompanyingform', { state: uuid })
   };
@@ -144,15 +159,6 @@ export const Mainform = () => {
     leadForm.setValue('leadImage', imageSrc)
   };
 
-  const handleSave = (data) => {
-    axios.post('http://127.0.0.1:8000/api/leadvisitor/', data)
-      .then(response => {
-        console.log('Success', response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
   return (
     <div className="h-full w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full flex flex-col items-center mt-24">
@@ -173,7 +179,7 @@ export const Mainform = () => {
               {/* WEBCAM COMPONENT  */}
               {showModal && (
                 <div
-                  className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
+                  className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
                   onClick={toggleModal}
                 >
                   <div className="h-auto flex flex-col justify-center items-center w-1/3 bg-slate-600 rounded-md p-4">
@@ -282,13 +288,13 @@ export const Mainform = () => {
         >
           Submit
         </button>
-        <button
+        {/* <button
           type="button"
           onClick={handleSave}
           className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
           Save
-        </button>
+        </button> */}
       </form >
       <div
         className="fixed bottom-4 right-4 bg-amber-600 p-4 hover:bg-black text-white rounded-full"
