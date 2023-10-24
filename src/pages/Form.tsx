@@ -34,7 +34,7 @@ export const Mainform = () => {
   const [responseData, setResponseData] = useState('null')
 
 
-  const onSubmit = async (data: FormValues, flag: number) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       if (imageSrc !== '0') {
         data.leadImage = imageSrc;
@@ -60,23 +60,12 @@ export const Mainform = () => {
       });
       const uniqueId = response.data.unique_id;
       console.log(uniqueId);
-
-      if (flag === 0) {
-        // navigate('/print', { state: { uuid: uniqueId } });
-        console.log(0)
-      } else {
-        // navigate('/accompanyingform', { state: { uuid: uniqueId } });
-        console.log(1)
-      }
+      navigate('/accompanyingform', { state: { uuid: uniqueId } });
     } catch (error) {
       console.error(error);
     }
   };
 
-
-  const addForm = async (data: FormValues) => {
-    onSubmit(data, 1)
-  };
 
   const [showModal, setShowModal] = useState(false);
   const [imageSrc, setImageSrc] = useState('0');
@@ -290,21 +279,8 @@ export const Mainform = () => {
         >
           Submit
         </button>
-        {/* <button
-          type="button"
-          onClick={handleSave}
-          className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
-        >
-          Save
-        </button> */}
       </form >
-      <button
-        type="button"
-        className="fixed bottom-4 right-4 bg-amber-600 p-4 hover:bg-black text-white rounded-full"
-        onClick={() => onSubmit(data, 1)}
-      >
-        <img src={associateSVG} width={50} alt={"add-image"}></img>
-      </button>
+
       <DevTool control={control} />
     </div >
 
