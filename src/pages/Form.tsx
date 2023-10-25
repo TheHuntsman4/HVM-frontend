@@ -1,42 +1,64 @@
-import React, { useState, useRef } from "react";
+"use client";
+import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { DevTool } from "@hookform/devtools";
 import { useForm, Controller } from "react-hook-form";
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import addSVG from "../assets/add.svg";
-import associateSVG from '../assets/associates.svg';
-import cameraSVG from '../assets/camera.svg';
-import placeHolder from '../assets/placeholder.jpeg'
-
-
+import associateSVG from "../assets/associates.svg";
+import cameraSVG from "../assets/camera.svg";
+import placeHolder from "../assets/placeholder.jpeg";
+import { ToastContainer, toast } from "react-toastify";
+import Loader from "../components/loader";
 
 export const Mainform = () => {
-  const accessToken = localStorage.getItem('access_token')
+  const accessToken = localStorage.getItem("access_token");
   // form hook definitions
   const leadForm = useForm<FormValues>();
-  const { register, control, handleSubmit } = leadForm
+  const location = useLocation();
+  
+  
+  // useEffect(() => {
+  //   if (location.state?.error === "NULL_UUID") {
+  //     toast.error(location.state.message, {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //     console.log("UUID was null");
+  //   }
+  // }, [location.state?.error]);
+
+
+  const { register, control, handleSubmit } = leadForm;
   type FormValues = {
     leadFullName: string;
     leadEmail: string;
     companyName: string;
-    leadPhoneNumber: number;
+    leadPhoneNumber: string;
     leadImage: string;
     leadAddress1: string;
     leadAddress2: string;
-    facultyFullName: string,
-    facultyDesignation: string,
-    department: string,
+    facultyFullName: string;
+    facultyDesignation: string;
+    department: string;
   };
 
   // Navigation to Printing page
   const navigate = useNavigate();
-  const [responseData, setResponseData] = useState('null')
-
-
+  const [responseData, setResponseData] = useState("null");
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (data: FormValues) => {
     try {
-      if (imageSrc !== '0') {
+      setLoading(true);
+
+      if (imageSrc !== "0") {
         data.leadImage = imageSrc;
       }
 
@@ -49,51 +71,52 @@ export const Mainform = () => {
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
 
-      const url = 'https://aims.pythonanywhere.com/api/leadvisitor/';
+      const url = "https://aims.pythonanywhere.com/api/leadvisitor/";
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
       const uniqueId = response.data.unique_id;
       console.log(uniqueId);
-      navigate('/accompanyingform', { state: { uuid: uniqueId } });
+      navigate("/accompanyingform", { state: { uuid: uniqueId } });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-
   const [showModal, setShowModal] = useState(false);
-  const [imageSrc, setImageSrc] = useState('0');
+  const [imageSrc, setImageSrc] = useState("0");
 
   const departmentOptions = [
-    'Biomedical',
-    'Clinical engineering',
-    'Dietary department',
-    'Dining services',
-    'Facilities management',
-    'Health records',
-    'Inpatient service (IP)',
-    'IT Services',
-    'Medical director department',
-    'Non-professional services',
-    'Nursing department',
-    'Nursing department (led by a director of nursing or chief nursing officer)',
-    'Operation theater complex (OT)',
-    'Outpatient department (OPD)',
-    'Paramedical department',
-    'Pharmacy department',
-    'Physical medicine',
-    'Plant operations',
-    'Radiology department (X-ray)',
-    'Rehabilitation department',
-    'Surgical department',
-    'Technical support',
-    'Disclosure of information'
+    "Biomedical",
+    "Clinical engineering",
+    "Dietary department",
+    "Dining services",
+    "Facilities management",
+    "Health records",
+    "Inpatient service (IP)",
+    "IT Services",
+    "Medical director department",
+    "Non-professional services",
+    "Nursing department",
+    "Nursing department (led by a director of nursing or chief nursing officer)",
+    "Operation theater complex (OT)",
+    "Outpatient department (OPD)",
+    "Paramedical department",
+    "Pharmacy department",
+    "Physical medicine",
+    "Plant operations",
+    "Radiology department (X-ray)",
+    "Rehabilitation department",
+    "Surgical department",
+    "Technical support",
+    "Disclosure of information",
   ];
 
   const facultyDesignationOptions = [
@@ -134,12 +157,10 @@ export const Mainform = () => {
     "Surgeon",
     "Technical Support Specialist",
     "Dining Services Manager",
-    "General Practitioner"
+    "General Practitioner",
   ];
 
-
   const webCamRef = useRef(null);
-
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -147,26 +168,57 @@ export const Mainform = () => {
 
   const captureWebcam = () => {
     setImageSrc(webCamRef.current.getScreenshot());
-    leadForm.setValue('leadImage', imageSrc)
+    leadForm.setValue("leadImage", imageSrc);
   };
 
-  return (
+  return loading ? <Loader /> : (
     <div className="h-full w-full">
-      <form onSubmit={handleSubmit((data) => onSubmit(data, 0))} className="h-full w-full flex flex-col items-center mt-24">
+      <form
+        onSubmit={handleSubmit((data) => onSubmit(data, 0))}
+        className="h-full w-full flex flex-col items-center mt-24"
+      >
         <div className="p-6 w-2/3 bg-[#E9EDFF]">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
               <label className="font-semibold text-md">Full Name</label>
-              <input type="text" id="leadFullName"  {...register('leadFullName')} className="h-10 px-2" />
-              <label className="font-semibold text-md pt-6 pb-2">Company Name</label>
-              <input type="text" id='companyName' {...register('companyName')} className=" h-10 px-2" />
-              <label className="font-semibold text-md pt-6 pb-2">Phone Number</label>
-              <input type="number" id='leadPhoneNumber' {...register('leadPhoneNumber')} className=" h-10 px-2" />
+              <input
+                type="text"
+                id="leadFullName"
+                required
+                {...register("leadFullName")}
+                className="h-10 px-2"
+              />
+              <label className="font-semibold text-md pt-6 pb-2">
+                Company Name
+              </label>
+              <input
+                type="text"
+                id="companyName"
+                required
+                {...register("companyName")}
+                className=" h-10 px-2"
+              />
+              <label className="font-semibold text-md pt-6 pb-2">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                id="leadPhoneNumber"
+                required
+                {...register("leadPhoneNumber")}
+                className=" h-10 px-2"
+              />
               <label className="font-semibold text-md pt-6 pb-2">Email</label>
-              <input type="email" id='leadEmail' {...register('leadEmail')} className=" h-10 px-2" />
+              <input
+                type="email"
+                id="leadEmail"
+                required
+                {...register("leadEmail")}
+                className=" h-10 px-2"
+              />
             </div>
             <div className="w-1/2">
-              <input type="hidden" {...register('leadImage')} />
+              <input type="hidden" required {...register("leadImage")} />
               {/* WEBCAM COMPONENT  */}
               {showModal && (
                 <div
@@ -192,7 +244,7 @@ export const Mainform = () => {
                 </div>
               )}
               <div className="flex flex-col  justify-center items-center w-full">
-                {imageSrc !== '0' ?
+                {imageSrc !== "0" ? (
                   <div className="flex flex-col justify-center items-center">
                     <img src={imageSrc} width={360} alt="Profile Picture" />
                     <button
@@ -202,7 +254,8 @@ export const Mainform = () => {
                     >
                       Take Picture Again
                     </button>
-                  </div> :
+                  </div>
+                ) : (
                   <div className="flex flex-col justify-center items-center">
                     <img src={placeHolder} width={240} alt="Profile Picture" />
                     <button
@@ -212,18 +265,29 @@ export const Mainform = () => {
                     >
                       Take Picture
                     </button>
-                  </div>}
+                  </div>
+                )}
               </div>
             </div>
           </div>
           <div className="w-full flex pl-12">
             <div className="w-1/2 flex flex-col">
               <label className="font-semibold text-md">Address Line 1</label>
-              <input type="text" {...register('leadAddress1')} className="w-3/4 h-10 px-2" />
+              <input
+                type="text"
+                required
+                {...register("leadAddress1")}
+                className="w-3/4 h-10 px-2"
+              />
             </div>
             <div className="w-1/2 flex flex-col">
               <label className="font-semibold text-md">Address Line 2</label>
-              <input type="text" {...register('leadAddress2')} className="w-3/4 h-10 px-2" />
+              <input
+                type="text"
+                required
+                {...register("leadAddress2")}
+                className="w-3/4 h-10 px-2"
+              />
             </div>
           </div>
         </div>
@@ -231,9 +295,19 @@ export const Mainform = () => {
         <div className="p-6 w-2/3 bg-[#E9EDFF]">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
-              <label className="font-semibold text-md">Full Name Of Faculty</label>
-              <input type="text" id="leadFullName"  {...register('facultyFullName')} className="h-10 px-2" />
-              <label className="font-semibold text-md pt-6 pb-2">Department</label>
+              <label className="font-semibold text-md">
+                Full Name Of Faculty
+              </label>
+              <input
+                type="text"
+                required
+                id="leadFullName"
+                {...register("facultyFullName")}
+                className="h-10 px-2"
+              />
+              <label className="font-semibold text-md pt-6 pb-2">
+                Department
+              </label>
               <Controller
                 name="department"
                 control={control}
@@ -247,7 +321,9 @@ export const Mainform = () => {
                   </select>
                 )}
               />
-              <label className="font-semibold text-md pt-6 pb-2">Designation Of Faculty</label>
+              <label className="font-semibold text-md pt-6 pb-2">
+                Designation Of Faculty
+              </label>
               <Controller
                 name="facultyDesignation"
                 control={control}
@@ -261,14 +337,11 @@ export const Mainform = () => {
                   </select>
                 )}
               />
-
-
             </div>
             <div className="w-1/2">
-              <input type="hidden" {...register('leadImage')} />
+              <input type="hidden" {...register("leadImage")} required />
 
-              <div className="flex flex-col  justify-center items-center w-full">
-              </div>
+              <div className="flex flex-col  justify-center items-center w-full"></div>
             </div>
           </div>
         </div>
@@ -279,11 +352,10 @@ export const Mainform = () => {
         >
           Submit
         </button>
-      </form >
+      </form>
 
       <DevTool control={control} />
-    </div >
-
+      <ToastContainer />
+    </div>
   );
 };
-

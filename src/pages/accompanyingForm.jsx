@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Webcam from "react-webcam";
@@ -6,12 +6,25 @@ import placeHolder from "../assets/placeholder.jpeg";
 import addSVG from "../assets/add.svg";
 import closeSVG from "../assets/close.svg";
 import cameraSVG from "../assets/camera.svg";
+import Loader from "../components/loader";
 
 function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
   const location = useLocation();
-  const navigate = useNavigate()
-  const leadID = location.state.uuid;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state === null || location.state.uuid === null) {
+      navigate("/leadform", {
+        state: {
+          error: "NULL_UUID",
+          message: "Cannot add accompanying visitors before lead visitor.",
+        },
+      });
+    }
+  }, [location.state, navigate]);
+
+  const leadID = location.state?.uuid;
   console.log(leadID);
   const [formFields, setFormFields] = useState([
     {
@@ -23,6 +36,7 @@ function AccompanyingForm() {
       lead_visitor_id: leadID,
     },
   ]);
+  const [loading, setLoading] = useState(false);
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
@@ -67,6 +81,7 @@ function AccompanyingForm() {
   const onSubmit = async () => {
     const requestData = cleanData();
     try {
+      setLoading(true);
       const url = "https://aims.pythonanywhere.com/api/accompanying/";
       const token = accessToken;
 
@@ -76,10 +91,12 @@ function AccompanyingForm() {
           "Content-Type": "application/json",
         },
       });
-      const uniqueId = leadID
+      const uniqueId = leadID;
       navigate("/print", { state: { uuid: uniqueId } });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,10 +118,15 @@ function AccompanyingForm() {
     setFormFields(data);
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="h-full w-full">
       {showConfirmationModal && (
-        <div className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center" onClick={toggleConfirmation}>
+        <div
+          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center"
+          onClick={toggleConfirmation}
+        >
           <div className="bg-black opacity-75 absolute inset-0"></div>
           <div className="bg-white h-1/2 w-1/2 relative flex flex-col justify-center items-center">
             <p>Are you sure all of the entered data is correct?</p>
@@ -170,7 +192,7 @@ function AccompanyingForm() {
                             alt="Profile Picture"
                           />
                           <button
-                          type="button"
+                            type="button"
                             className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                             onClick={() => toggleModal(index)}
                           >
@@ -186,7 +208,7 @@ function AccompanyingForm() {
                               alt="Profile Picture"
                             />
                             <button
-                            type="button"
+                              type="button"
                               className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                               onClick={() => toggleModal(index)}
                             >
