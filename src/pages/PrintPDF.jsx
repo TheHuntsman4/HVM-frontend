@@ -7,7 +7,6 @@ import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 import Pass from "../components/passComponent";
 import "./print.css";
-import formatDateTime from '../services/dateFormat';
 
 const PrintPDF = () => {
   const location = useLocation();
@@ -38,7 +37,24 @@ const PrintPDF = () => {
     documentTitle: "tickets.pdf",
     content: () => pdfRef.current,
   });
-
+  function formatDateTime(dateStr) {
+    const dateObj = new Date(dateStr);
+  
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const year = dateObj.getFullYear();
+  
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+  
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+  }
+  function removeSeconds(timeStr) {
+    const timeParts = timeStr.split(':');
+    const hours = timeParts[0];
+    const minutes = timeParts[1];
+    return `${hours}:${minutes}`;
+  }
   return (
     <div className="h-full w-full">
       {isLoading ? (
@@ -73,7 +89,7 @@ const PrintPDF = () => {
               fullName={leadData?.full_name}
               companyName={leadData?.company_name}
               validFromDate={leadData?.visiting_date}
-              validFromTime={leadData?.visiting_time}
+              validFromTime={removeSeconds(leadData?.visiting_time)}
               validTill={formatDateTime(leadData?.valid_till)}
               visitee={leadData?.visitee}
               department="someplace"
@@ -86,7 +102,7 @@ const PrintPDF = () => {
                 fullName={accompany?.full_name}
                 companyName={leadData?.company_name}
                 validFromDate={leadData?.visiting_date}
-                validFromTime={leadData?.visiting_time}
+                validFromTime={removeSeconds(leadData?.visiting_time)}
                 validTill={formatDateTime(leadData?.valid_till)}
                 visitee={leadData?.visitee}
                 department="someplace"
