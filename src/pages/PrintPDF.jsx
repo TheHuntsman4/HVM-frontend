@@ -7,6 +7,7 @@ import logoSVG from "../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 import Pass from "../components/passComponent";
 import "./print.css";
+import formatDateTime from '../services/dateFormat';
 
 const PrintPDF = () => {
   const location = useLocation();
@@ -73,7 +74,7 @@ const PrintPDF = () => {
               companyName={leadData?.company_name}
               validFromDate={leadData?.visiting_date}
               validFromTime={leadData?.visiting_time}
-              validTill={leadData?.valid_till}
+              validTill={formatDateTime(leadData?.valid_till)}
               visitee={leadData?.visitee}
               department="someplace"
               imageSrc={leadData?.image}
@@ -86,7 +87,7 @@ const PrintPDF = () => {
                 companyName={leadData?.company_name}
                 validFromDate={leadData?.visiting_date}
                 validFromTime={leadData?.visiting_time}
-                validTill={leadData?.valid_till}
+                validTill={formatDateTime(leadData?.valid_till)}
                 visitee={leadData?.visitee}
                 department="someplace"
                 imageSrc={accompany?.image}

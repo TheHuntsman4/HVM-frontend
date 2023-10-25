@@ -32,9 +32,8 @@ export default function Page(props) {
         },
         { withCredentials: true }
       );
-
-      console.log(data);
       localStorage.clear();
+      localStorage.setItem("current_user",user.username)
       localStorage.setItem("access_token", data.access);
       localStorage.setItem("refresh_token", data.refresh);
       axios.defaults.headers.common[
@@ -43,6 +42,7 @@ export default function Page(props) {
       GetUsername({ username });
 
       window.location.href = "/leadform";
+      
     } catch (error) {
       const statusCode = error.response.status
       if (statusCode === 401){
