@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import GetUsername from "../services/GetUserName";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page(props) {
   // if(localStorage.getItem('access_token')){
@@ -42,7 +44,32 @@ export default function Page(props) {
 
       window.location.href = "/leadform";
     } catch (error) {
-      setErrorMessage("Incorrect username or password");
+      const statusCode = error.response.status
+      if (statusCode === 401){
+        toast.error('Wrong credentials entered', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }
+      else if (statusCode===400){
+        toast.error('One or more required fields is empty', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }
+      console.log(error.response.status)
     }
   };
   return (
@@ -80,6 +107,7 @@ export default function Page(props) {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }
