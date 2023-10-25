@@ -11,7 +11,6 @@ import "./print.css";
 const PrintPDF = () => {
   const location = useLocation();
   const uuid=location.state.uuid
-  // const uuid = '28fbc03c-fef1-4a50-b3c5-e786dfa56d9b'
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 

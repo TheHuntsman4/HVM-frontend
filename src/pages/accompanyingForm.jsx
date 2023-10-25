@@ -7,19 +7,18 @@ import closeSVG from "../assets/close.svg";
 import cameraSVG from "../assets/camera.svg";
 
 function AccompanyingForm() {
+  const accessToken = localStorage.getItem('access_token')
   const location = useLocation();
   const leadID = location.state.uuid;
   console.log(leadID);
   const [formFields, setFormFields] = useState([
     {
-      fullname: "",
+      full_name: "",
       email: "",
-      phonenumber: "",
-      imageSrc: "",
+      contact_number: "",
+      image: "",
       showModal: false,
       lead_visitor_id: leadID,
-      address1: "",
-      address2: "",
     },
   ]);
 
@@ -41,7 +40,7 @@ function AccompanyingForm() {
     (index) => {
       const imageSrc = webcamRef.current.getScreenshot();
       let data = [...formFields];
-      data[index].imageSrc = imageSrc;
+      data[index].image = imageSrc;
       setFormFields(data);
     },
     [formFields]
@@ -66,12 +65,10 @@ function AccompanyingForm() {
 
   const addFields = () => {
     let object = {
-      fullname: "",
+      full_name: "",
       email: "",
-      phonenumber: "",
-      imageSrc: "",
-      address1: "",
-      address2: "",
+      contact_number: "",
+      image: "",
       lead_visitor_id: leadID,
     };
 
@@ -116,7 +113,7 @@ function AccompanyingForm() {
                       <label className="font-semibold text-md">Full Name</label>
                       <input
                         className="h-10 px-2"
-                        name="fullname"
+                        name="full_name"
                         placeholder="Full Name"
                         onChange={(event) => handleFormChange(event, index)}
                         value={form.fullname}
@@ -137,7 +134,7 @@ function AccompanyingForm() {
                       </label>
                       <input
                         className="h-10 px-2"
-                        name="phonenumber"
+                        name="contact_number"
                         type="number"
                         placeholder="Phone Number"
                         onChange={(event) => handleFormChange(event, index)}
@@ -145,10 +142,10 @@ function AccompanyingForm() {
                       />
                     </div>
                     <div className="w-1/2">
-                      {form.imageSrc ? (
+                      {form.image ? (
                         <div className="flex flex-col justify-center items-center">
                           <img
-                            src={form.imageSrc}
+                            src={form.image}
                             width={360}
                             alt="Profile Picture"
                           />

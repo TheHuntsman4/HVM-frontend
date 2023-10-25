@@ -12,7 +12,7 @@ import placeHolder from '../assets/placeholder.jpeg'
 
 
 export const Mainform = () => {
-
+  const accessToken = localStorage.getItem('access_token')
   // form hook definitions
   const leadForm = useForm<FormValues>();
   const { register, control, handleSubmit } = leadForm
@@ -50,7 +50,7 @@ export const Mainform = () => {
       };
 
       const url = 'http://127.0.0.1:8000/api/leadvisitor/';
-      const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MjQzMjQ4LCJpYXQiOjE2OTgxNTY4NDgsImp0aSI6IjIwZTM3MGVjN2EzZDRhOWViNThlNDlmOGU0NTMwNzI0IiwidXNlcl9pZCI6MTYsInVzZXJuYW1lIjoic3BlbGxzaGFycCJ9.YkdvboBKfh-IXgnhEVFia8gQ5H1anGZ9MvSZIQB1iO8';
+      const token = accessToken;
 
       const response = await axios.post(url, requestData, {
         headers: {
