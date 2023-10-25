@@ -23,7 +23,7 @@ export default function Page(props) {
     };
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/token/",
+        "https://aims.pythonanywhere.com/api/token/",
         user,
         {
           headers: {

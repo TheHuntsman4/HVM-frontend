@@ -11,14 +11,20 @@ import "./print.css";
 const PrintPDF = () => {
   const location = useLocation();
   const uuid=location.state.uuid
+  const token = localStorage.getItem("access_token");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const url = `https://aims.pythonanywhere.com/api/visitors?unique_id=${uuid}`;
+  
     axios
-      .get(
-        `http://127.0.0.1:8000/api/visitors?unique_id=${uuid}`
-      )
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         console.log(response);
         setData(response.data);
@@ -28,6 +34,7 @@ const PrintPDF = () => {
         console.error(error);
       });
   }, []);
+  
 
   const leadData = data?.lead_visitor[0];
   console.log(data?.leadImage);
@@ -49,12 +56,7 @@ const PrintPDF = () => {
   
     return `${day}-${month}-${year} ${hours}:${minutes}`;
   }
-  function removeSeconds(timeStr) {
-    const timeParts = timeStr.split(':');
-    const hours = timeParts[0];
-    const minutes = timeParts[1];
-    return `${hours}:${minutes}`;
-  }
+
   return (
     <div className="h-full w-full">
       {isLoading ? (
@@ -89,7 +91,7 @@ const PrintPDF = () => {
               fullName={leadData?.full_name}
               companyName={leadData?.company_name}
               validFromDate={leadData?.visiting_date}
-              validFromTime={removeSeconds(leadData?.visiting_time)}
+              validFromTime={(leadData?.visiting_time)}
               validTill={formatDateTime(leadData?.valid_till)}
               visitee={leadData?.visitee}
               department="someplace"
@@ -102,7 +104,7 @@ const PrintPDF = () => {
                 fullName={accompany?.full_name}
                 companyName={leadData?.company_name}
                 validFromDate={leadData?.visiting_date}
-                validFromTime={removeSeconds(leadData?.visiting_time)}
+                validFromTime={(leadData?.visiting_time)}
                 validTill={formatDateTime(leadData?.valid_till)}
                 visitee={leadData?.visitee}
                 department="someplace"

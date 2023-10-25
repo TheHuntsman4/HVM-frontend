@@ -7,7 +7,7 @@ const Home = () => {
   const getVisitors = async () => {
     try {
       console.log(localStorage.getItem("current_user"))
-      const response = await axios.get("http://localhost:8000/api/visitors", {
+      const response = await axios.get("https://aims.pythonanywhere.com/api/visitors", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

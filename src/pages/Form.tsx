@@ -49,7 +49,7 @@ export const Mainform = () => {
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
 
-      const url = 'http://127.0.0.1:8000/api/leadvisitor/';
+      const url = 'https://aims.pythonanywhere.com/api/leadvisitor/';
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {
