@@ -10,14 +10,15 @@ import "./print.css";
 
 const PrintPDF = () => {
   const location = useLocation();
-  const uuid=location.state.uuid
+  // const uuid=location.state.uuid
+  const uuid = "something";
   const token = localStorage.getItem("access_token");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const url = `https://aims.pythonanywhere.com/api/visitors?unique_id=${uuid}`;
-  
+
     axios
       .get(url, {
         headers: {
@@ -34,7 +35,6 @@ const PrintPDF = () => {
         console.error(error);
       });
   }, []);
-  
 
   const leadData = data?.lead_visitor[0];
   console.log(data?.leadImage);
@@ -46,14 +46,14 @@ const PrintPDF = () => {
   });
   function formatDateTime(dateStr) {
     const dateObj = new Date(dateStr);
-  
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // January is 0!
+
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // January is 0!
     const year = dateObj.getFullYear();
-  
-    const hours = String(dateObj.getHours()).padStart(2, '0');
-    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
-  
+
+    const hours = String(dateObj.getHours()).padStart(2, "0");
+    const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+
     return `${day}-${month}-${year} ${hours}:${minutes}`;
   }
 
@@ -76,22 +76,16 @@ const PrintPDF = () => {
         </div>
       ) : (
         <div>
-          <button
-            onClick={printPDF}
-            className="px-6 py-4 bg-amber-600 text-black font-semibold"
-          >
-            Print
-          </button>
           <div
             ref={pdfRef}
-            className="h-full w-full flex flex-col justify-center items-center"
+            className="h-full w-full mt-12 flex flex-col justify-center items-center"
           >
             <Pass
               uuid={uuid}
               fullName={leadData?.full_name}
               companyName={leadData?.company_name}
               validFromDate={leadData?.visiting_date}
-              validFromTime={(leadData?.visiting_time)}
+              validFromTime={leadData?.visiting_time}
               validTill={formatDateTime(leadData?.valid_till)}
               visitee={leadData?.visitee}
               department="someplace"
@@ -104,7 +98,7 @@ const PrintPDF = () => {
                 fullName={accompany?.full_name}
                 companyName={leadData?.company_name}
                 validFromDate={leadData?.visiting_date}
-                validFromTime={(leadData?.visiting_time)}
+                validFromTime={leadData?.visiting_time}
                 validTill={formatDateTime(leadData?.valid_till)}
                 visitee={leadData?.visitee}
                 department="someplace"
@@ -115,6 +109,14 @@ const PrintPDF = () => {
           </div>
         </div>
       )}
+      <div className="pt-12 flex flex-col justify-center items-center">
+        <button
+          onClick={printPDF}
+          className="px-12 py-4 bg-amber-600 text-black font-semibold rounded-full"
+        >
+          Print
+        </button>
+      </div>
     </div>
   );
 };
