@@ -10,8 +10,7 @@ import "./print.css";
 
 const PrintPDF = () => {
   const location = useLocation();
-  // const uuid=location.state.uuid
-  const uuid = "something";
+  const uuid=location.state.uuid
   const token = localStorage.getItem("access_token");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
