@@ -1,22 +1,26 @@
 import React, { useState, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Webcam from "react-webcam";
 import placeHolder from "../assets/placeholder.jpeg";
 import addSVG from "../assets/add.svg";
-import closeSVG from '../assets/close.svg';
+import closeSVG from "../assets/close.svg";
 import cameraSVG from "../assets/camera.svg";
 
 function AccompanyingForm() {
-  const leadID = "somevalue";
+  const accessToken = localStorage.getItem("access_token");
+  const location = useLocation();
+  const navigate = useNavigate()
+  const leadID = location.state.uuid;
+  console.log(leadID);
   const [formFields, setFormFields] = useState([
     {
-      lead_visitor_id: leadID,
-      fullname: "",
+      full_name: "",
       email: "",
-      phonenumber: "",
-      imageSrc: "",
-      // address1: "",
-      // address2: "",
+      contact_number: "",
+      image: "",
       showModal: false,
+      lead_visitor_id: leadID,
     },
   ]);
 
@@ -38,25 +42,54 @@ function AccompanyingForm() {
     (index) => {
       const imageSrc = webcamRef.current.getScreenshot();
       let data = [...formFields];
-      data[index].imageSrc = imageSrc;
+      data[index].image = imageSrc;
       setFormFields(data);
     },
     [formFields]
   );
 
-  const submit = (e) => {
-    e.preventDefault();
-    console.log(formFields);
+  const [showConfirmationModal, setshowConfirmationModal] = useState(false);
+  const toggleConfirmation = () => {
+    setshowConfirmationModal(!showConfirmationModal);
+  };
+
+  const cleanData = () => {
+    const cleanData = formFields.map((form, index) => {
+      if (index === 0) {
+        const { showModal, ...rest } = form;
+        return rest;
+      }
+      return form;
+    });
+    return cleanData;
+  };
+
+  const onSubmit = async () => {
+    const requestData = cleanData();
+    try {
+      const url = "http://127.0.0.1:8000/api/accompanying/";
+      const token = accessToken;
+
+      const response = await axios.post(url, requestData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const uniqueId = leadID
+      navigate("/print", { state: { uuid: uniqueId } });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const addFields = () => {
     let object = {
-      fullname: "",
+      full_name: "",
       email: "",
-      phonenumber: "",
-      imageSrc: "",
-      address1: "",
-      address2: "",
+      contact_number: "",
+      image: "",
+      lead_visitor_id: leadID,
     };
 
     setFormFields([...formFields, object]);
@@ -70,7 +103,26 @@ function AccompanyingForm() {
 
   return (
     <div className="h-full w-full">
-      <form onSubmit={submit} className="h-full w-full mt-24">
+      {showConfirmationModal && (
+        <div className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center" onClick={toggleConfirmation}>
+          <div className="bg-black opacity-75 absolute inset-0"></div>
+          <div className="bg-white h-1/2 w-1/2 relative flex flex-col justify-center items-center">
+            <p>Are you sure all of the entered data is correct?</p>
+            <p className="text-red-900 font-semibold">
+              WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
+            </p>
+            <button
+              type="submit"
+              onClick={onSubmit}
+              className="px-6 py-4 bg-amritaOrange text-center"
+            >
+              Continue To Print
+            </button>
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={onSubmit} className="h-full w-full mt-24">
         <div>
           {formFields.map((form, index) => {
             return (
@@ -81,7 +133,7 @@ function AccompanyingForm() {
                       <label className="font-semibold text-md">Full Name</label>
                       <input
                         className="h-10 px-2"
-                        name="fullname"
+                        name="full_name"
                         placeholder="Full Name"
                         onChange={(event) => handleFormChange(event, index)}
                         value={form.fullname}
@@ -102,7 +154,7 @@ function AccompanyingForm() {
                       </label>
                       <input
                         className="h-10 px-2"
-                        name="phonenumber"
+                        name="contact_number"
                         type="number"
                         placeholder="Phone Number"
                         onChange={(event) => handleFormChange(event, index)}
@@ -110,14 +162,15 @@ function AccompanyingForm() {
                       />
                     </div>
                     <div className="w-1/2">
-                      {form.imageSrc ? (
+                      {form.image ? (
                         <div className="flex flex-col justify-center items-center">
                           <img
-                            src={form.imageSrc}
+                            src={form.image}
                             width={360}
                             alt="Profile Picture"
                           />
                           <button
+                          type="button"
                             className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                             onClick={() => toggleModal(index)}
                           >
@@ -133,6 +186,7 @@ function AccompanyingForm() {
                               alt="Profile Picture"
                             />
                             <button
+                            type="button"
                               className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
                               onClick={() => toggleModal(index)}
                             >
@@ -170,7 +224,7 @@ function AccompanyingForm() {
                     </div>
                     <button className="" onClick={() => removeFields(index)}>
                       <img src={closeSVG} width={30} />
-                    </button> 
+                    </button>
                   </div>
                   {/* <label className="font-semibold text-md pt-6 pb-2">
                     Address Line 1
@@ -201,7 +255,7 @@ className="h-10 px-2"
       <div className="h-full w-full flex flex-col justify-center items-center">
         <button
           className="px-6 py-4 bg-amber-600 font-semibold text-md rounded-lg"
-          onClick={submit}
+          onClick={toggleConfirmation}
         >
           Submit
         </button>

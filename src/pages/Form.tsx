@@ -5,13 +5,14 @@ import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import addSVG from "../assets/add.svg";
+import associateSVG from '../assets/associates.svg';
 import cameraSVG from '../assets/camera.svg';
 import placeHolder from '../assets/placeholder.jpeg'
 
 
 
 export const Mainform = () => {
-
+  const accessToken = localStorage.getItem('access_token')
   // form hook definitions
   const leadForm = useForm<FormValues>();
   const { register, control, handleSubmit } = leadForm
@@ -29,36 +30,42 @@ export const Mainform = () => {
   };
 
   // Navigation to Printing page
-  const uuid = 'somegibberish value';
   const navigate = useNavigate();
+  const [responseData, setResponseData] = useState('null')
 
 
-  const onSubmit = (data: FormValues) => {
-    if (imageSrc !== '0') {
-      data.leadImage = imageSrc;
+  const onSubmit = async (data: FormValues) => {
+    try {
+      if (imageSrc !== '0') {
+        data.leadImage = imageSrc;
+      }
+
+      const requestData = {
+        full_name: data.leadFullName,
+        email: data.leadEmail,
+        company_name: data.companyName,
+        contact_number: data.leadPhoneNumber,
+        image: data.leadImage,
+        address: `${data.leadAddress1}, ${data.leadAddress2}`,
+      };
+
+      const url = 'http://127.0.0.1:8000/api/leadvisitor/';
+      const token = accessToken;
+
+      const response = await axios.post(url, requestData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const uniqueId = response.data.unique_id;
+      console.log(uniqueId);
+      navigate('/accompanyingform', { state: { uuid: uniqueId } });
+    } catch (error) {
+      console.error(error);
     }
-    const department = leadForm.getValues('department');
-    const facultyDesignation = leadForm.getValues('facultyDesignation');
-    
-    const requestData = {
-      full_name: data.leadFullName,
-      email: data.leadEmail,
-      company_name: data.companyName,
-      contact_number: data.leadPhoneNumber,
-      image: data.leadImage,
-      address: `${data.leadAddress1}, ${data.leadAddress2}`,
-    };
-    console.log(requestData)
-    handleSave(requestData); // Send the form data to the server
-    navigate('/print', { state: { data, uuid } });
   };
-  
 
-
-
-  const addForm = () => {
-    console.log('adding form')
-  };
 
   const [showModal, setShowModal] = useState(false);
   const [imageSrc, setImageSrc] = useState('0');
@@ -143,18 +150,9 @@ export const Mainform = () => {
     leadForm.setValue('leadImage', imageSrc)
   };
 
-  const handleSave = (data) => {
-    axios.post('http://127.0.0.1:8000/api/leadvisitor/', data)
-    .then(response=>{
-      console.log('Success',response.data);
-    })
-    .catch(error=>{
-      console.error(error);
-    });
-  }
   return (
     <div className="h-full w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full flex flex-col items-center mt-24">
+      <form onSubmit={handleSubmit((data) => onSubmit(data, 0))} className="h-full w-full flex flex-col items-center mt-24">
         <div className="p-6 w-2/3 bg-[#E9EDFF]">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
@@ -172,7 +170,7 @@ export const Mainform = () => {
               {/* WEBCAM COMPONENT  */}
               {showModal && (
                 <div
-                  className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
+                  className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
                   onClick={toggleModal}
                 >
                   <div className="h-auto flex flex-col justify-center items-center w-1/3 bg-slate-600 rounded-md p-4">
@@ -194,7 +192,7 @@ export const Mainform = () => {
                 </div>
               )}
               <div className="flex flex-col  justify-center items-center w-full">
-                {imageSrc != 0 ?
+                {imageSrc !== '0' ?
                   <div className="flex flex-col justify-center items-center">
                     <img src={imageSrc} width={360} alt="Profile Picture" />
                     <button
@@ -281,20 +279,8 @@ export const Mainform = () => {
         >
           Submit
         </button>
-        <button
-          type="button"
-          onClick={handleSave}
-          className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
-        >
-          Save
-        </button>
       </form >
-      <div
-        className="fixed bottom-4 right-4 bg-amber-600 p-4 hover:bg-black text-white rounded-full"
-        onClick={addForm}
-      >
-        <img src={addSVG} width={50} alt={"add-image"}></img>
-      </div>
+
       <DevTool control={control} />
     </div >
 

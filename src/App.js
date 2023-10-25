@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, PrintPDF, Register } from "./pages";
 import {Mainform} from'./pages/Form.tsx';
 // import { FormComponent } from "./components";
-import AccompanyingForm from "./components/formComponent";
+import AccompanyingForm from "./pages/accompanyingForm";
 
 function App() {
   return (
