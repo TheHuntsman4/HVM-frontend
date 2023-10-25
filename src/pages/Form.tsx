@@ -153,17 +153,20 @@ export const Mainform = () => {
   return (
     <div className="h-full w-full">
       <form onSubmit={handleSubmit((data) => onSubmit(data, 0))} className="h-full w-full flex flex-col items-center mt-24">
-        <div className="p-6 w-2/3 bg-[#E9EDFF]">
-          <div className="h-1/2 p-12 w-full flex">
+      <div className="w-2/3 flex flex-col items-start">
+          <span className="font-bold text-black text-2xl pt-8 pb-6  ">Personal Details</span>
+        </div>
+        <div className="p-6 w-2/3 border-2 border-black rounded-lg">
+          <div className="h-1/2 p-4 w-full flex">
             <div className="flex flex-col w-1/2">
               <label className="font-semibold text-md">Full Name</label>
-              <input type="text" id="leadFullName"  {...register('leadFullName')} className="h-10 px-2" />
+              <input type="text" id="leadFullName"  {...register('leadFullName')} className="h-10 px-2 border-2 border-black" />
               <label className="font-semibold text-md pt-6 pb-2">Company Name</label>
-              <input type="text" id='companyName' {...register('companyName')} className=" h-10 px-2" />
+              <input type="text" id='companyName' {...register('companyName')} className=" h-10 px-2 border-2 border-black" />
               <label className="font-semibold text-md pt-6 pb-2">Phone Number</label>
-              <input type="number" id='leadPhoneNumber' {...register('leadPhoneNumber')} className=" h-10 px-2" />
+              <input type="number" id='leadPhoneNumber' {...register('leadPhoneNumber')} className=" h-10 px-2 border-2 border-black" />
               <label className="font-semibold text-md pt-6 pb-2">Email</label>
-              <input type="email" id='leadEmail' {...register('leadEmail')} className=" h-10 px-2" />
+              <input type="email" id='leadEmail' {...register('leadEmail')} className="h-10 px-2 border-2 border-black" />
             </div>
             <div className="w-1/2">
               <input type="hidden" {...register('leadImage')} />
@@ -193,8 +196,8 @@ export const Mainform = () => {
               )}
               <div className="flex flex-col  justify-center items-center w-full">
                 {imageSrc !== '0' ?
-                  <div className="flex flex-col justify-center items-center">
-                    <img src={imageSrc} width={360} alt="Profile Picture" />
+                  <div className="flex flex-col justify-center items-center ">
+                    <img src={imageSrc} width={360} alt="Profile Picture" className="border-2 border-black p-4" />
                     <button
                       type="button"
                       className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
@@ -204,7 +207,7 @@ export const Mainform = () => {
                     </button>
                   </div> :
                   <div className="flex flex-col justify-center items-center">
-                    <img src={placeHolder} width={240} alt="Profile Picture" />
+                    <img src={placeHolder} width={240} alt="Profile Picture" className="border-2 border-black p-4" />
                     <button
                       type="button"
                       className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
@@ -216,29 +219,31 @@ export const Mainform = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex pl-12">
+          <div className="w-full flex pl-4">
             <div className="w-1/2 flex flex-col">
               <label className="font-semibold text-md">Address Line 1</label>
-              <input type="text" {...register('leadAddress1')} className="w-3/4 h-10 px-2" />
+              <input type="text" {...register('leadAddress1')} className="w-3/4 h-10 px-2 border-2 border-black" />
             </div>
             <div className="w-1/2 flex flex-col">
               <label className="font-semibold text-md">Address Line 2</label>
-              <input type="text" {...register('leadAddress2')} className="w-3/4 h-10 px-2" />
+              <input type="text" {...register('leadAddress2')} className="w-3/4 h-10 px-2 border-2 border-black" />
             </div>
           </div>
         </div>
-        <span>Visit Details</span>
-        <div className="p-6 w-2/3 bg-[#E9EDFF]">
+        <div className="w-2/3 flex flex-col items-start">
+          <span className="font-bold text-black text-2xl pt-8 pb-6">Visit Details</span>
+        </div>
+        <div className="p-6 w-2/3 border-2 border-black rounded-lg">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
               <label className="font-semibold text-md">Full Name Of Faculty</label>
-              <input type="text" id="leadFullName"  {...register('facultyFullName')} className="h-10 px-2" />
+              <input type="text" id="leadFullName"  {...register('facultyFullName')} className="h-10 px-2 border-2 border-black" />
               <label className="font-semibold text-md pt-6 pb-2">Department</label>
               <Controller
                 name="department"
                 control={control}
                 render={({ field }) => (
-                  <select {...field} className="h-10 px-2 bg-white">
+                  <select {...field} className="h-10 px-2 bg-white border-2 border-black">
                     {departmentOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}
@@ -252,7 +257,7 @@ export const Mainform = () => {
                 name="facultyDesignation"
                 control={control}
                 render={({ field }) => (
-                  <select {...field} className="h-10 px-2 bg-white">
+                  <select {...field} className="h-10 px-2 bg-white border-2 border-black">
                     {facultyDesignationOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}
