@@ -11,6 +11,7 @@ import Loader from "../components/loader";
 function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
   const location = useLocation();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function AccompanyingForm() {
   }, [location.state, navigate]);
 
   const leadID = location.state?.uuid;
+
   console.log(leadID);
   const [formFields, setFormFields] = useState([
     {
@@ -150,11 +152,11 @@ function AccompanyingForm() {
             return (
               <div key={index}>
                 <div className="p-6 w-full flex flex-col items-center">
-                  <div className="h-1/2 w-1/2 p-12 flex justify-between items-start bg-[#E9EDFF] rounded-md">
+                  <div className="h-1/2 w-1/2 p-12 flex justify-between items-start rounded-lg border-2 border-black">
                     <div className="flex flex-col w-1/2">
                       <label className="font-semibold text-md">Full Name</label>
                       <input
-                        className="h-10 px-2"
+                        className="h-10 px-2 border-2 border-black"
                         name="full_name"
                         placeholder="Full Name"
                         onChange={(event) => handleFormChange(event, index)}
@@ -164,7 +166,7 @@ function AccompanyingForm() {
                         Email
                       </label>
                       <input
-                        className="h-10 px-2"
+                        className="h-10 px-2 border-2 border-black"
                         name="email"
                         type="email"
                         placeholder="Email"
@@ -175,7 +177,7 @@ function AccompanyingForm() {
                         Phone Number
                       </label>
                       <input
-                        className="h-10 px-2"
+                        className="h-10 px-2 border-2 border-black"
                         name="contact_number"
                         type="number"
                         placeholder="Phone Number"
@@ -190,6 +192,7 @@ function AccompanyingForm() {
                             src={form.image}
                             width={360}
                             alt="Profile Picture"
+                            className="p-4 border-2 border-black rounded-lg"
                           />
                           <button
                             type="button"
@@ -206,6 +209,7 @@ function AccompanyingForm() {
                               src={placeHolder}
                               width={240}
                               alt="Profile Picture"
+                              className="p-4 border-2 border-black rounded-lg"
                             />
                             <button
                               type="button"
@@ -248,26 +252,6 @@ function AccompanyingForm() {
                       <img src={closeSVG} width={30} />
                     </button>
                   </div>
-                  {/* <label className="font-semibold text-md pt-6 pb-2">
-                    Address Line 1
-                  </label>
-                  <input
-className="h-10 px-2"
-                    name="address1"
-                    placeholder="Address Line 1"
-                    onChange={(event) => handleFormChange(event, index)}
-                    value={form.address1}
-                  />
-                  <label className="font-semibold text-md pt-6 pb-2">
-                    Address Line 2
-                  </label>
-                  <input
-className="h-10 px-2"
-                    name="address2"
-                    placeholder="Address Line 2"
-                    onChange={(event) => handleFormChange(event, index)}
-                    value={form.address2}
-                  /> */}
                 </div>
               </div>
             );
