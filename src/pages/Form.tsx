@@ -271,7 +271,6 @@ export const Mainform = () => {
             </div>
             <div className="w-1/2">
               <input type="hidden" {...register('leadImage')} />
-
               <div className="flex flex-col  justify-center items-center w-full">
               </div>
             </div>
@@ -280,7 +279,7 @@ export const Mainform = () => {
 
         <button
           type="submit"
-          className="bg-amber-600 font-semibold rounded-lg px-12 py-4"
+          className="mt-6 bg-amber-600 font-semibold rounded-lg px-12 py-4"
         >
           Submit
         </button>
