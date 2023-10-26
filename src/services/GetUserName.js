@@ -1,20 +1,20 @@
 const GetUsername = async ({ username }) => {
-    const current_username = username;
-  
+    const token = localStorage.getItem("access_token");
     try {
       const response = await fetch(
-        "http://localhost:8000/api/username",
+        "http://aims.pythonanywhere.com/api/receivers/?username="+username,
         {
-          method: "POST",
-          body: JSON.stringify({"current_username" : current_username}),
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
           },
         },
       );
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        const data = await response.json();        
+        console.log(data)
+        return data;
       } else {
         throw new Error(`HTTP status ${response.status}`);
       }

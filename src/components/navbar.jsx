@@ -11,7 +11,6 @@ import { IoLogOut } from "react-icons/io5";
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const accessToken = localStorage.getItem("access_token");
-  console.log(accessToken);
   const handleLogout = () => {
     (async () => {
       try {
