@@ -177,10 +177,10 @@ export const Mainform = () => {
         onSubmit={handleSubmit((data) => onSubmit(data, 0))}
         className="h-full w-full flex flex-col items-center mt-24"
       >
-        <div className="w-2/3 flex flex-col items-start">
+        <div className="w-1/2 flex flex-col items-start">
           <span className="font-bold text-black text-2xl pt-8 pb-6">Visitor Details</span>
         </div>
-        <div className="pb-12 w-2/3 border-2 border-black rounded-lg">
+        <div className="pb-12 w-1/2 border-2 border-black rounded-lg">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
               <label className="font-semibold text-md">Full Name</label>
@@ -299,10 +299,10 @@ export const Mainform = () => {
             </div>
           </div>
         </div>
-        <div className="w-2/3 flex flex-col items-start">
+        <div className="w-1/2 flex flex-col items-start">
           <span className="font-bold text-black text-2xl pt-8 pb-6">Visit Details</span>
         </div>
-        <div className="p-6 w-2/3 border-2 border-black rounded-lg">
+        <div className="p-6 w-1/2 border-2 border-black rounded-lg">
           <div className="h-1/2 p-12 w-full flex">
             <div className="flex flex-col w-1/2">
 
