@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
-import { DevTool } from "@hookform/devtools";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,23 +16,23 @@ export const Mainform = () => {
   // form hook definitions
   const leadForm = useForm<FormValues>();
   const location = useLocation();
+  const message = location.state?.message;
 
-
-  // useEffect(() => {
-  //   if (location.state?.error === "NULL_UUID") {
-  //     toast.error(location.state.message, {
-  //       position: "top-right",
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //     });
-  //     console.log("UUID was null");
-  //   }
-  // }, [location.state?.error]);
+  useEffect(() => {
+    if (location.state?.error==="NULL_UUID") {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "UUIDerr",
+      });     
+    }
+  }, [message]);
 
 
   const { register, control, handleSubmit } = leadForm;
@@ -369,7 +368,6 @@ export const Mainform = () => {
         </button>
       </form>
 
-      <DevTool control={control} />
       <ToastContainer />
     </div>
   );
