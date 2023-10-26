@@ -35,7 +35,7 @@ const Home = () => {
           <p className="text-xl">Greetings</p>
           <p className="text-xl">{currentUser}</p>
         </div>
-        <div className="grid grid-cols-6 gap-4">
+        <div className="grid grid-cols-6 gap-2">
           <div className="font-bold">Sl No</div>
           <div className="font-bold">Full Name</div>
           <div className="font-bold">Company</div>
