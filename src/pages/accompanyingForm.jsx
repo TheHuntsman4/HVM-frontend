@@ -27,7 +27,7 @@ function AccompanyingForm() {
     }
   }, [location.state, navigate]);
 
-  const leadID = "location.state?.uuid";
+  const leadID = location.state?.uuid;
 
   console.log(leadID);
   const [formFields, setFormFields] = useState([

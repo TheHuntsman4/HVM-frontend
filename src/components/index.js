@@ -1,1 +1,1 @@
-export {default as AccompanyingForm} from './formComponent';
+export {default as Navbar} from './navbar'

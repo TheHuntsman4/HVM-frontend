@@ -20,7 +20,7 @@ export const Mainform = () => {
   const message = location.state?.message;
 
   useEffect(() => {
-    if (location.state?.error==="NULL_UUID") {
+    if (location.state?.error === "NULL_UUID") {
       toast.error(message, {
         position: "top-right",
         autoClose: 2000,
@@ -31,7 +31,7 @@ export const Mainform = () => {
         progress: undefined,
         theme: "light",
         toastId: "UUIDerr",
-      });     
+      });
     }
   }, [message]);
 
@@ -65,12 +65,15 @@ export const Mainform = () => {
       const requestData = {
         full_name: data.leadFullName,
         email: data.leadEmail,
+        department: data.department,
+        visitee: data.facultyFullName,
+        visitee_designation:data.facultyDesignation,
         company_name: data.companyName,
         contact_number: data.leadPhoneNumber,
         image: data.leadImage,
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
-
+      console.log(data)
       const url = "https://aims.pythonanywhere.com/api/leadvisitor/";
       const token = accessToken;
 
@@ -313,7 +316,7 @@ export const Mainform = () => {
               <input
                 type="text"
                 required
-                id="leadFullName"
+                id="facultyFullName"
                 {...register("facultyFullName")}
                 className="h-10 px-2 border-2 border-black"
               />
