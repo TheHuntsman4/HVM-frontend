@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { CirclesWithBar } from "react-loader-spinner";
 import axios from "axios";
@@ -9,9 +9,21 @@ import Pass from "../components/passComponent";
 import "./print.css";
 
 const PrintPDF = () => {
-  const location = useLocation();
-  const uuid=location.state.uuid
   const token = localStorage.getItem("access_token");
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.state === null || location.state.uuid === null) {
+      navigate("/leadform", {
+        state: {
+          error: "NULL_UUID",
+          message: "Cannot print visiting card before adding visitors.",
+        },
+      });
+    }
+  }, [location.state, navigate]);
+
+  const uuid = location.state?.uuid;
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
