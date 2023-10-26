@@ -7,13 +7,12 @@ import { click } from "@testing-library/user-event/dist/click";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const currentUser = localStorage.getItem("current_user");
+  const currentUser = localStorage.getItem("current_user_fullname");
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(localStorage.getItem("current_user"));
+        console.log(localStorage.getItem("current_user_fullname"));
         const response = await axios.get(
           "https://aims.pythonanywhere.com/api/visitors",
           {

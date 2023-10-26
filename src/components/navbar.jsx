@@ -22,7 +22,7 @@ const Navbar = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${accessToken}`
+              Authorization: `Bearer ${accessToken}`,
             },
           },
           { withCredentials: true }
@@ -47,45 +47,43 @@ const Navbar = () => {
 
   return (
     <>
-      <nav>
-        <nav className="main-nav">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/home">
-              <img src={logo} alt="AIMS Logo" className="logo" />
-            </Link>
-          </div>
-          <div className="menu-link">
-            <ul>
-              <li>
-                <div className="navlinks">
-                  <Link to="/home" className="home">
-                    <FaHome />
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="navlinks">
-                  <Link to="/register" className="leadform">
-                    <FaUserPlus />
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="navlinks">
-                  <a className="logout" onClick={handleLogout}>
-                    <IoLogOut />
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
+      <nav className="main-nav">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+          }}
+        >
+          <Link to="/home">
+            <img src={logo} alt="AIMS Logo" className="logo" />
+          </Link>
+        </div>
+        <div className="menu-link">
+          <ul>
+            <li>
+              <div className="navlinks">
+                <Link to="/home" className="home">
+                  <FaHome />
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="navlinks">
+                <Link to="/register" className="leadform">
+                  <FaUserPlus />
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="navlinks">
+                <a className="logout" onClick={handleLogout}>
+                  <IoLogOut />
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
       </nav>
     </>
   );
