@@ -34,7 +34,7 @@ const Home = () => {
         <div className="font-Heading font-semibold flex justify-between">
           <p className="text-xl">Greetings, {currentUser}</p>
           <a href="/leadform" className="float-right">
-            <button className="p-3 rounded-full bg-[#f58220] text-white">
+            <button className="px-4 py-2 rounded-full bg-[#f58220] text-white">
               Add Lead Visitor
             </button>
           </a>
