@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import bg from "../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import printerSVG from "../assets/printer.svg";
@@ -47,7 +48,7 @@ const Home = () => {
     navigate("/print", { state: { uuid: uuid } });
   };
   return (
-    <div className="h-full w-full">
+    <div className="h-screen w-full" style={{ backgroundImage: `url(${bg})` }}>
       <div className="mx-64 mt-12">
         <div className="font-Heading font-semibold flex justify-between">
           <p className="text-xl">Greetings, {currentUser}</p>
@@ -69,22 +70,32 @@ const Home = () => {
               <th className="w-1/6 py-2 px-4 border-b">Department</th>
               <th className="w-1/6 py-2 px-4 border-b">Valid From</th>
               <th className="w-1/6 py-2 px-4 border-b">Valid Till</th>
+              <th className="w-1/6 py-2 px-4 border-b"> </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                <td className="w-1/6 py-2 px-4 border-b text-center">{index + 1}</td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">{item.full_name}</td>
+              <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {index + 1}
+                </td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {item.full_name}
+                </td>
                 <td className="w-1/6 py-2 px-4 border-b text-center">
                   {item.company_name}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">{item.department}</td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {item.department}
+                </td>
                 <td className="w-1/6 py-2 px-4 border-b text-center">
                   {item.visiting_data} {item.visiting_time}
                 </td>
                 <td className="w-1/6 py-2 px-4 border-b text-center">
                   {formatDateTime(item.valid_till)}
+                </td>
+                <td>
+                  <img src={printerSVG} width={20} />
                 </td>
               </tr>
             ))}

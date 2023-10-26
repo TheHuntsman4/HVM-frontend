@@ -73,7 +73,7 @@ export default function Page(props) {
     <Loader />
   ) : (
     <div
-      className="bg-back-login h-[100vh]"
+      className="bg-back-login h-screen"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="flex items-center justify-center h-full w-full bg-no-repeat bg-cover bg-center">

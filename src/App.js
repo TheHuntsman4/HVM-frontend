@@ -55,6 +55,7 @@ function App() {
           element={
             <>
               <Auth />
+              <Navbar/>
               <PrintPDF />
             </>
           }
