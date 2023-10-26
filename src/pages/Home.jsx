@@ -7,7 +7,7 @@ import { click } from "@testing-library/user-event/dist/click";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const currentUser = localStorage.getItem("current_user");
+  const currentUser= localStorage.getItem("current_user_fullname");
   const navigate = useNavigate();
 
   useEffect(() => {
