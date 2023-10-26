@@ -52,7 +52,7 @@ const PrintPDF = () => {
 
   const pdfRef = useRef(null);
   const printPDF = useReactToPrint({
-    documentTitle: "tickets.pdf",
+    documentTitle: `${leadData?.visiting_time}.pdf`,
     content: () => pdfRef.current,
   });
   function formatDateTime(dateStr) {
@@ -99,7 +99,7 @@ const PrintPDF = () => {
               validFromTime={leadData?.visiting_time}
               validTill={formatDateTime(leadData?.valid_till)}
               visitee={leadData?.visitee}
-              department="someplace"
+              department={leadData?.department}
               imageSrc={leadData?.image}
             />
             {data?.accompanying.map((accompany, index) => (
@@ -112,7 +112,7 @@ const PrintPDF = () => {
                 validFromTime={leadData?.visiting_time}
                 validTill={formatDateTime(leadData?.valid_till)}
                 visitee={leadData?.visitee}
-                department="someplace"
+                department={leadData?.department}
                 imageSrc={accompany?.image}
                 className="page-break"
               />

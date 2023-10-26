@@ -46,7 +46,7 @@ const Pass = ({
             <p className="">{fullName}</p>
             <p className="">{companyName}</p>
             <p className="">{visitee}</p>
-            <p className="">someplace</p>
+            <p className="">{department}</p>
             <p className="">
               {validFromDate} {validFromTime}
             </p>
