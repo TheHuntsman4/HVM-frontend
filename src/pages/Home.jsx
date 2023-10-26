@@ -95,7 +95,7 @@ const Home = () => {
                   {formatDateTime(item.valid_till)}
                 </td>
                 <td>
-                  <img src={printerSVG} width={20} />
+                  <img src={printerSVG} width={20} onClick={handlePrint}/>
                 </td>
               </tr>
             ))}
