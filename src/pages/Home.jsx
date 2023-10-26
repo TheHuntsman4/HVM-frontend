@@ -7,7 +7,7 @@ import { click } from "@testing-library/user-event/dist/click";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const currentUser= localStorage.getItem("current_user_fullname");
+  const currentUser = localStorage.getItem("current_user");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,9 +44,9 @@ const Home = () => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
-  const handlePrint = (uuid) =>{
-navigate("/print",{ state: { uuid: uuid } })
-  }
+  const handlePrint = (uuid) => {
+    navigate("/print", { state: { uuid: uuid } });
+  };
   return (
     <div className="h-full w-full">
       <div className="mx-64 mt-12">
@@ -61,34 +61,36 @@ navigate("/print",{ state: { uuid: uuid } })
         <br />
         <br />
         <br />
-        <div className="grid grid-cols-6 gap-2">
-          <div className="font-bold">S.No</div>
-          <div className="font-bold">Full Name</div>
-          <div className="font-bold">Company</div>
-          <div className="font-bold">Department</div>
-          <div className="font-bold">Valid From</div>
-          <div className="font-bold">Valid Till</div>
-          {data.map((item, index) => (
-            <React.Fragment key={index}>
-              <div>{index + 1}</div>
-              <div>{item.full_name}</div>
-              <div>{item.company_name}</div>
-              <div>{item.department}</div>
-              <div>
-                {item.visiting_date} {item.visiting_time}
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>{formatDateTime(item.valid_till)}</div>
-                <img
-                  src={printerSVG}
-                  width={20}
-                  onClick={() => handlePrint(item.unique_id)
-                  }
-                />
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
+        <table className="table-auto border border-gray-300">
+          <thead>
+            <tr>
+              <th className="w-1/6 py-2 px-4 border-b">Sl No</th>
+              <th className="w-1/6 py-2 px-4 border-b">Full Name</th>
+              <th className="w-1/6 py-2 px-4 border-b">Company</th>
+              <th className="w-1/6 py-2 px-4 border-b">Department</th>
+              <th className="w-1/6 py-2 px-4 border-b">Valid From</th>
+              <th className="w-1/6 py-2 px-4 border-b">Valid Till</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => (
+              <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                <td className="w-1/6 py-2 px-4 border-b text-center">{index + 1}</td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">{item.full_name}</td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {item.company_name}
+                </td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">{item.department}</td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {item.visiting_data} {item.visiting_time}
+                </td>
+                <td className="w-1/6 py-2 px-4 border-b text-center">
+                  {formatDateTime(item.valid_till)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
