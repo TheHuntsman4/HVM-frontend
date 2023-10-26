@@ -36,9 +36,10 @@ export default function Page() {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data["access"]}`;
-      const userData = await GetUsername({ username });
-      localStorage.setItem("current_user_fullname", userData[0].full_name);
-      console.log(userData[0].full_name);
+      // const userData = await GetUsername({ username });
+      const userName  = user.username
+      localStorage.setItem("current_user_fullname", userName);
+      // console.log(userData[0].full_name);
       window.location.href = "/home";
       
     } catch (error) {
