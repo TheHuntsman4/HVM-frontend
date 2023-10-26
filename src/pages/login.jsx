@@ -6,10 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Page(props) {
-  // if(localStorage.getItem('access_token')){
-  //   window.location.href= '/home'
-  // }
+export default function Page() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -85,13 +82,13 @@ export default function Page(props) {
           >
             <div className="flex flex-col gap-11 w-full mb-10 justify-center items-center">
               <input
-                className="h-16 text-2xl"
+                className="h-16 text-2xl rounded-lg p-5"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
-                className="h-16 text-2xl"
+                className="h-16 text-2xl rounded-lg p-5"
                 placeholder="Password"
                 type="password"
                 value={password}
