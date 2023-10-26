@@ -5,6 +5,8 @@
 }
 
 .main-nav {
+  position: sticky;
+  top: 0;
   display: flex;
   background-color: #f58220;
   z-index: 100;

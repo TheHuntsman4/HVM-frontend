@@ -45,6 +45,7 @@ function App() {
           element={
             <>
               <Auth />
+              <Navbar />
               <Register />
             </>
           }

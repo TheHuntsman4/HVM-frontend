@@ -9,7 +9,6 @@ const Home = () => {
   const [data, setData] = useState([]);
   const currentUser = localStorage.getItem("current_user");
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
