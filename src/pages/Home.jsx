@@ -48,7 +48,8 @@ const Home = () => {
     navigate("/print", { state: { uuid: uuid } });
   };
   return (
-    <div className="h-screen w-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat' }}>
+    <div className="h-screen w-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+
       <div className="mx-64 p-12">
         <div className="font-Heading font-semibold flex justify-between">
           <p className="text-xl">Greetings, {currentUser}</p>
