@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { Navbar } from "../components";
 
@@ -6,24 +6,28 @@ const Home = () => {
   const [data, setData] = useState([]);
   const currentUser = localStorage.getItem("current_user");
 
-  const getVisitors = async () => {
-    try {
-      console.log(localStorage.getItem("current_user"));
-      const response = await axios.get(
-        "https://aims.pythonanywhere.com/api/visitors",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(localStorage.getItem("current_user"));
+        const response = await axios.get(
+          "https://aims.pythonanywhere.com/api/visitors",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
 
-      setData(response.data.lead_visitor);
-      console.log(data);
-    } catch (error) {
-      console.error(`Error: ${error}`);
-    }
-  };
+        setData(response.data.lead_visitor);
+        console.log(data);
+      } catch (error) {
+        console.error(`Error: ${error}`);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="h-full w-full">
       <div className="mx-64 mt-12">
@@ -44,14 +48,13 @@ const Home = () => {
               <div>{item.full_name}</div>
               <div>{item.company_name}</div>
               <div>{item.department}</div>
-              <div>{item.visiting_date} {item.visiting_time}</div>
+              <div>
+                {item.visiting_date} {item.visiting_time}
+              </div>
               <div>{item.valid_till}</div>
             </React.Fragment>
           ))}
         </div>
-        <button className="bg-amritaOrange w-full p-4" onClick={getVisitors}>
-          Click Me
-        </button>
       </div>
     </div>
   );
