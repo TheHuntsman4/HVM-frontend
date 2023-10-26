@@ -16,18 +16,17 @@ function AccompanyingForm() {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (location.state === null || location.state.uuid === null) {
-  //     navigate("/leadform", {
-  //       state: {
-  //         error: "NULL_UUID",
-  //         message: "Cannot add accompanying visitors before lead visitor.",
-  //       },
-  //     });
-  //   }
-  // }, [location.state, navigate]);
+  useEffect(() => {
+    if (location.state === null || location.state.uuid === null) {
+      navigate("/leadform", {
+        state: {
+          error: "NULL_UUID",
+          message: "Cannot add accompanying visitors before lead visitor.",
+        },
+      });
+    }
+  }, [location.state, navigate]);
 
-  // const leadID = location.state?.uuid;
   const leadID = "location.state?.uuid";
 
   console.log(leadID);
