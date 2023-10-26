@@ -85,13 +85,13 @@ export default function Page(props) {
           >
             <div className="flex flex-col gap-11 w-full mb-10 justify-center items-center">
               <input
-                className="h-16 text-2xl"
+                className="h-16 text-2xl rounded-lg p-5"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
-                className="h-16 text-2xl"
+                className="h-16 text-2xl rounded-lg p-5"
                 placeholder="Password"
                 type="password"
                 value={password}

@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
-    const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem("access_token");
 
-    if (!accessToken) {
-        navigate('/login');
-    }
+  if (accessToken === null) {
+    window.location.href = "/";
+    
+  }
 };
 
 export default Auth;
