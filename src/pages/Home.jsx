@@ -27,15 +27,26 @@ const Home = () => {
   return (
     <div className="h-full w-full">
       <div className="mx-64 mt-12">
-        <div className="font-Heading font-semibold"> 
+        <div className="font-Heading font-semibold">
           <p className="text-xl">Greetings</p>
           <p className="text-xl">{currentUser}</p>
         </div>
-        <div className="w-full h-full grid">
+        <div className="grid grid-cols-6 gap-4">
+          <div className="font-bold">Sl No</div>
+          <div className="font-bold">Full Name</div>
+          <div className="font-bold">Company</div>
+          <div className="font-bold">Department</div>
+          <div className="font-bold">Valid From</div>
+          <div className="font-bold">Valid Till</div>
           {data.map((item, index) => (
-            <div className="text-black" key={index}>
-              {item.full_name}
-            </div>
+            <React.Fragment key={index}>
+              <div>{index + 1}</div>
+              <div>{item.full_name}</div>
+              <div>{item.company_name}</div>
+              <div>{item.department}</div>
+              <div>{item.visiting_date} {item.visiting_time}</div>
+              <div>{item.valid_till}</div>
+            </React.Fragment>
           ))}
         </div>
         <button className="bg-amritaOrange w-full p-4" onClick={getVisitors}>
