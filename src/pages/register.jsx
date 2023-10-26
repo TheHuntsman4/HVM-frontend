@@ -1,19 +1,21 @@
-import React, { useState } from "react"
-import bg from '../assets/back.png'
-import axios from 'axios';
+import React, { useState } from "react";
+import bg from "../assets/back.png";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import Loader from "../components/loader.js";
 
 export default function Page(props) {
-
-  const [data, setData] = useState({}); // State to store the response data
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    uname:'',
-    pass: '',
-    conPass: '',
-    email: '',
-    conNum: '',
-    empid: '',
+    first_name: "",
+    last_name: "",
+    username: "",
+    password: "",
+    password2: "",
+    email: "",
+    contact_number: "",
+    employee_id: "",
   });
 
   const handleInputChange = (event) => {
@@ -22,44 +24,141 @@ export default function Page(props) {
       ...formData,
       [name]: value,
     });
-    console.log(formData)
-  };
-
-  const postData = async () => {
-    try {
-      const response = await axios.post('https:', {
-        formData
-      });
-
-      setData(response.data);
-    } catch (error) {
-      console.error('Error:', error);
+    console.log(formData);
+    if (formData.password === formData.password2) {
+      setPasswordsMatch(true);
+    } else {
+      setPasswordsMatch(false);
     }
   };
 
-  return (
-    <div className='bg-back-login h-[100vh]' style={{ backgroundImage: `url(${bg})` }}>
+  const postData = async () => {
+    if (!passwordsMatch) {
+      toast.error("Passwords don't match!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "UUIDerr",
+      });
+      return;
+    }
+    const token = localStorage.getItem("access_token");
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://aims.pythonanywhere.com/api/register/",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+      window.location.href = "/home";
+    }
+  };
+
+  return loading ? (
+    <Loader />
+  ) : (
+    <div
+      className="bg-back-login h-[100vh]"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <div className="flex items-center justify-center h-full w-full bg-no-repeat bg-cover bg-center">
-        <div className='flex bg-white/30 h-[40rem] w-[50rem] rounded-3xl shadow-xl backdrop-blur-sm px-5'>
-          <form onSubmit={postData} className='flex flex-col w-full justify-center items-center'>
-            <div className='flex flex-row gap-11 w-full mb-3 justify-center items-center'>
+        <div className="flex bg-white/30 h-[40rem] w-[50rem] rounded-3xl shadow-xl backdrop-blur-sm px-5">
+          <form
+            onSubmit={(e) => {
+              postData();
+              e.preventDefault();
+            }}
+            className="flex flex-col w-full justify-center items-center"
+          >
+            <div className="flex flex-row gap-11 w-full mb-3 justify-center items-center">
               <div className="flex flex-col gap-11">
-                <input name="fname" className='h-16 text-2xl w-full p-5' placeholder='First Name' onChange={handleInputChange}></input>
-                <input name="lname" className='h-16 text-2xl w-full p-5' placeholder='Last Name' onChange={handleInputChange}></input>
-                <input name="uname" className='h-16 text-2xl w-full p-5' placeholder='Usernme' onChange={handleInputChange}></input>
-                <input name="pass" className='h-16 text-2xl w-full p-5' placeholder='Password' type='password' onChange={handleInputChange}></input>
-                <input name="conPass" className='h-16 text-2xl w-full p-5' placeholder='Confirm Password' type='password' onChange={handleInputChange}></input>
+                <input
+                  required
+                  name="first_name"
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="First Name"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="last_name"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Last Name"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="username"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Username"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="password"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Password"
+                  type="password"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="password2"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Confirm Password"
+                  type="password"
+                  onChange={handleInputChange}
+                ></input>
               </div>
-              <div className="flex flex-col gap-11">
-                <input name="email" className='h-16 text-2xl w-full p-5' placeholder='Email' onChange={handleInputChange}></input>
-                <input name="conNum" className='h-16 text-2xl w-full p-5' placeholder='Contact_Number' onChange={handleInputChange}></input>
-                <input name="empid" className='h-16 text-2xl w-full p-5' placeholder='Employee_Id' onChange={handleInputChange}></input>
+              <div className="flex flex-col gap-11 rounded-lg">
+                <input
+                  required
+                  name="email"
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Email"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="contact_number"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Contact Number"
+                  onChange={handleInputChange}
+                ></input>
+                <input
+                  name="employee_id"
+                  required
+                  className="h-16 text-2xl w-full p-5 rounded-lg"
+                  placeholder="Employee ID"
+                  onChange={handleInputChange}
+                ></input>
               </div>
             </div>
-            <button className='bg-[#f58220] w-40 text-white h-16 rounded-3xl font-bold text-xl'>Register</button>
+            <button
+              type="submit"
+              className="bg-[#f58220] w-40 text-white h-16 rounded-3xl font-bold text-xl"
+            >
+              Register
+            </button>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
-  )
+  );
 }

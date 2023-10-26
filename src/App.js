@@ -4,31 +4,60 @@ import { Mainform } from "./pages/Form.tsx";
 // import { FormComponent } from "./components";
 import AccompanyingForm from "./pages/accompanyingForm";
 import Navbar from "./components/navbar";
+import Auth from "./services/checkAuth";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element=
-        {
-          <>
-            <Navbar />
-            <Home />
-          </>
-        }/>
+        <Route
+          path="/home"
+          element={
+            <>
+              <Auth />
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
         <Route
           path="/leadform"
           element={
             <>
+              <Auth />
               <Navbar />
               <Mainform />
             </>
           }
         />
-        <Route path="/accompanyingform" element={<AccompanyingForm />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/print" element={<PrintPDF />} />
+        <Route
+          path="/accompanyingform"
+          element={
+            <>
+              <Auth />
+              <AccompanyingForm />
+            </>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <>
+              <Auth />
+              <Register />
+            </>
+          }
+        />
+        <Route
+          path="/print"
+          element={
+            <>
+              <Auth />
+              <PrintPDF />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
