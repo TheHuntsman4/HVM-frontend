@@ -72,7 +72,7 @@ const Navbar = () => {
               </li>
               <li>
                 <div className="navlinks">
-                  <Link to="/leadform" className="leadform">
+                  <Link to="/register" className="leadform">
                     <FaUserPlus />
                   </Link>
                 </div>
