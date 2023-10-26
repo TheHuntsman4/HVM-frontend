@@ -38,7 +38,7 @@ export default function Page() {
       ] = `Bearer ${data["access"]}`;
       GetUsername({ username });
 
-      window.location.href = "/leadform";
+      window.location.href = "/home";
       
     } catch (error) {
       const statusCode = error.response.status

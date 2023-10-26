@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Navbar } from "../components";
 
@@ -31,12 +31,19 @@ const Home = () => {
   return (
     <div className="h-full w-full">
       <div className="mx-64 mt-12">
-        <div className="font-Heading font-semibold">
-          <p className="text-xl">Greetings</p>
-          <p className="text-xl">{currentUser}</p>
+        <div className="font-Heading font-semibold flex justify-between">
+          <p className="text-xl">Greetings, {currentUser}</p>
+          <a href="/leadform" className="float-right">
+            <button className="p-3 rounded-full bg-[#f58220] text-white">
+              Add Lead Visitor
+            </button>
+          </a>
         </div>
+        <br />
+        <br />
+        <br />
         <div className="grid grid-cols-6 gap-2">
-          <div className="font-bold">Sl No</div>
+          <div className="font-bold">S.No</div>
           <div className="font-bold">Full Name</div>
           <div className="font-bold">Company</div>
           <div className="font-bold">Department</div>
