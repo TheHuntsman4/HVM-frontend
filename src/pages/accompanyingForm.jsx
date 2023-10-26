@@ -6,7 +6,9 @@ import placeHolder from "../assets/placeholder.jpeg";
 import addSVG from "../assets/add.svg";
 import closeSVG from "../assets/close.svg";
 import cameraSVG from "../assets/camera.svg";
+import warningSVG from "../assets/warning.svg";
 import Loader from "../components/loader";
+import crossSVG from "../assets/cross.svg";
 
 function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
@@ -14,18 +16,19 @@ function AccompanyingForm() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.state === null || location.state.uuid === null) {
-      navigate("/leadform", {
-        state: {
-          error: "NULL_UUID",
-          message: "Cannot add accompanying visitors before lead visitor.",
-        },
-      });
-    }
-  }, [location.state, navigate]);
+  // useEffect(() => {
+  //   if (location.state === null || location.state.uuid === null) {
+  //     navigate("/leadform", {
+  //       state: {
+  //         error: "NULL_UUID",
+  //         message: "Cannot add accompanying visitors before lead visitor.",
+  //       },
+  //     });
+  //   }
+  // }, [location.state, navigate]);
 
-  const leadID = location.state?.uuid;
+  // const leadID = location.state?.uuid;
+  const leadID = "location.state?.uuid";
 
   console.log(leadID);
   const [formFields, setFormFields] = useState([
@@ -130,18 +133,30 @@ function AccompanyingForm() {
           onClick={toggleConfirmation}
         >
           <div className="bg-black opacity-75 absolute inset-0"></div>
-          <div className="bg-white h-1/2 w-1/2 relative flex flex-col justify-center items-center">
-            <p>Are you sure all of the entered data is correct?</p>
-            <p className="text-red-900 font-semibold">
-              WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
-            </p>
-            <button
-              type="submit"
-              onClick={onSubmit}
-              className="px-6 py-4 bg-amritaOrange text-center"
-            >
-              Continue To Print
-            </button>
+          <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
+            <div className="h-full bg-amritaOrange flex flex-col justify-center items-center rounded-3xl">
+              <img src={warningSVG} width={50} className="mb-4" />
+              <img
+                src={crossSVG}
+                width={40}
+                className="absolute top-0 right-0 mt-6 mr-6"
+                onClick={toggleConfirmation}
+              />
+              <p className="text-red-900 font-semibold text-center">
+                WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
+              </p>
+              <p className="my-4">
+                Are you sure all of the entered data is correct?
+              </p>
+
+              <button
+                type="submit"
+                onClick={onSubmit}
+                className="mt-2 px-6 py-4 bg-white text-center rounded-full"
+              >
+                Continue To Print
+              </button>
+            </div>
           </div>
         </div>
       )}
