@@ -133,7 +133,7 @@ function AccompanyingForm() {
         >
           <div className="bg-black opacity-75 absolute inset-0"></div>
           <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
-            <div className="h-full bg-amritaOrange flex flex-col justify-center items-center rounded-3xl">
+            <div className="h-full  flex flex-col justify-center items-center rounded-3xl">
               <img src={warningSVG} width={50} className="mb-4" />
               <img
                 src={crossSVG}
@@ -151,7 +151,7 @@ function AccompanyingForm() {
               <button
                 type="submit"
                 onClick={onSubmit}
-                className="mt-2 px-6 py-4 bg-white text-center rounded-full"
+                className="mt-2 bg-amritaOrange px-6 py-4 text-center rounded-full"
               >
                 Continue To Print
               </button>
