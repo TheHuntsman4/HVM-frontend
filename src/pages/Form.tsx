@@ -11,6 +11,8 @@ import placeHolder from "../assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../components/loader";
 import bg from "../assets/formback.png";
+import crossSVG from '../assets/cross.svg';
+import warningSVG from '../assets/warning.svg';
 
 
 export const Mainform = () => {
@@ -68,7 +70,7 @@ export const Mainform = () => {
         email: data.leadEmail,
         department: data.department,
         visitee: data.facultyFullName,
-        visitee_designation:data.facultyDesignation,
+        visitee_designation: data.facultyDesignation,
         company_name: data.companyName,
         contact_number: data.leadPhoneNumber,
         image: data.leadImage,
@@ -95,6 +97,7 @@ export const Mainform = () => {
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setshowConfirmationModal] = useState(false)
   const [imageSrc, setImageSrc] = useState("0");
 
   const departmentOptions = [
@@ -175,15 +178,51 @@ export const Mainform = () => {
     leadForm.setValue("leadImage", imageSrc);
   };
 
-  return loading ? <Loader /> : (
-    <div className="h-full w-full bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${bg})` }}>
+  const toggleConfirmation = () => {
+    setshowConfirmationModal(!showConfirmationModal)
+  }
 
+  return loading ? <Loader /> : (
+
+    
+    <div className="h-full w-full bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${bg})` }}>
+      {showConfirmationModal && (
+        <div
+          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center"
+          onClick={toggleConfirmation}
+        >
+          <div className="bg-black opacity-75 absolute inset-0"></div>
+          <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
+            <div className="h-full  flex flex-col justify-center items-center rounded-3xl">
+              <img src={warningSVG} width={50} className="mb-4" />
+              <img
+                src={crossSVG}
+                width={40}
+                className="absolute top-0 right-0 mt-6 mr-6"
+                onClick={toggleConfirmation}
+              />
+              <p className="text-red-900 font-semibold text-center">
+                WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
+              </p>
+              <p className="my-4">
+                Are you sure all of the entered data is correct?
+              </p>
+
+              <button
+                type="submit"
+                onClick={onSubmit(data)}
+                className="mt-2 bg-amritaOrange px-6 py-4 text-center rounded-full"
+              >
+                Continue To Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <form
         onSubmit={handleSubmit((data) => onSubmit(data, 0))}
         className="h-full w-30 flex flex-col items-center justify-center py-20"
-        
       >
-
         <div className="bg-white w-[53rem] rounded-lg py-5 drop-shadow-lg">
         <div className="w-full flex flex-col items-start">
           <span className="font-bold text-black text-2xl pt-8 pb-6 px-5">Visitor Details</span>
@@ -371,6 +410,7 @@ export const Mainform = () => {
        <button
           type="submit"
           className="mt-6 bg-amber-600 font-semibold rounded-lg px-12 py-4"
+          onClick={toggleConfirmation}
         >
           Submit
         </button>
