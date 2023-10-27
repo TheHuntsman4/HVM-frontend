@@ -73,10 +73,10 @@ export default function Page() {
   };
   return (
     <div
-      className="bg-back-login h-[100vh]"
+      className="bg-back-login h-[100vh] bg-no-repeat bg-cover bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="flex items-center justify-center h-full w-full bg-no-repeat bg-cover bg-center">
+      <div className="flex items-center justify-center h-full w-full">
         <div className="flex bg-white/30 h-[30rem] w-[45rem] rounded-3xl shadow-xl backdrop-blur-sm px-32">
           <form
             className="flex flex-col w-full justify-center items-center"
