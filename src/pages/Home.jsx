@@ -8,6 +8,7 @@ import { click } from "@testing-library/user-event/dist/click";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const currentUser = localStorage.getItem("current_user_fullname");
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,7 +50,6 @@ const Home = () => {
   };
   return (
     <div className="h-screen w-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-
       <div className="mx-64 p-12">
         <div className="font-Heading font-semibold flex justify-between">
           <p className="text-xl">Greetings, {currentUser}</p>
@@ -62,6 +62,7 @@ const Home = () => {
         <br />
         <br />
         <br />
+        
         <table className="table-auto border border-gray-300">
           <thead>
             <tr>

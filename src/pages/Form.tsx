@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import addSVG from "../assets/add.svg";
 import associateSVG from "../assets/associates.svg";
+import crossSVG from '../assets/cross.svg';
+import warningSVG from '../assets/warning.svg';
 import cameraSVG from "../assets/camera.svg";
 import placeHolder from "../assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
@@ -67,7 +69,7 @@ export const Mainform = () => {
         email: data.leadEmail,
         department: data.department,
         visitee: data.facultyFullName,
-        visitee_designation:data.facultyDesignation,
+        visitee_designation: data.facultyDesignation,
         company_name: data.companyName,
         contact_number: data.leadPhoneNumber,
         image: data.leadImage,
@@ -94,7 +96,9 @@ export const Mainform = () => {
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setshowConfirmationModal] = useState(false)
   const [imageSrc, setImageSrc] = useState("0");
+
 
   const departmentOptions = [
     "Biomedical",
@@ -173,12 +177,47 @@ export const Mainform = () => {
     setImageSrc(webCamRef.current.getScreenshot());
     leadForm.setValue("leadImage", imageSrc);
   };
+  const toggleConfirmation = () => {
+    setshowConfirmationModal(!showConfirmationModal)
+  }
 
   return loading ? <Loader /> : (
     <div className="h-full w-full">
+      {showConfirmationModal && (
+        <div
+          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center"
+          onClick={toggleConfirmation}
+        >
+          <div className="bg-black opacity-75 absolute inset-0"></div>
+          <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
+            <div className="h-full  flex flex-col justify-center items-center rounded-3xl">
+              <img src={warningSVG} width={50} className="mb-4" />
+              <img
+                src={crossSVG}
+                width={40}
+                className="absolute top-0 right-0 mt-6 mr-6"
+                onClick={toggleConfirmation}
+              />
+              <p className="text-red-900 font-semibold text-center">
+                WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
+              </p>
+              <p className="my-4">
+                Are you sure all of the entered data is correct?
+              </p>
+
+              <button
+                type="submit"
+                onClick={onSubmit(data)}
+                className="mt-2 bg-amritaOrange px-6 py-4 text-center rounded-full"
+              >
+                Continue To Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form
-        onSubmit={handleSubmit((data) => onSubmit(data, 0))}
         className="h-full w-full flex flex-col items-center mt-24"
       >
         <div className="w-1/2 flex flex-col items-start">
@@ -365,8 +404,9 @@ export const Mainform = () => {
         </div>
 
         <button
-          type="submit"
+          type="button"
           className="mt-6 bg-amber-600 font-semibold rounded-lg px-12 py-4"
+          onClick={toggleConfirmation}
         >
           Submit
         </button>
