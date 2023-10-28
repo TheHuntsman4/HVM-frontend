@@ -273,10 +273,10 @@ export const Mainform = () => {
               {/* WEBCAM COMPONENT  */}
               {showModal && (
                 <div
-                  className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
+                  className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center"
                   onClick={toggleModal}
                 >
-                  <div className="h-auto flex flex-col justify-center items-center w-1/3 bg-slate-600 rounded-md p-4">
+                  <div className="h-1/2 flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
                     <Webcam
                       ref={webCamRef}
                       audio={false}
@@ -285,7 +285,7 @@ export const Mainform = () => {
                     ></Webcam>
                     <button
                       type="button"
-                      className=" w-1/3  flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
+                      className=" w-1/2  text-white font-semibold flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
                       onClick={captureWebcam}
                     >
                       <img src={cameraSVG} width={40} className=""></img>
@@ -302,7 +302,7 @@ export const Mainform = () => {
 
                     <button
                       type="button"
-                      className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
+                      className="h-auto w-1/2 mt-4 p-2 rounded-lg text-white font-semibold bg-amber-600 "
                       onClick={toggleModal}
                     >
                       Take Picture Again
@@ -313,7 +313,7 @@ export const Mainform = () => {
                     <img src={placeHolder} width={240} alt="Profile Picture" className=" p-4" />
                     <button
                       type="button"
-                      className="h-auto w-1/2 mt-4 p-2 text-white rounded-lg bg-amber-600 "
+                      className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amber-600 "
                       onClick={toggleModal}
                     >
                       Take Picture
