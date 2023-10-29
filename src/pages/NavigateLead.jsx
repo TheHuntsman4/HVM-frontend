@@ -14,9 +14,9 @@ const NavigateLead = () => {
     navigate("/print", { state: { uuid: uuid } });
   };
 
-  const handleAccompanying=()=>{
-    
-  }
+  const handleAccompanying = () => {
+    navigate("/accompanyingform", { state: { uuid: uuid } });
+  };
   return (
     <div
       className="h-screen w-full bg-cover bg-no-repeat bg-center"
@@ -29,10 +29,17 @@ const NavigateLead = () => {
             <div className="">
               <p>To continue printing the pass</p>
               <p>Click the button below</p>
-              <button onClick={handlePrint}></button>
+              <button onClick={handlePrint}>Go to Printing</button>
             </div>
           </div>
-          <div>Hello There {uuid}</div>
+          <div className="h-full w-full p-4 rounded-lg bg-amritaOrange shadow-black shadow-md flex flex-col justify-center items-center">
+            <img src={peopleSVG} width={50} />
+            <div className="">
+              <p>To continue adding accompanying people details</p>
+              <p>Click the button below</p>
+              <button onClick={handleAccompanying}>Go to Printing</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
