@@ -4,15 +4,12 @@ import Webcam from "react-webcam";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import addSVG from "../assets/add.svg";
-import associateSVG from "../assets/associates.svg";
+
 import cameraSVG from "../assets/camera.svg";
 import placeHolder from "../assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../components/loader";
 import bg from "../assets/formback.png";
-import crossSVG from '../assets/cross.svg';
-import warningSVG from '../assets/warning.svg';
 
 
 export const Mainform = () => {
@@ -183,238 +180,203 @@ export const Mainform = () => {
   }
 
   return loading ? <Loader /> : (
-
-    
-    <div className="h-full w-full bg-cover bg-no-repeat" style={{ backgroundImage: `url(${bg})` }}>
-      {showConfirmationModal && (
-        <div
-          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center"
-          onClick={toggleConfirmation}
-        >
-          <div className="bg-black opacity-75 absolute inset-0"></div>
-          <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
-            <div className="h-full  flex flex-col justify-center items-center rounded-3xl">
-              <img src={warningSVG} width={50} className="mb-4" />
-              <img
-                src={crossSVG}
-                width={40}
-                className="absolute top-0 right-0 mt-6 mr-6"
-                onClick={toggleConfirmation}
-              />
-              <p className="text-red-900 font-semibold text-center">
-                WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
-              </p>
-              <p className="my-4">
-                Are you sure all of the entered data is correct?
-              </p>
-
-              <button
-                type="submit"
-                onClick={onSubmit(data)}
-                className="mt-2 bg-amritaOrange px-6 py-4 text-center rounded-full"
-              >
-                Continue To Print
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+    <div className="h-full w-full bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${bg})` }}>
       <form
         onSubmit={handleSubmit((data) => onSubmit(data, 0))}
         className="h-full w-30 flex flex-col items-center justify-center py-20"
       >
         <div className="bg-white w-[53rem] rounded-lg py-5 drop-shadow-lg">
-        <div className="w-full flex flex-col items-start">
-          <span className="font-bold text-black text-2xl pt-8 pb-6 px-5">Visitor Details</span>
-        </div>
-        <div className="pb-12 w-full">
-          <div className="h-1/2 px-12 py-8 w-full flex">
-            <div className="flex flex-col w-1/2">
-              <label className="text-[#868686] font-semibold text-md">Full Name</label>
-              <input
-                type="text"
-                id="leadFullName"
-                required
-                {...register("leadFullName")}
-                className="h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
-              <label className=" text-[#868686] font-semibold text-md pt-6 pb-2">
-                Company Name
-              </label>
-              <input
-                type="text"
-                id="companyName"
-                required
-                {...register("companyName")}
-                className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
-              <label className="text-[#868686] font-semibold text-md pt-6 pb-2">
-                Phone Number
-              </label>
-              <input
-                type="text"
-                id="leadPhoneNumber"
-                required
-                {...register("leadPhoneNumber")}
-                className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
-              <label className="text-[#868686] font-semibold text-md pt-6 pb-2">Email</label>
-              <input
-                type="email"
-                id="leadEmail"
-                required
-                {...register("leadEmail")}
-                className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
+          <div className="w-full flex flex-col items-start">
+            <span className="font-bold text-black text-2xl pt-8 pb-6 px-5">Visitor Details</span>
+          </div>
+          <div className="pb-12 w-full">
+            <div className="h-1/2 px-12 py-8 w-full flex">
+              <div className="flex flex-col w-1/2">
+                <label className="text-[#868686] font-semibold text-md">Full Name</label>
+                <input
+                  type="text"
+                  id="leadFullName"
+                  required
+                  {...register("leadFullName")}
+                  className="h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+                <label className=" text-[#868686] font-semibold text-md pt-6 pb-2">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  id="companyName"
+                  required
+                  {...register("companyName")}
+                  className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+                <label className="text-[#868686] font-semibold text-md pt-6 pb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="leadPhoneNumber"
+                  required
+                  {...register("leadPhoneNumber")}
+                  className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+                <label className="text-[#868686] font-semibold text-md pt-6 pb-2">Email</label>
+                <input
+                  type="email"
+                  id="leadEmail"
+                  required
+                  {...register("leadEmail")}
+                  className=" h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
 
-            </div>
-            <div className="w-full">
-              <input type="hidden" required {...register("leadImage")} />
-              {/* WEBCAM COMPONENT  */}
-              {showModal && (
-                <div
-                  className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center"
-                  onClick={toggleModal}
-                >
-                  <div className="h-1/2 flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
-                    <Webcam
-                      ref={webCamRef}
-                      audio={false}
-                      className="w-full h-full"
-                      screenshotFormat="image/jpeg"
-                    ></Webcam>
-                    <button
-                      type="button"
-                      className=" w-1/2  text-white font-semibold flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
-                      onClick={captureWebcam}
-                    >
-                      <img src={cameraSVG} width={40} className=""></img>
-                      Capture image
-                    </button>
-                  </div>
-                </div>
-              )}
-              <div className="flex flex-col  justify-center items-center w-full">
-
-                {imageSrc !== "0" ? (
-                  <div className="flex flex-col justify-center items-center">
-                    <img src={imageSrc} width={360} alt="Profile Picture" />
-
-                    <button
-                      type="button"
-                      className="h-auto w-1/2 mt-4 p-2 rounded-lg text-white font-semibold bg-amber-600 "
-                      onClick={toggleModal}
-                    >
-                      Take Picture Again
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex flex-col justify-center items-center">
-                    <img src={placeHolder} width={240} alt="Profile Picture" className=" p-4" />
-                    <button
-                      type="button"
-                      className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amber-600 "
-                      onClick={toggleModal}
-                    >
-                      Take Picture
-                    </button>
+              </div>
+              <div className="w-full">
+                <input type="hidden" required {...register("leadImage")} />
+                {/* WEBCAM COMPONENT  */}
+                {showModal && (
+                  <div
+                    className="fixed top-0 left-0 h-screen w-full flex flex-col justify-center items-center"
+                    onClick={toggleModal}
+                  >
+                    <div className="h-1/2 flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
+                      <Webcam
+                        ref={webCamRef}
+                        audio={false}
+                        className="w-full h-full"
+                        screenshotFormat="image/jpeg"
+                      ></Webcam>
+                      <button
+                        type="button"
+                        className=" w-1/2  text-white font-semibold flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
+                        onClick={captureWebcam}
+                      >
+                        <img src={cameraSVG} width={40} className=""></img>
+                        Capture image
+                      </button>
+                    </div>
                   </div>
                 )}
+                <div className="flex flex-col  justify-center items-center w-full">
+
+                  {imageSrc !== "0" ? (
+                    <div className="flex flex-col justify-center items-center">
+                      <img src={imageSrc} width={360} alt="Profile Picture" />
+
+                      <button
+                        type="button"
+                        className="h-auto w-1/2 mt-4 p-2 rounded-lg text-white font-semibold bg-amber-600 "
+                        onClick={toggleModal}
+                      >
+                        Take Picture Again
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col justify-center items-center">
+                      <img src={placeHolder} width={240} alt="Profile Picture" className=" p-4" />
+                      <button
+                        type="button"
+                        className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amber-600 "
+                        onClick={toggleModal}
+                      >
+                        Take Picture
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex px-12">
+              <div className="w-1/2 flex flex-col">
+                <label className="text-[#868686] font-semibold text-md">Address Line 1</label>
+
+                <input
+                  type="text"
+                  required
+                  {...register("leadAddress1")}
+                  className="w-3/4 h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+              </div>
+              <div className="w-1/2 flex flex-col">
+                <label className="text-[#868686] font-semibold text-md">Address Line 2</label>
+                <input
+                  type="text"
+                  required
+                  {...register("leadAddress2")}
+                  className="w-3/4 h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+
               </div>
             </div>
           </div>
-          <div className="w-full flex px-12">
-            <div className="w-1/2 flex flex-col">
-              <label className="text-[#868686] font-semibold text-md">Address Line 1</label>
+          <div className="w-1/2 flex flex-col items-start">
+            <span className=" font-bold text-black text-2xl pt-8 pb-6 px-5">Visit Details</span>
+          </div>
+          <div className="w-full">
+            <div className="h-1/2 px-12 py-8 w-full flex">
+              <div className="flex flex-col w-1/2">
 
-              <input
-                type="text"
-                required
-                {...register("leadAddress1")}
-                className="w-3/4 h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
-            </div>
-            <div className="w-1/2 flex flex-col">
-              <label className="text-[#868686] font-semibold text-md">Address Line 2</label>
-              <input
-                type="text"
-                required
-                {...register("leadAddress2")}
-                className="w-3/4 h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
+                <label className="text-[#868686] font-semibold text-md">
+                  Full Name Of Faculty
+                </label>
+                <input
+                  type="text"
+                  required
+                  id="facultyFullName"
+                  {...register("facultyFullName")}
+                  className="h-10 px-2 border-2 border-[#eae9e7] rounded-md"
+                />
+                <label className="text-[#868686] first-letter:font-semibold text-md pt-6 pb-2">
+                  Department
+                </label>
 
+                <Controller
+                  name="department"
+                  control={control}
+                  render={({ field }) => (
+                    <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
+                      {departmentOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                />
+                <label className="text-[#868686] font-semibold text-md pt-6 pb-2">
+                  Designation Of Faculty
+                </label>
+                <Controller
+                  name="facultyDesignation"
+                  control={control}
+                  render={({ field }) => (
+                    <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
+                      {facultyDesignationOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                />
+              </div>
+              <div className="w-1/2">
+
+                <input type="hidden" {...register("leadImage")} required />
+
+                <div className="flex flex-col  justify-center items-center w-full"></div>
+
+              </div>
             </div>
           </div>
-        </div>
-        <div className="w-1/2 flex flex-col items-start">
-          <span className=" font-bold text-black text-2xl pt-8 pb-6 px-5">Visit Details</span>
-        </div>
-        <div className="w-full">
-          <div className="h-1/2 px-12 py-8 w-full flex">
-            <div className="flex flex-col w-1/2">
-
-              <label className="text-[#868686] font-semibold text-md">
-                Full Name Of Faculty
-              </label>
-              <input
-                type="text"
-                required
-                id="facultyFullName"
-                {...register("facultyFullName")}
-                className="h-10 px-2 border-2 border-[#eae9e7] rounded-md"
-              />
-              <label className="text-[#868686] first-letter:font-semibold text-md pt-6 pb-2">
-                Department
-              </label>
-
-              <Controller
-                name="department"
-                control={control}
-                render={({ field }) => (
-                  <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
-                    {departmentOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              />
-              <label className="text-[#868686] font-semibold text-md pt-6 pb-2">
-                Designation Of Faculty
-              </label>
-              <Controller
-                name="facultyDesignation"
-                control={control}
-                render={({ field }) => (
-                  <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
-                    {facultyDesignationOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              />
-            </div>
-            <div className="w-1/2">
-
-              <input type="hidden" {...register("leadImage")} required />
-
-              <div className="flex flex-col  justify-center items-center w-full"></div>
-
-            </div>
+          <div className="flex items-center justify-center">
+            <button
+              type="submit"
+              className="mt-6 bg-amber-600 text-white font-semibold rounded-lg px-12 py-4"
+              onClick={()=>onSubmit}
+            >
+              Submit
+            </button>
           </div>
-        </div>
-       <div className="flex items-center justify-center">
-       <button
-          type="submit"
-          className="mt-6 bg-amber-600 text-white font-semibold rounded-lg px-12 py-4"
-          onClick={toggleConfirmation}
-        >
-          Submit
-        </button>
-       </div>
 
         </div>
       </form>

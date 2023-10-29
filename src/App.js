@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Mainform></Mainform>} />
+        <Route path="/" element={<Login/>} />
         <Route
           path="/home"
           element={
