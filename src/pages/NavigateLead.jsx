@@ -24,20 +24,32 @@ const NavigateLead = () => {
     >
       <div className="z-10 h-full w-full flex justify-center items-center">
         <div className="grid grid-cols-2 gap-4">
-          <div className="h-full w-full p-4 rounded-lg bg-white shadow-black shadow-md flex flex-col justify-center items-center">
-            <img src={printerSVG} width={50} />
-            <div className="">
-              <p>To continue printing the pass</p>
-              <p>Click the button below</p>
-              <button onClick={handlePrint}>Go to Printing</button>
+          <div className="h-96 w-full p-4 rounded-lg bg-white shadow-black shadow-md flex flex-col justify-center items-center">
+            <img src={printerSVG} width={70} />
+            <div className="text-xl text-center">
+              <p className="pt-4">To continue printing the pass</p>
+              <p className="pt-2">Click the button below</p>
+              <button
+                onClick={handlePrint}
+                className="mt-6 bg-amritaOrange text-white font-semibold rounded-lg px-12 py-4"
+              >
+                Go to Printing
+              </button>
             </div>
           </div>
-          <div className="h-full w-full p-4 rounded-lg bg-amritaOrange shadow-black shadow-md flex flex-col justify-center items-center">
-            <img src={peopleSVG} width={50} />
-            <div className="">
-              <p>To continue adding accompanying people details</p>
-              <p>Click the button below</p>
-              <button onClick={handleAccompanying}>Go to Printing</button>
+          <div className="h-96  w-full p-4 rounded-lg bg-white shadow-black shadow-md flex flex-col justify-center items-center">
+            <img src={peopleSVG} width={70} />
+            <div className="text-xl text-center">
+              <p className="pt-4">
+                To continue adding accompanying people details
+              </p>
+              <p className="pt-2">Click the button below</p>
+              <button
+                onClick={handleAccompanying}
+                className="mt-6 bg-amritaOrange text-white font-semibold rounded-lg px-12 py-4"
+              >
+                Go to Acccompanying Form
+              </button>
             </div>
           </div>
         </div>

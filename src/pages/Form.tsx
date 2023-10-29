@@ -264,7 +264,7 @@ export const Mainform = () => {
 
                       <button
                         type="button"
-                        className="h-auto w-1/2 mt-4 p-2 rounded-lg text-white font-semibold bg-amber-600 "
+                        className="h-auto w-1/2 mt-4 p-2 rounded-lg text-white font-semibold bg-amritaOrange "
                         onClick={toggleModal}
                       >
                         Take Picture Again
@@ -275,7 +275,7 @@ export const Mainform = () => {
                       <img src={placeHolder} width={240} alt="Profile Picture" className=" p-4" />
                       <button
                         type="button"
-                        className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amber-600 "
+                        className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amritaOrange"
                         onClick={toggleModal}
                       >
                         Take Picture
@@ -371,7 +371,7 @@ export const Mainform = () => {
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="mt-6 bg-amber-600 text-white font-semibold rounded-lg px-12 py-4"
+              className="mt-6 bg-amritaOrange text-white font-semibold rounded-lg px-12 py-4"
               onClick={()=>onSubmit}
             >
               Submit
