@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login, PrintPDF, Register, Home } from "./pages";
+import { Login, PrintPDF, Register, Home, Navigate } from "./pages";
 import { Mainform } from "./pages/Form.tsx";
 // import { FormComponent } from "./components";
 import AccompanyingForm from "./pages/accompanyingForm";
@@ -11,6 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>} />
+        <Route path="/navigate" element={<Navigate/>}/>
         <Route
           path="/home"
           element={

@@ -85,7 +85,7 @@ export const Mainform = () => {
       });
       const uniqueId = response.data.unique_id;
       console.log(uniqueId);
-      navigate("/accompanyingform", { state: { uuid: uniqueId } });
+      navigate("/navigate", { state: { uuid: uniqueId } });
     } catch (error) {
       console.error(error);
     } finally {
