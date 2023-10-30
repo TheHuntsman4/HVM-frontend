@@ -63,41 +63,41 @@ const Home = () => {
         <br />
         <br />
         
-        <table className="table-auto border border-gray-300">
+        <table className="table-auto border border-gray-300 bg-white">
           <thead>
             <tr>
-              <th className="w-1/6 py-2 px-4 border-b">Sl No</th>
-              <th className="w-1/6 py-2 px-4 border-b">Full Name</th>
-              <th className="w-1/6 py-2 px-4 border-b">Company</th>
-              <th className="w-1/6 py-2 px-4 border-b">Department</th>
-              <th className="w-1/6 py-2 px-4 border-b">Valid From</th>
-              <th className="w-1/6 py-2 px-4 border-b">Valid Till</th>
-              <th className="w-1/6 py-2 px-4 border-b"> </th>
+              <th className="w-1/6 py-2 px-4 border border-black">Sl No</th>
+              <th className="w-1/6 py-2 px-4 border border-black">Full Name</th>
+              <th className="w-1/6 py-2 px-4 border border-black">Company</th>
+              <th className="w-1/6 py-2 px-4 border border-black">Department</th>
+              <th className="w-1/6 py-2 px-4 border border-black">Valid From</th>
+              <th className="w-1/6 py-2 px-4 border-t border-black">Valid Till</th>
+              <th className="w-1/6 py-2 px-4 border-t border-r border-black"> </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {index + 1}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {item.full_name}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {item.company_name}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {item.department}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {item.visiting_data} {item.visiting_time}
                 </td>
-                <td className="w-1/6 py-2 px-4 border-b text-center">
+                <td className="w-1/6 py-2 px-4 border-t border-b border-black text-center">
                   {formatDateTime(item.valid_till)}
                 </td>
-                <td>
-                <img src={printerSVG} width={20} onClick={() => handlePrint(item.unique_id)} />
+                <td  className="border-t border-r border-black" >
+                <img src={printerSVG} width={20} onClick={() => handlePrint(item.unique_id)}/>
 
                 </td>
               </tr>
