@@ -9,6 +9,7 @@ import cameraSVG from "../assets/camera.svg";
 import warningSVG from "../assets/warning.svg";
 import Loader from "../components/loader";
 import crossSVG from "../assets/cross.svg";
+import bg from "../assets/formback.png";
 
 function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
@@ -125,10 +126,10 @@ function AccompanyingForm() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="h-full w-full">
+    <div className="h-screen w-screen bg-fixed bg-cover bg-no-repeat overflow-scroll" style={{ backgroundImage: `url(${bg})` }}>
       {showConfirmationModal && (
         <div
-          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center"
+          className="fixed w-full h-full atop-0 bottom-0 flex flex-col justify-center items-center"
           onClick={toggleConfirmation}
         >
           <div className="bg-black opacity-75 absolute inset-0"></div>
@@ -160,12 +161,12 @@ function AccompanyingForm() {
         </div>
       )}
 
-      <form onSubmit={onSubmit} className="h-full w-full mt-24">
+      <form onSubmit={onSubmit} className="h-screen w-full">
         <div>
           {formFields.map((form, index) => {
             return (
               <div key={index}>
-                <div className="p-6 w-full flex flex-col items-center">
+                <div className="p-6 w-full h-full flex flex-col items-center">
                   <div className="h-1/2 w-1/2 p-12 flex justify-between items-start rounded-lg border-2 border-black">
                     <div className="flex flex-col w-1/2">
                       <label className="font-semibold text-md">Full Name</label>
@@ -271,15 +272,15 @@ function AccompanyingForm() {
             );
           })}
         </div>
-      </form>
-      <div className="h-full w-full flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center">
         <button
           className="px-6 py-4 bg-amber-600 font-semibold text-md rounded-lg"
           onClick={toggleConfirmation}
         >
           Submit
         </button>
-      </div>
+        </div>
+      </form>
       <button
         className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-amber-600 hover:bg-black transition-colors duration-300"
         onClick={addFields}

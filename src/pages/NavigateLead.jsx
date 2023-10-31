@@ -24,7 +24,7 @@ const NavigateLead = () => {
     >
       <div className="z-10 h-full w-full flex justify-center items-center">
         <div className="grid grid-cols-2 gap-4">
-          <div className="h-96 w-full p-4 rounded-lg bg-white shadow-black shadow-md flex flex-col justify-center items-center">
+          <div className="h-96 w-full p-4 rounded-lg bg-white drop-shadow-md flex flex-col justify-center items-center">
             <img src={printerSVG} width={70} />
             <div className="text-xl text-center">
               <p className="pt-4">To continue printing the pass</p>
@@ -37,7 +37,7 @@ const NavigateLead = () => {
               </button>
             </div>
           </div>
-          <div className="h-96  w-full p-4 rounded-lg bg-white shadow-black shadow-md flex flex-col justify-center items-center">
+          <div className="h-96  w-full p-4 rounded-lg bg-white drop-shadow-md flex flex-col justify-center items-center">
             <img src={peopleSVG} width={70} />
             <div className="text-xl text-center">
               <p className="pt-4">

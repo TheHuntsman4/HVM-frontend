@@ -180,7 +180,7 @@ export const Mainform = () => {
   }
 
   return loading ? <Loader /> : (
-    <div className="h-full w-full bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${bg})` }}>
+    <div className="h-full w-full bg-cover bg-no-repeat bg-center bg-fixed overflow-scroll" style={{ backgroundImage: `url(${bg})` }}>
       <form
         onSubmit={handleSubmit((data) => onSubmit(data))}
         className="h-full w-30 flex flex-col items-center justify-center py-20"

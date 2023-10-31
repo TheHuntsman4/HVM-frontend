@@ -27,3 +27,7 @@ input:focus{
   border: 2px solid black;
   outline: none;
 }
+
+body > #root > div {
+  min-height: 100%;
+}
