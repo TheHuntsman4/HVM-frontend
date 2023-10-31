@@ -161,17 +161,16 @@ function AccompanyingForm() {
         </div>
       )}
 
-      <form onSubmit={onSubmit} className="h-screen w-full">
-        <div>
+      <form onSubmit={onSubmit} className="h-screen flex justify-center items-center flex-col">
+        <div className="w-[50rem]">
           {formFields.map((form, index) => {
             return (
-              <div key={index}>
-                <div className="p-6 w-full h-full flex flex-col items-center">
-                  <div className="h-1/2 w-1/2 p-12 flex justify-between items-start rounded-lg border-2 border-black">
+                <div className="p-6 flex flex-col items-center" key={index}>
+                  <div className="h-1/2 w-full p-12 flex justify-between items-start rounded-lg border-2 bg-white drop-shadow-md">
                     <div className="flex flex-col w-1/2">
                       <label className="font-semibold text-md">Full Name</label>
                       <input
-                        className="h-10 px-2 border-2 border-black"
+                        className="h-10 px-2 border-2 rounded-md"
                         name="full_name"
                         placeholder="Full Name"
                         onChange={(event) => handleFormChange(event, index)}
@@ -181,7 +180,7 @@ function AccompanyingForm() {
                         Email
                       </label>
                       <input
-                        className="h-10 px-2 border-2 border-black"
+                        className="h-10 px-2 border-2 rounded-md"
                         name="email"
                         type="email"
                         placeholder="Email"
@@ -192,7 +191,7 @@ function AccompanyingForm() {
                         Phone Number
                       </label>
                       <input
-                        className="h-10 px-2 border-2 border-black"
+                        className="h-10 px-2 border-2 rounded-md"
                         name="contact_number"
                         type="number"
                         placeholder="Phone Number"
@@ -211,7 +210,7 @@ function AccompanyingForm() {
                           />
                           <button
                             type="button"
-                            className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
+                            className="h-auto w-1/2 mt-4 p-2 rounded-lg font-semibold text-white bg-amber-600 "
                             onClick={() => toggleModal(index)}
                           >
                             Take Picture Again
@@ -224,11 +223,11 @@ function AccompanyingForm() {
                               src={placeHolder}
                               width={240}
                               alt="Profile Picture"
-                              className="p-4 border-2 border-black rounded-lg"
+                              className="p-4 border-2 rounded-lg"
                             />
                             <button
                               type="button"
-                              className="h-auto w-1/2 mt-4 p-2 rounded-lg bg-amber-600 "
+                              className="h-auto w-1/2 mt-4 p-2 rounded-lg font-semibold text-white bg-amber-600 "
                               onClick={() => toggleModal(index)}
                             >
                               Take Picture
@@ -236,10 +235,10 @@ function AccompanyingForm() {
                           </div>
                           {form.showModal && (
                             <div
-                              className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center bg-opacity-75 bg-black"
+                              className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center"
                               onClick={() => toggleModal(index)}
                             >
-                              <div className="h-auto flex flex-col justify-center items-center w-1/3 bg-slate-600 rounded-md p-4">
+                              <div className="h-auto flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
                                 <Webcam
                                   ref={webcamRef}
                                   audio={false}
@@ -247,7 +246,7 @@ function AccompanyingForm() {
                                   screenshotFormat="image/jpeg"
                                 ></Webcam>
                                 <button
-                                  className=" w-1/3 flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
+                                  className=" w-1/2 flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg text-white font-semibold bg-amber-600"
                                   onClick={() => capture(index)}
                                 >
                                   <img
@@ -268,13 +267,13 @@ function AccompanyingForm() {
                     </button>
                   </div>
                 </div>
-              </div>
+
             );
           })}
         </div>
         <div className="w-full flex flex-col justify-center items-center">
         <button
-          className="px-6 py-4 bg-amber-600 font-semibold text-md rounded-lg"
+          className="px-6 py-4 w-40 bg-amber-600 font-semibold text-md text-white rounded-lg"
           onClick={toggleConfirmation}
         >
           Submit
