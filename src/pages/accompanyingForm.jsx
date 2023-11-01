@@ -16,7 +16,7 @@ function AccompanyingForm() {
   const location = useLocation();
 
   const navigate = useNavigate();
-
+  const [toggleActive, setToggleActive] = useState(false);
   useEffect(() => {
     if (location.state === null || location.state.uuid === null) {
       navigate("/leadform", {
@@ -53,6 +53,7 @@ function AccompanyingForm() {
     let data = [...formFields];
     data[index].showModal = !data[index].showModal;
     setFormFields(data);
+    setToggleActive(!toggleActive);
   };
 
   const webcamRef = useRef(0);
@@ -126,10 +127,13 @@ function AccompanyingForm() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="h-screen w-screen bg-fixed bg-cover bg-no-repeat overflow-scroll" style={{ backgroundImage: `url(${bg})` }}>
+    <div
+      className="h-screen w-screen bg-fixed bg-cover bg-no-repeat overflow-scroll"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       {showConfirmationModal && (
         <div
-          className="fixed w-full h-full atop-0 bottom-0 flex flex-col justify-center items-center"
+          className="fixed w-full h-full top-0 bottom-0 flex flex-col justify-center items-center z-10"
           onClick={toggleConfirmation}
         >
           <div className="bg-black opacity-75 absolute inset-0"></div>
@@ -161,81 +165,86 @@ function AccompanyingForm() {
         </div>
       )}
 
-      <form onSubmit={onSubmit} className="h-screen flex justify-center items-center flex-col">
+      <form
+        onSubmit={onSubmit}
+        className="h-screen flex justify-center items-center flex-col"
+      >
         <div className="w-[50rem]">
           {formFields.map((form, index) => {
             return (
-                <div className="p-6 flex flex-col items-center" key={index}>
-                  <div className="h-1/2 w-full p-12 flex justify-between items-start rounded-lg border-2 bg-white drop-shadow-md">
-                    <div className="flex flex-col w-1/2">
-                      <label className="font-semibold text-md">Full Name</label>
-                      <input
-                        className="h-10 px-2 border-2 rounded-md"
-                        name="full_name"
-                        placeholder="Full Name"
-                        onChange={(event) => handleFormChange(event, index)}
-                        value={form.fullname}
-                      />
-                      <label className="font-semibold text-md pt-6 pb-2">
-                        Email
-                      </label>
-                      <input
-                        className="h-10 px-2 border-2 rounded-md"
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        onChange={(event) => handleFormChange(event, index)}
-                        value={form.email}
-                      />
-                      <label className="font-semibold text-md pt-6 pb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        className="h-10 px-2 border-2 rounded-md"
-                        name="contact_number"
-                        type="number"
-                        placeholder="Phone Number"
-                        onChange={(event) => handleFormChange(event, index)}
-                        value={form.phonenumber}
-                      />
-                    </div>
-                    <div className="w-1/2">
-                      {form.image ? (
+              <div className="p-6 flex flex-col items-center" key={index}>
+                <div className="h-1/2 w-full p-12 flex justify-between items-start rounded-lg border-2 bg-white drop-shadow-md">
+                  <div className="flex flex-col w-1/2">
+                    <label className="font-semibold text-md">Full Name</label>
+                    <input
+                      className="h-10 px-2 border-2 rounded-md"
+                      name="full_name"
+                      placeholder="Full Name"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.fullname}
+                    />
+                    <label className="font-semibold text-md pt-6 pb-2">
+                      Email
+                    </label>
+                    <input
+                      className="h-10 px-2 border-2 rounded-md"
+                      name="email"
+                      type="email"
+                      placeholder="Email"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.email}
+                    />
+                    <label className="font-semibold text-md pt-6 pb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      className="h-10 px-2 border-2 rounded-md"
+                      name="contact_number"
+                      type="number"
+                      placeholder="Phone Number"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.phonenumber}
+                    />
+                  </div>
+                  <div className="w-1/2">
+                    {form.image ? (
+                      <div className="flex flex-col justify-center items-center">
+                        <img
+                          src={form.image}
+                          width={360}
+                          alt="Profile Picture"
+                          className="p-4 border-2 border-black rounded-lg"
+                        />
+                        <button
+                          type="button"
+                          className="h-auto w-1/2 mt-4 p-2 rounded-lg font-semibold text-white bg-amber-600 "
+                          onClick={() => toggleModal(index)}
+                        >
+                          Take Picture Again
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
                         <div className="flex flex-col justify-center items-center">
                           <img
-                            src={form.image}
-                            width={360}
+                            src={placeHolder}
+                            width={240}
                             alt="Profile Picture"
-                            className="p-4 border-2 border-black rounded-lg"
+                            className="p-4 border-2 rounded-lg"
                           />
                           <button
                             type="button"
                             className="h-auto w-1/2 mt-4 p-2 rounded-lg font-semibold text-white bg-amber-600 "
                             onClick={() => toggleModal(index)}
                           >
-                            Take Picture Again
+                            Take Picture
                           </button>
                         </div>
-                      ) : (
-                        <div>
-                          <div className="flex flex-col justify-center items-center">
-                            <img
-                              src={placeHolder}
-                              width={240}
-                              alt="Profile Picture"
-                              className="p-4 border-2 rounded-lg"
-                            />
-                            <button
-                              type="button"
-                              className="h-auto w-1/2 mt-4 p-2 rounded-lg font-semibold text-white bg-amber-600 "
-                              onClick={() => toggleModal(index)}
-                            >
-                              Take Picture
-                            </button>
-                          </div>
-                          {form.showModal && (
+                        {form.showModal && (
+                          <>
+                            <div className="fixed bg-black opacity-75 inset-0"></div>
                             <div
-                              className="absolute top-0 left-0 h-screen w-full flex flex-col justify-center items-center"
+                              className="fixed top-0 left-0 h-full w-full flex flex-col justify-center items-center"
                               onClick={() => toggleModal(index)}
                             >
                               <div className="h-auto flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
@@ -258,34 +267,43 @@ function AccompanyingForm() {
                                 </button>
                               </div>
                             </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    <button className="" onClick={() => removeFields(index)}>
-                      <img src={closeSVG} width={30} />
-                    </button>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
+                  <button className="" onClick={() => removeFields(index)}>
+                    <img src={closeSVG} width={30} />
+                  </button>
                 </div>
-
+              </div>
             );
           })}
         </div>
         <div className="w-full flex flex-col justify-center items-center">
-        <button
-          className="px-6 py-4 w-40 bg-amber-600 font-semibold text-md text-white rounded-lg"
-          onClick={toggleConfirmation}
-        >
-          Submit
-        </button>
+          <button
+            className="px-6 py-4 w-40 bg-amber-600 font-semibold text-md text-white rounded-lg"
+            onClick={toggleConfirmation}
+          >
+            Submit
+          </button>
         </div>
       </form>
-      <button
-        className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-amber-600 hover:bg-black transition-colors duration-300"
-        onClick={addFields}
-      >
-        <img src={addSVG} width={50} />
-      </button>
+      {toggleActive ? (
+        <button
+          className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-black"
+        >
+          <img src={addSVG} width={50} />
+        </button>
+      ) : (
+        <button
+          className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-amber-600 hover:bg-black transition-colors duration-300"
+          onClick={addFields}
+        >
+          <img src={addSVG} width={50} />
+        </button>
+      )}
+
     </div>
   );
 }
