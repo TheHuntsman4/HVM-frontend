@@ -241,33 +241,30 @@ function AccompanyingForm() {
                           </button>
                         </div>
                         {form.showModal && (
-                          <>
-                            <div className="fixed bg-black opacity-75 inset-0"></div>
-                            <div
-                              className="fixed top-0 left-0 h-full w-full flex flex-col justify-center items-center"
-                              onClick={() => toggleModal(index)}
-                            >
-                              <div className="h-auto flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
-                                <Webcam
-                                  ref={webcamRef}
-                                  audio={false}
-                                  className="w-full h-full"
-                                  screenshotFormat="image/jpeg"
-                                ></Webcam>
-                                <button
-                                  className=" w-1/2 flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg text-white font-semibold bg-amber-600"
-                                  onClick={() => capture(index)}
-                                >
-                                  <img
-                                    src={cameraSVG}
-                                    width={40}
-                                    className=""
-                                  ></img>
-                                  Capture image
-                                </button>
-                              </div>
+                          <div
+                            className="fixed top-0 left-0 h-full w-full flex flex-col justify-center items-center"
+                            onClick={() => toggleModal(index)}
+                          >
+                            <div className="h-auto flex flex-col justify-center items-center w-1/2 bg-[#bebebe] rounded-md p-4">
+                              <Webcam
+                                ref={webcamRef}
+                                audio={false}
+                                className="w-full h-full"
+                                screenshotFormat="image/jpeg"
+                              ></Webcam>
+                              <button
+                                className=" w-1/2 flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg text-white font-semibold bg-amber-600"
+                                onClick={() => capture(index)}
+                              >
+                                <img
+                                  src={cameraSVG}
+                                  width={40}
+                                  className=""
+                                ></img>
+                                Capture image
+                              </button>
                             </div>
-                          </>
+                          </div>
                         )}
                       </div>
                     )}
@@ -290,9 +287,7 @@ function AccompanyingForm() {
         </div>
       </form>
       {toggleActive ? (
-        <button
-          className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-black"
-        >
+        <button className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-black">
           <img src={addSVG} width={50} />
         </button>
       ) : (
@@ -303,7 +298,6 @@ function AccompanyingForm() {
           <img src={addSVG} width={50} />
         </button>
       )}
-
     </div>
   );
 }
