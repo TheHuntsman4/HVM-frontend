@@ -3,8 +3,6 @@ import bg from "../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import printerSVG from "../assets/printer.svg";
-import { Navbar } from "../components";
-import { click } from "@testing-library/user-event/dist/click";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -24,7 +22,7 @@ const Home = () => {
           }
         );
 
-        setData(response.data.lead_visitor);
+        setData(response.data.lead_visitor.reverse());
         console.log(data);
       } catch (error) {
         console.error(`Error: ${error}`);
@@ -49,7 +47,14 @@ const Home = () => {
     navigate("/print", { state: { uuid: uuid } });
   };
   return (
-    <div className="h-screen w-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+    <div
+      className="h-screen w-full"
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundRepeat: "repeat",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="mx-64 p-12">
         <div className="font-Heading font-semibold flex justify-between">
           <p className="text-xl">Greetings, {currentUser}</p>
@@ -62,22 +67,33 @@ const Home = () => {
         <br />
         <br />
         <br />
-        
+
         <table className="table-auto border border-gray-300 bg-white">
           <thead>
             <tr>
               <th className="w-1/6 py-2 px-4 border border-black">Sl No</th>
               <th className="w-1/6 py-2 px-4 border border-black">Full Name</th>
               <th className="w-1/6 py-2 px-4 border border-black">Company</th>
-              <th className="w-1/6 py-2 px-4 border border-black">Department</th>
-              <th className="w-1/6 py-2 px-4 border border-black">Valid From</th>
-              <th className="w-1/6 py-2 px-4 border-t border-black">Valid Till</th>
-              <th className="w-1/6 py-2 px-4 border-t border-r border-black"> </th>
+              <th className="w-1/6 py-2 px-4 border border-black">
+                Department
+              </th>
+              <th className="w-1/6 py-2 px-4 border border-black">
+                Valid From
+              </th>
+              <th className="w-1/6 py-2 px-4 border-t border-black">
+                Valid Till
+              </th>
+              <th className="w-1/6 py-2 px-4 border-t border-r border-black">
+                {" "}
+              </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}>
+              <tr
+                key={index}
+                className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
+              >
                 <td className="w-1/6 py-2 px-4 border border-black text-center">
                   {index + 1}
                 </td>
@@ -96,9 +112,12 @@ const Home = () => {
                 <td className="w-1/6 py-2 px-4 border-t border-b border-black text-center">
                   {formatDateTime(item.valid_till)}
                 </td>
-                <td  className="border-t border-r border-black" >
-                <img src={printerSVG} width={20} onClick={() => handlePrint(item.unique_id)}/>
-
+                <td className="border-t border-r border-black">
+                  <img
+                    src={printerSVG}
+                    width={20}
+                    onClick={() => handlePrint(item.unique_id)}
+                  />
                 </td>
               </tr>
             ))}
