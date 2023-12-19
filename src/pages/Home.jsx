@@ -92,7 +92,7 @@ const Home = () => {
             currentPage === i
               ? "bg-[#f58220] text-white"
               : "bg-gray-300 font-bold"
-          }`}
+          } transform transition-transform hover:scale-110 transition-200`}
           onClick={() => handlePageChange(i)}
         >
           {i}
@@ -122,7 +122,7 @@ const Home = () => {
         </button>
         {pages}
         <button
-          className={`mx-2 px-4 py-2 rounded-full ${
+          className={`mx-2 px-4 py-2 rounded-full hover:animate-pulse transition-100 ${
             currentPage === totalPages
               ? "bg-gray-300"
               : "bg-[#f58220] text-white"
@@ -149,16 +149,18 @@ const Home = () => {
   return (
     <div>
       <div
-        className="w-full bg-gray-100 bg-cover bg-center bg-repeat min-h-screen"
+        className="w-full bg-cover bg-center bg-repeat min-h-screen"
         style={{
           backgroundImage: `url(${bg})`,
         }}
       >
         <div className="mx-64 p-12">
-          <div className="font-Heading font-semibold flex justify-between">
-            <p className="text-xl">Namah Shivaya, {currentUser}</p>
-            <a href="/leadform" className="float-right">
-              <button className="px-4 py-2 rounded-full bg-[#f58220] text-white">
+          <div className="bg-white bg-opacity-75 p-4 rounded-md mb-4 flex justify-between items-center">
+            <p className="font-Heading font-semibold text-xl">
+              Namah Shivaya, {currentUser}
+            </p>
+            <a href="/leadform">
+              <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-300">
                 Add Lead Visitor
               </button>
             </a>
