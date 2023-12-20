@@ -109,7 +109,7 @@ export const Mainform = () => {
     "Medical director department",
     "Non-professional services",
     "Nursing department",
-    "Nursing department (led by a director of nursing or chief nursing officer)",
+    "Nursing department",
     "Operation theater complex (OT)",
     "Outpatient department (OPD)",
     "Paramedical department",
