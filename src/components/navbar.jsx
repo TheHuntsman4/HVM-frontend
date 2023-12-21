@@ -11,6 +11,7 @@ import { IoLogOut } from "react-icons/io5";
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const accessToken = localStorage.getItem("access_token");
+  const currentUser = localStorage.getItem("current_user_fullname");
   const handleLogout = () => {
     (async () => {
       try {
@@ -59,6 +60,11 @@ const Navbar = () => {
             <img src={logo} alt="AIMS Logo" className="logo" />
           </Link>
         </div>
+        {/* <div className="w-full px-12 py-2">
+          <p className="font-Heading font-semibold text-xl">
+            Namah Shivaya, {currentUser}
+          </p>
+        </div> */}
         <div className="menu-link">
           <ul>
             <li>

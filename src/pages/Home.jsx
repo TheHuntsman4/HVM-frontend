@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import printerSVG from "../assets/printer.svg";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import { CirclesWithBar } from "react-loader-spinner";
 
 const ITEMS_PER_PAGE = 15;
 
@@ -167,7 +168,20 @@ const Home = () => {
           </div>
           <br />
           {Loading ? (
-            <p>Loading...</p>
+            <div className="w-full flex justify-center items-center pt-12">
+              <CirclesWithBar
+                height="100"
+                width="100"
+                color="#F48221"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                outerCircleColor=""
+                innerCircleColor=""
+                barColor=""
+                ariaLabel="circles-with-bar-loading"
+              />
+            </div>
           ) : (
             <div className="overflow-x-auto drop-shadow-2xl">
               <table className="min-w-full border-white border-[3px]">
