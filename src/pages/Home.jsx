@@ -125,7 +125,7 @@ const Home = () => {
         <button
           className={`mx-2 px-4 py-2 rounded-full hover:animate-pulse transition-100 ${
             currentPage === totalPages
-              ? "bg-gray-300"
+              ? "bg-gray-200"
               : "bg-[#f58220] text-white"
           }`}
           onClick={() => handlePageChange(currentPage + 1)}
@@ -155,19 +155,20 @@ const Home = () => {
           backgroundImage: `url(${bg})`,
         }}
       >
-        <div className="mx-64 p-12">
+        <div className="mx-64 p-12 drop-shadow-sm">
           <div className="bg-white bg-opacity-75 p-4 rounded-md mb-4 flex justify-between items-center">
             <p className="font-Heading font-semibold text-xl">
               Namah Shivaya, {currentUser}
             </p>
             <a href="/leadform">
-              <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-300">
+              <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-200">
                 Add Lead Visitor
               </button>
             </a>
           </div>
           <br />
           {Loading ? (
+
             <div className="w-full flex justify-center items-center pt-12">
             <CirclesWithBar
               height="100"
@@ -182,66 +183,80 @@ const Home = () => {
               ariaLabel="circles-with-bar-loading"
             />
             </div>
+
           ) : (
-            <table className="table-fixed border border-gray-300 bg-white">
-              <thead>
-                <tr>
-                  <th className="w-1/6 py-2 px-4 border border-black">Sl No</th>
-                  <th className="w-1/6 py-2 px-4 border border-black">
-                    Full Name
-                  </th>
-                  <th className="w-1/6 py-2 px-4 border border-black">
-                    Company
-                  </th>
-                  <th className="w-1/6 py-2 px-4 border border-black">
-                    Department
-                  </th>
-                  <th className="w-1/6 py-2 px-4 border border-black">
-                    Valid From
-                  </th>
-                  <th className="w-1/6 py-2 px-4 border-t border-black">
-                    Valid Till
-                  </th>
-                  <th className="w-1/6 py-2 px-4 border-t border-r border-black">
-                    {" "}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayedData.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
-                  >
-                    <td className="w-1/6 py-2 px-4 border border-black text-center">
-                      {index + 1}
-                    </td>
-                    <td className="w-1/6 py-2 px-4 border border-black text-center">
-                      {item.full_name}
-                    </td>
-                    <td className="w-1/6 py-2 px-4 border border-black text-center">
-                      {item.company_name}
-                    </td>
-                    <td className="w-1/6 py-2 px-4 border border-black text-center">
-                      {item.department}
-                    </td>
-                    <td className="w-1/6 py-2 px-4 border border-black text-center">
-                      {item.visiting_data} {item.visiting_time}
-                    </td>
-                    <td className="w-1/6 py-2 px-4 border-t border-b border-black text-center">
-                      {formatDateTime(item.valid_till)}
-                    </td>
-                    <td className="border-t border-r border-black">
-                      <img
-                        src={printerSVG}
-                        width={20}
-                        onClick={() => handlePrint(item.unique_id)}
-                      />
-                    </td>
+            <div className="overflow-x-auto drop-shadow-2xl">
+              <table className="min-w-full border-white border-[3px]">
+                <thead className="bg-[#ff9e4f] border-white border-[3px]">
+                  <tr>
+                    <th className="py-3 px-4 text-right">S.No</th>
+                    <th className="py-3 px-4 text-left">Full Name</th>
+                    <th className="py-3 px-4 text-left">Company</th>
+                    <th className="py-3 px-4 text-left">Department</th>
+                    <th className="py-3 px-4 text-right">Valid From</th>
+                    <th className="py-3 px-4 text-right">Valid Till</th>
+                    <th className="py-3 px-4"></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {displayedData.map((item, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-orange-100" : "bg-white"}
+                    >
+                      <td className="py-2 px-4 text-right">{index + 1}</td>
+                      <td className="py-2 px-4 ">{item.full_name}</td>
+                      <td className="py-2 px-4 ">{item.company_name}</td>
+                      <td className="py-2 px-4 text-left">{item.department}</td>
+                      <td className="py-2 px-4">
+                        <div className="text-right">
+                          <div className="font-bold">
+                            {new Intl.DateTimeFormat("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }).format(new Date(item.visiting_date))}
+                          </div>
+                          <div className="text-sm">
+                            {new Intl.DateTimeFormat("en-US", {
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                            }).format(new Date(item.visiting_date))}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4">
+                        <div className="text-right">
+                          <div className="font-bold">
+                            {new Intl.DateTimeFormat("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }).format(new Date(item.valid_till))}
+                          </div>
+                          <div className="text-sm">
+                            {new Intl.DateTimeFormat("en-US", {
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                            }).format(new Date(item.valid_till))}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4">
+                        <img
+                          src={printerSVG}
+                          alt="Print"
+                          width={20}
+                          onClick={() => handlePrint(item.unique_id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
           {/* Pagination controls */}
           {totalPages > 1 && renderPagination()}{" "}
