@@ -3,9 +3,13 @@ import bg from "../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import printerSVG from "../assets/printer.svg";
+import { Dayjs } from "dayjs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { CirclesWithBar } from "react-loader-spinner";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const ITEMS_PER_PAGE = 15;
 
@@ -51,18 +55,6 @@ const Home = () => {
     fetchData();
   }, []);
 
-  function formatDateTime(dateStr) {
-    const dateObj = new Date(dateStr);
-
-    const day = String(dateObj.getDate()).padStart(2, "0");
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // January is 0!
-    const year = dateObj.getFullYear();
-
-    const hours = String(dateObj.getHours()).padStart(2, "0");
-    const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  }
   const handlePrint = (uuid) => {
     navigate("/print", { state: { uuid: uuid } });
   };
@@ -160,11 +152,16 @@ const Home = () => {
             <p className="font-Heading font-semibold text-xl">
               Namah Shivaya, {currentUser}
             </p>
-            <a href="/leadform">
-              <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-200">
-                Add Lead Visitor
-              </button>
-            </a>
+            <div className="flex justify-between items-center">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker />
+              </LocalizationProvider>
+              <a href="/leadform">
+                <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-200">
+                  Add Lead Visitor
+                </button>
+              </a>
+            </div>
           </div>
           <br />
           {Loading ? (
@@ -220,7 +217,11 @@ const Home = () => {
                               hour: "numeric",
                               minute: "numeric",
                               hour12: true,
-                            }).format(new Date(item.visiting_date))}
+                            }).format(
+                              new Date(
+                                `${item.visiting_date}T${item.visiting_time}`
+                              )
+                            )}
                           </div>
                         </div>
                       </td>
@@ -242,7 +243,7 @@ const Home = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="py-2 px-4">
+                      <td className="py-2 px-4 hover:cursor-pointer">
                         <img
                           src={printerSVG}
                           alt="Print"
@@ -257,7 +258,7 @@ const Home = () => {
             </div>
           )}
           {/* Pagination controls */}
-          {totalPages > 1 && renderPagination()}{" "}
+          {totalPages > 1 && renderPagination()}
         </div>
       </div>
     </div>
