@@ -3,7 +3,7 @@ import bg from "../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import printerSVG from "../assets/printer.svg";
-import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { CirclesWithBar } from "react-loader-spinner";
@@ -16,9 +16,9 @@ const ITEMS_PER_PAGE = 15;
 const Home = () => {
   const [data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const currentUser = localStorage.getItem("current_user_fullname");
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,6 +32,9 @@ const Home = () => {
         const response = await axios.get(
           "https://aims.pythonanywhere.com/api/visitors",
           {
+            params: {
+              date: selectedDate.format("YYYY-MM-DD"),
+            },
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
@@ -42,7 +45,6 @@ const Home = () => {
 
         if (JSON.stringify(newData) !== cachedData) {
           localStorage.setItem("cached_lead_visitor", JSON.stringify(newData));
-
           setData(newData);
           setLoading(false);
         }
@@ -53,7 +55,7 @@ const Home = () => {
     };
 
     fetchData();
-  }, []);
+  }, [selectedDate]);
 
   const handlePrint = (uuid) => {
     navigate("/print", { state: { uuid: uuid } });
@@ -70,9 +72,9 @@ const Home = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   const renderPagination = () => {
     const visiblePages = 5;
-
     const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
     const endPage = Math.min(totalPages, startPage + visiblePages - 1);
 
@@ -139,6 +141,26 @@ const Home = () => {
       </div>
     );
   };
+
+  const datePickerStyles = `
+  .css-1u23akw-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+    background-color: orange !important;
+  }
+  .css-jgls56-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    background-color: orange !important;
+  }
+  .css-1u23akw-MuiButtonBase-root-MuiPickersDay-root.Mui-selected:hover{
+    background-color: orange !important;
+  }
+  .css-jgls56-MuiButtonBase-root-MuiPickersDay-root.Mui-selected:hover {
+    background-color: orange !important;
+  }
+  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{
+    border-radius: 24px !important;
+    height: 48px !important;
+  }
+`;
+
   return (
     <div>
       <div
@@ -152,9 +174,14 @@ const Home = () => {
             <p className="font-Heading font-semibold text-xl">
               Namah Shivaya, {currentUser}
             </p>
+            <style>{datePickerStyles}</style>
             <div className="flex justify-between items-center">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker />
+                <DatePicker
+                  className="items-center h-1/2 right-[30px] w-48 rounded-lg"
+                  value={selectedDate}
+                  onChange={(newDate) => setSelectedDate(newDate)}
+                />
               </LocalizationProvider>
               <a href="/leadform">
                 <button className="px-4 py-2 rounded-full bg-[#f58220] text-white hover:bg-black transition-200">
