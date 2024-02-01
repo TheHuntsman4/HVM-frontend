@@ -20,7 +20,7 @@ export default function Page() {
     };
     try {
       const { data } = await axios.post(
-        "https://aims.pythonanywhere.com/api/token/",
+        "http://136.233.19.201:8000/api/token/",
         user,
         {
           headers: {

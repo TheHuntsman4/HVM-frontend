@@ -51,7 +51,7 @@ export default function Page(props) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://aims.pythonanywhere.com/api/register/",
+        "http://136.233.19.201:8000/api/register/",
         formData,
         {
           headers: {

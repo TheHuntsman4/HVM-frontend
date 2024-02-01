@@ -28,7 +28,7 @@ const PrintPDF = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const url = `https://aims.pythonanywhere.com/api/visitors?unique_id=${uuid}`;
+    const url = `http://136.233.19.201:8000/api/visitors?unique_id=${uuid}`;
 
     axios
       .get(url, {

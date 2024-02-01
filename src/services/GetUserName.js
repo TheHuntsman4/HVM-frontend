@@ -2,7 +2,7 @@ const GetUsername = async ({ username }) => {
     const token = localStorage.getItem("access_token");
     try {
       const response = await fetch(
-        "https://aims.pythonanywhere.com/api/receivers/?username="+username,
+        "http://136.233.19.201:8000/api/receivers/?username="+username,
         {
           method: "GET",
           headers: {

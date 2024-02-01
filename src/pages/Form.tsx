@@ -74,7 +74,7 @@ export const Mainform = () => {
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
       console.log(data)
-      const url = "https://aims.pythonanywhere.com/api/leadvisitor/";
+      const url = "http://136.233.19.201:8000/api/leadvisitor/";
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {

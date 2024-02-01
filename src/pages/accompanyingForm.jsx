@@ -88,7 +88,7 @@ function AccompanyingForm() {
     const requestData = cleanData();
     try {
       setLoading(true);
-      const url = "https://aims.pythonanywhere.com/api/accompanying/";
+      const url = "http://136.233.19.201:8000/api/accompanying/";
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {

@@ -16,7 +16,7 @@ const Navbar = () => {
     (async () => {
       try {
         const { data } = await axios.post(
-          "https://aims.pythonanywhere.com/api/logout/",
+          "http://136.233.19.201:8000/api/logout/",
           {
             refresh_token: localStorage.getItem("refresh_token"),
           },

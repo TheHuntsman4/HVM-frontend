@@ -30,7 +30,7 @@ const Home = () => {
         }
 
         const response = await axios.get(
-          "https://aims.pythonanywhere.com/api/visitors",
+          "http://136.233.19.201:8000/api/visitors",
           {
             params: {
               date: selectedDate.format("YYYY-MM-DD"),
