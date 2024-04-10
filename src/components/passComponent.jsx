@@ -22,7 +22,7 @@ const Pass = ({
           className="p-4 border-[2px] border-black rounded-md shadow-lg"
         />
       </div>
-      <p className="p-8 text-center text-3xl font-bold">Visiting Pass</p>
+      <p className="p-8 text-center text-3xl font-bold">VISITOR PASS</p>
       {/* part which handles the image and QR code */}
       <div className="grid grid-cols-2 gap-4 items-center">
         <div className="aspect-w-1 aspect-h-1 p-4">
@@ -34,9 +34,9 @@ const Pass = ({
       </div>
       <div className="w-full p-4 grid grid-cols-2 gap-4 text-start font-semibold text-lg">
         <div className="text-start font-bold text-lg">
-          <p className="">Name</p>
+          <p className="">Name of visitor</p>
           <p className="">Company Name</p>
-          <p className="">Visiting</p>
+          <p className="">Name of Visiting Person</p>
           <p className="">Department</p>
           <p className="">Valid from</p>
           <p className="">Valid Till</p>
@@ -44,7 +44,7 @@ const Pass = ({
         <div className="text-start font-bold text-lg">
           <div>
             <p className="">{fullName}</p>
-            <p className="">{companyName}</p>
+            <p className="whitespace-normal">{companyName}</p>
             <p className="">{visitee}</p>
             <p className="">{department}</p>
             <p className="">

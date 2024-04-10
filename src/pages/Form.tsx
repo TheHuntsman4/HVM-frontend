@@ -55,6 +55,7 @@ export const Mainform = () => {
   const [responseData, setResponseData] = useState("null");
   const [loading, setLoading] = useState(false);
   const onSubmit = async (data: FormValues) => {
+    console.log(data)
     try {
       setLoading(true);
 
@@ -332,6 +333,7 @@ export const Mainform = () => {
                 <Controller
                   name="department"
                   control={control}
+                  rules={{required: true}}
                   render={({ field }) => (
                     <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
                       {departmentOptions.map((option) => (
@@ -348,6 +350,7 @@ export const Mainform = () => {
                 <Controller
                   name="facultyDesignation"
                   control={control}
+                  rules={{required: true}}
                   render={({ field }) => (
                     <select {...field} className="h-10 px-2 bg-white border-2 border-[#eae9e7] rounded-md">
                       {facultyDesignationOptions.map((option) => (
