@@ -4,6 +4,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../components/loader.js";
 
+const API = process.env.REACT_APP_API_URL
+
 export default function Page(props) {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -51,15 +53,12 @@ export default function Page(props) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://136.233.19.201:8000/api/register/",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        `${API}/register/`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
       console.log(response);
     } catch (error) {
       console.error("Error:", error);

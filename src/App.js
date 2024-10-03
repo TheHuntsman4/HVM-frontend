@@ -6,6 +6,7 @@ import AccompanyingForm from "./pages/accompanyingForm";
 import Navbar from "./components/navbar";
 import Auth from "./services/checkAuth";
 
+
 function App() {
   return (
     <BrowserRouter>
