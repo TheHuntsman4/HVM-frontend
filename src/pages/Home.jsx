@@ -12,6 +12,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const ITEMS_PER_PAGE = 15;
+const API = process.env.REACT_APP_API_URL
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -30,7 +31,7 @@ const Home = () => {
         }
 
         const response = await axios.get(
-          "http://136.233.19.201:8000/api/visitors",
+          `${API}/visitors`,
           {
             params: {
               date: selectedDate.format("YYYY-MM-DD"),

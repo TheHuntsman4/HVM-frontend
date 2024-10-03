@@ -8,6 +8,8 @@ import logo from "../assets/amritaLogo.svg";
 import { IoLogIn } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 
+const API = process.env.REACT_APP_API_URL;
+
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const accessToken = localStorage.getItem("access_token");
@@ -16,7 +18,7 @@ const Navbar = () => {
     (async () => {
       try {
         const { data } = await axios.post(
-          "http://136.233.19.201:8000/api/logout/",
+          `${API}/logout/`,
           {
             refresh_token: localStorage.getItem("refresh_token"),
           },

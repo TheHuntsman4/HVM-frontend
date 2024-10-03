@@ -8,6 +8,8 @@ import { useReactToPrint } from "react-to-print";
 import Pass from "../components/passComponent";
 import "./print.css";
 
+const API = process.env.REACT_APP_API_URL
+
 const PrintPDF = () => {
   const token = localStorage.getItem("access_token");
   const location = useLocation();
@@ -28,7 +30,7 @@ const PrintPDF = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const url = `http://136.233.19.201:8000/api/visitors?unique_id=${uuid}`;
+    const url = `${API}/visitors?unique_id=${uuid}`;
 
     axios
       .get(url, {

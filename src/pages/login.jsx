@@ -6,6 +6,8 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API = process.env.REACT_APP_API_URL;
+
 export default function Page() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,14 +15,14 @@ export default function Page() {
 
   const submit = async (e) => {
     e.preventDefault();
-
+    console.log("APIIIII : ", API);
     const user = {
       username: username,
       password: password,
     };
     try {
       const { data } = await axios.post(
-        "http://136.233.19.201:8000/api/token/",
+        `${API}/token/`,
         user,
         {
           headers: {

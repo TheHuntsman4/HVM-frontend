@@ -11,6 +11,8 @@ import Loader from "../components/loader";
 import crossSVG from "../assets/cross.svg";
 import bg from "../assets/formback.png";
 
+const API = process.env.REACT_APP_API_URL;
+
 function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
   const location = useLocation();
@@ -88,7 +90,7 @@ function AccompanyingForm() {
     const requestData = cleanData();
     try {
       setLoading(true);
-      const url = "http://136.233.19.201:8000/api/accompanying/";
+      const url = `${API}/accompanying/`
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {

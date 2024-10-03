@@ -1,8 +1,10 @@
+const API = process.env.REACT_APP_API_URL;
+
 const GetUsername = async ({ username }) => {
     const token = localStorage.getItem("access_token");
     try {
       const response = await fetch(
-        "http://136.233.19.201:8000/api/receivers/?username="+username,
+        `${API}/receivers/?username=`+username,
         {
           method: "GET",
           headers: {

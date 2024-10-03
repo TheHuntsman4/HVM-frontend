@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from "../components/loader";
 import bg from "../assets/formback.png";
 
+const API = process.env.REACT_APP_API_URL;
 
 export const Mainform = () => {
   const accessToken = localStorage.getItem("access_token");
@@ -75,7 +76,7 @@ export const Mainform = () => {
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
       console.log(data)
-      const url = "http://136.233.19.201:8000/api/leadvisitor/";
+      const url = `${API}/leadvisitor/`;
       const token = accessToken;
 
       const response = await axios.post(url, requestData, {
