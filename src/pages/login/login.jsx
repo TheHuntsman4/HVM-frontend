@@ -1,7 +1,7 @@
-import bg from "../assets/back.png";
+import bg from "../../assets/back.png";
 import React from "react";
 import { useState } from "react";
-import GetUsername from "../services/GetUserName";
+import GetUsername from "../../services/GetUserName";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

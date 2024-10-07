@@ -1,7 +1,7 @@
 import React from "react";
 import './loader.css';
 
-const Loader = () => {
+export default function Loader() {
   function getRandomNumber() {
     return Math.floor(Math.random() * 8) + 1;
   }
@@ -50,5 +50,3 @@ const Loader = () => {
     </>
   );
 };
-
-export default Loader;

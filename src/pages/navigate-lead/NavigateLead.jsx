@@ -1,10 +1,10 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
-import printerSVG from "../assets/printer.svg";
-import peopleSVG from "../assets/associates.svg";
-import bg from "../assets/back.png";
+import printerSVG from "../../assets/printer.svg";
+import peopleSVG from "../../assets/associates.svg";
+import bg from "../../assets/back.png";
 
-const NavigateLead = () => {
+export default function NavigateLead() {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,5 +57,3 @@ const NavigateLead = () => {
     </div>
   );
 };
-
-export default NavigateLead;

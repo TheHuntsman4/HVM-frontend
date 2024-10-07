@@ -1,9 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login, PrintPDF, Register, Home, Navigate } from "./pages";
-import { Mainform } from "./pages/Form.tsx";
-// import { FormComponent } from "./components";
-import AccompanyingForm from "./pages/accompanyingForm";
-import Navbar from "./components/navbar";
+import Login from "./pages/login/login"
+import PrintPDF from "./pages/print-pdf/PrintPDF";
+import Register from "./pages/register/register"
+import Home from "./pages/home/home";
+import Navigate from "./pages/navigate-lead/NavigateLead";
+import Mainform from "./pages/forms/Form.tsx";
+import AccompanyingForm from "./pages/forms/accompanyingForm";
+import Navbar from "./components/navbar/navbar";
 import Auth from "./services/checkAuth";
 
 

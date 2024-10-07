@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import bg from "../assets/back.png";
+import bg from "../../assets/back.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import Loader from "../components/loader.js";
+import Loader from "../../components/loader/loader";
 
 const API = process.env.REACT_APP_API_URL
 
