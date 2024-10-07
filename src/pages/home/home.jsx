@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import bg from "../assets/back.png";
+import bg from "../../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import printerSVG from "../assets/printer.svg";
+import printerSVG from "../../assets/printer.svg";
 import dayjs from "dayjs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
@@ -14,7 +14,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 const ITEMS_PER_PAGE = 15;
 const API = process.env.REACT_APP_API_URL
 
-const Home = () => {
+export default function Home() {
   const [data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -293,4 +293,3 @@ const Home = () => {
   );
 };
 
-export default Home;

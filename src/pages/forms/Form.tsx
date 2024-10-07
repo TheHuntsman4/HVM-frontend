@@ -5,15 +5,15 @@ import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import cameraSVG from "../assets/camera.svg";
-import placeHolder from "../assets/placeholder.jpeg";
+import cameraSVG from "../../assets/camera.svg";
+import placeHolder from "../../assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
-import Loader from "../components/loader";
-import bg from "../assets/formback.png";
+import Loader from "../../components/loader/loader";
+import bg from "../../assets/formback.png";
 
 const API = process.env.REACT_APP_API_URL;
 
-export const Mainform = () => {
+export default function Mainform() {
   const accessToken = localStorage.getItem("access_token");
   // form hook definitions
   const leadForm = useForm<FormValues>();
@@ -166,16 +166,24 @@ export const Mainform = () => {
     "General Practitioner",
   ];
 
-  const webCamRef = useRef(null);
+  const webCamRef = useRef<Webcam>(null);
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
   const captureWebcam = () => {
-    setImageSrc(webCamRef.current.getScreenshot());
-    leadForm.setValue("leadImage", imageSrc);
+    if (webCamRef.current) {
+      const screenshot = webCamRef.current.getScreenshot();
+      if (screenshot) {
+        setImageSrc(screenshot);
+        leadForm.setValue("leadImage", screenshot);
+      }
+    } else {
+      console.error("Webcam is not available.");
+    }
   };
+  
 
   const toggleConfirmation = () => {
     setshowConfirmationModal(!showConfirmationModal)

@@ -4,13 +4,12 @@ import { FaHome, FaUserPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import logo from "../assets/amritaLogo.svg";
-import { IoLogIn } from "react-icons/io5";
+import logo from "../../assets/amritaLogo.svg";
 import { IoLogOut } from "react-icons/io5";
 
 const API = process.env.REACT_APP_API_URL;
 
-const Navbar = () => {
+export default function Navbar() {
   const [isAuth, setIsAuth] = useState(false);
   const accessToken = localStorage.getItem("access_token");
   const currentUser = localStorage.getItem("current_user_fullname");
@@ -96,5 +95,3 @@ const Navbar = () => {
     </>
   );
 };
-
-export default Navbar;

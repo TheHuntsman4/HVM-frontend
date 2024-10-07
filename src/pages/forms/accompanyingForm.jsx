@@ -2,18 +2,20 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Webcam from "react-webcam";
-import placeHolder from "../assets/placeholder.jpeg";
-import addSVG from "../assets/add.svg";
-import closeSVG from "../assets/close.svg";
-import cameraSVG from "../assets/camera.svg";
-import warningSVG from "../assets/warning.svg";
-import Loader from "../components/loader";
-import crossSVG from "../assets/cross.svg";
-import bg from "../assets/formback.png";
+
+import Loader from "../../components/loader/loader";
+
+import placeHolder from "../../assets/placeholder.jpeg";
+import addSVG from "../../assets/add.svg";
+import closeSVG from "../../assets/close.svg";
+import cameraSVG from "../../assets/camera.svg";
+import warningSVG from "../../assets/warning.svg";
+import crossSVG from "../../assets/cross.svg";
+import bg from "../../assets/formback.png";
 
 const API = process.env.REACT_APP_API_URL;
 
-function AccompanyingForm() {
+export default function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
   const location = useLocation();
 
@@ -304,4 +306,3 @@ function AccompanyingForm() {
   );
 }
 
-export default AccompanyingForm;

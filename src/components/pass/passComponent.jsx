@@ -1,6 +1,6 @@
 import React from "react";
 import QRCode from "react-qr-code";
-import logoSVG from "../assets/amritaLogo.svg";
+import logoSVG from "../../assets/amritaLogo.svg";
 
 const Pass = ({
   uuid,
