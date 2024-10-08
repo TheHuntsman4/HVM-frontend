@@ -34,7 +34,7 @@ export default function Mainform() {
         toastId: "UUIDerr",
       });
     }
-  }, [message]);
+  }, [location.state?.error, message]);
 
 
   const { register, control, handleSubmit } = leadForm;
@@ -53,10 +53,9 @@ export default function Mainform() {
 
   // Navigation to Printing page
   const navigate = useNavigate();
-  const [responseData, setResponseData] = useState("null");
   const [loading, setLoading] = useState(false);
   const onSubmit = async (data: FormValues) => {
-    console.log(data)
+    
     try {
       setLoading(true);
 
@@ -75,7 +74,7 @@ export default function Mainform() {
         image: data.leadImage,
         address: `${data.leadAddress1}, ${data.leadAddress2}`,
       };
-      console.log(data)
+      
       const url = `${API}/leadvisitor/`;
       const token = accessToken;
 
@@ -96,7 +95,6 @@ export default function Mainform() {
   };
 
   const [showModal, setShowModal] = useState(false);
-  const [showConfirmationModal, setshowConfirmationModal] = useState(false)
   const [imageSrc, setImageSrc] = useState("0");
 
   const departmentOptions = [
@@ -185,10 +183,6 @@ export default function Mainform() {
   };
   
 
-  const toggleConfirmation = () => {
-    setshowConfirmationModal(!showConfirmationModal)
-  }
-
   return loading ? <Loader /> : (
     <div className="h-full w-full bg-cover bg-no-repeat bg-center bg-fixed overflow-scroll" style={{ backgroundImage: `url(${bg})` }}>
       <form
@@ -260,7 +254,7 @@ export default function Mainform() {
                         className=" w-1/2  text-white font-semibold flex justify-evenly items-center py-4 px-2 mt-4 rounded-lg bg-amber-600"
                         onClick={captureWebcam}
                       >
-                        <img src={cameraSVG} width={40} className=""></img>
+                        <img src={cameraSVG} width={40} alt=""></img>
                         Capture image
                       </button>
                     </div>
@@ -270,7 +264,7 @@ export default function Mainform() {
 
                   {imageSrc !== "0" ? (
                     <div className="flex flex-col justify-center items-center">
-                      <img src={imageSrc} width={360} alt="Profile Picture" />
+                      <img src={imageSrc} width={360} alt="Profile" />
 
                       <button
                         type="button"
@@ -282,7 +276,7 @@ export default function Mainform() {
                     </div>
                   ) : (
                     <div className="flex flex-col justify-center items-center">
-                      <img src={placeHolder} width={240} alt="Profile Picture" className=" p-4" />
+                      <img src={placeHolder} width={240} alt="Profile" className=" p-4" />
                       <button
                         type="button"
                         className="h-auto w-1/2 mt-4 p-2 font-semibold text-white rounded-lg bg-amritaOrange"
@@ -341,6 +335,7 @@ export default function Mainform() {
 
                 <Controller
                   name="department"
+                  defaultValue={departmentOptions[0]}
                   control={control}
                   rules={{required: true}}
                   render={({ field }) => (
@@ -358,6 +353,7 @@ export default function Mainform() {
                 </label>
                 <Controller
                   name="facultyDesignation"
+                  defaultValue={facultyDesignationOptions[0]} 
                   control={control}
                   rules={{required: true}}
                   render={({ field }) => (
