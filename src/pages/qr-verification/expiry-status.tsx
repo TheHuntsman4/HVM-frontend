@@ -1,7 +1,8 @@
-// ExpiryStatus.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import acceptIcon from '../../assets/accept-icon.svg'; 
+import rejectIcon from '../../assets/cross-icon.svg';
 
 // Extend Record<string, string | undefined> for URL params
 interface Params extends Record<string, string | undefined> {
@@ -25,7 +26,6 @@ const ExpiryStatus: React.FC = () => {
             }
 
             try {
-                console.log(`${API}/status`)
                 const response = await axios.get(`${API}/status`, { // Proper string interpolation
                     params: { unique_id: uniqueId },
                     headers: {                    
@@ -56,8 +56,17 @@ const ExpiryStatus: React.FC = () => {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className={`text-4xl font-bold ${isExpired === null ? 'text-gray-500' : isExpired ? 'text-red-500' : 'text-green-500'}`}>
-                {status}
+            <div className="text-center">
+                {/* Show the SVG icon above the 'Verified' text */}
+                {status === 'Verified' && (
+                    <img src={acceptIcon} alt="Verified" className="mx-auto mb-4" />
+                )}
+                {(status === 'Not Verified/Expired' || status === 'UUID not found') && (
+                    <img src={rejectIcon} alt="Not Verified" className="mx-auto mb-4 h-1/3 w-1/3" />
+                )}
+                <div className={`text-4xl font-bold ${isExpired === null ? 'text-gray-500' : isExpired ? 'text-red-500' : 'text-green-500'}`}>
+                    {status}
+                </div>
             </div>
         </div>
     );
