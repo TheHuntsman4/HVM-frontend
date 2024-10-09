@@ -15,7 +15,7 @@ export default function Page() {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log("APIIIII : ", API);
+    console.log("API : ", API);
     const user = {
       username: username,
       password: password,
