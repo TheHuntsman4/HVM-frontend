@@ -14,6 +14,8 @@ const Pass = ({
   imageSrc,
   className
 }) => {
+  const currentDomain = window.location.origin; 
+  const qrCodeValue = `${currentDomain}/expiry/${uuid}`;
   return (
     <div className={`w-1/2 border-black border-2 ${className}`}>
       <div className="w-full p-4 bg-amritaOrange flex justify-center">
@@ -29,7 +31,7 @@ const Pass = ({
           <img src={imageSrc} className="object-cover" />
         </div>
         <div className="aspect-w-1 aspect-h-1 flex items-center justify-center p-4">
-          <QRCode value={uuid} className="object-contain" />
+          <QRCode value={qrCodeValue} className="object-contain" />
         </div>
       </div>
       <div className="w-full p-4 grid grid-cols-2 gap-4 text-start font-semibold text-lg">
