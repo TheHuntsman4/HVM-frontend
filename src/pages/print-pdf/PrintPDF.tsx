@@ -7,8 +7,10 @@ import logoSVG from "../../assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 import Pass from "../../components/pass/passComponent";
 import "./print.css";
+import { VisitorData } from "leadvisitorTypes";
 
 const API = process.env.REACT_APP_API_URL
+
 
 export default function PrintPDF() {
   const token = localStorage.getItem("access_token");
@@ -26,7 +28,7 @@ export default function PrintPDF() {
   }, [location.state, navigate]);
 
   const uuid = location.state?.uuid;
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<VisitorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,7 +42,6 @@ export default function PrintPDF() {
         },
       })
       .then((response) => {
-        console.log(response);
         setData(response.data);
         setIsLoading(false);
       })
@@ -50,14 +51,13 @@ export default function PrintPDF() {
   }, []);
 
   const leadData = data?.lead_visitor[0];
-  console.log(data?.leadImage);
 
   const pdfRef = useRef(null);
   const printPDF = useReactToPrint({
     documentTitle: `${leadData?.visiting_time}.pdf`,
     content: () => pdfRef.current,
   });
-  function formatDateTime(dateStr) {
+  function formatDateTime(dateStr: string) {
     const dateObj = new Date(dateStr);
 
     const day = String(dateObj.getDate()).padStart(2, "0");
@@ -93,28 +93,28 @@ export default function PrintPDF() {
             ref={pdfRef}
             className="h-full w-full mt-12 flex flex-col justify-center items-center"
           >
-            <Pass
-              uuid={uuid}
-              fullName={leadData?.full_name}
-              companyName={leadData?.company_name}
-              validFromDate={leadData?.visiting_date}
-              validFromTime={leadData?.visiting_time}
-              validTill={formatDateTime(leadData?.valid_till)}
-              visitee={leadData?.visitee}
-              department={leadData?.department}
-              imageSrc={leadData?.image}
-            />
+          <Pass
+            uuid={uuid}
+            fullName={leadData?.full_name ?? 'N/A'} 
+            companyName={leadData?.company_name ?? 'N/A'} 
+            validFromDate={leadData?.visiting_date ?? 'N/A'} 
+            validFromTime={leadData?.visiting_time ?? 'N/A'} 
+            validTill={formatDateTime(leadData?.valid_till ?? 'N/A')} 
+            visitee={leadData?.visitee ?? 'N/A'} 
+            department={leadData?.department ?? 'N/A'} 
+            imageSrc={leadData?.image ?? ''} 
+          />
             {data?.accompanying.map((accompany, index) => (
               <Pass
                 key={index}
                 uuid={uuid}
-                fullName={accompany?.full_name}
-                companyName={leadData?.company_name}
-                validFromDate={leadData?.visiting_date}
-                validFromTime={leadData?.visiting_time}
-                validTill={formatDateTime(leadData?.valid_till)}
-                visitee={leadData?.visitee}
-                department={leadData?.department}
+                fullName={accompany?.full_name ?? 'N/A'}
+                companyName={leadData?.company_name ?? 'N/A'}
+                validFromDate={leadData?.visiting_date ?? 'N/A'}
+                validFromTime={leadData?.visiting_time ?? 'N/A'}
+                validTill={formatDateTime(leadData?.valid_till ?? '')}
+                visitee={leadData?.visitee ?? 'N/A'}
+                department={leadData?.department ?? 'N/A'}
                 imageSrc={accompany?.image}
                 className="page-break"
               />

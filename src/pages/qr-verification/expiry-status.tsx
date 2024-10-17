@@ -45,10 +45,10 @@ const ExpiryStatus: React.FC = () => {
                     setStatus('Verified');
                     setIsExpired(false);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setStatus('Error fetching status');
                 console.error(error.response ? error.response.data : error.message);
-            }
+            }            
         };
 
         fetchExpiryStatus();

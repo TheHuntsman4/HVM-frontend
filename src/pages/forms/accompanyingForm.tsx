@@ -13,7 +13,10 @@ import warningSVG from "../../assets/warning.svg";
 import crossSVG from "../../assets/cross.svg";
 import bg from "../../assets/formback.png";
 
+import { FormField } from "formFieldsTypes"; 
+
 const API = process.env.REACT_APP_API_URL;
+
 
 export default function AccompanyingForm() {
   const accessToken = localStorage.getItem("access_token");
@@ -34,8 +37,7 @@ export default function AccompanyingForm() {
 
   const leadID = location.state?.uuid;
 
-  console.log(leadID);
-  const [formFields, setFormFields] = useState([
+  const [formFields, setFormFields] = useState<FormField[]>([
     {
       full_name: "",
       email: "",
@@ -47,30 +49,38 @@ export default function AccompanyingForm() {
   ]);
   const [loading, setLoading] = useState(false);
 
-  const handleFormChange = (event, index) => {
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     let data = [...formFields];
-    data[index][event.target.name] = event.target.value;
+
+    const fieldName = event.target.name as keyof FormField;
+
+    data[index] = {
+        ...data[index],
+        [fieldName]: event.target.value, 
+    };
+
     setFormFields(data);
   };
 
-  const toggleModal = (index) => {
+  const toggleModal = (index: number) => {
     let data = [...formFields];
     data[index].showModal = !data[index].showModal;
     setFormFields(data);
     setToggleActive(!toggleActive);
   };
 
-  const webcamRef = useRef(0);
+  const webcamRef = useRef<Webcam>(null);
 
   const capture = useCallback(
-    (index) => {
-      const imageSrc = webcamRef.current.getScreenshot();
+    (index: number) => {
+      const imageSrc = webcamRef.current?.getScreenshot();
       let data = [...formFields];
-      data[index].image = imageSrc;
-      setFormFields(data);
-    },
-    [formFields]
-  );
+      if (imageSrc) {
+        data[index].image = imageSrc;
+        setFormFields(data);
+      }
+    }, [formFields]);
+  
 
   const [showConfirmationModal, setshowConfirmationModal] = useState(false);
   const toggleConfirmation = () => {
@@ -111,18 +121,19 @@ export default function AccompanyingForm() {
   };
 
   const addFields = () => {
-    let object = {
+    let object: FormField = {
       full_name: "",
       email: "",
       contact_number: "",
       image: "",
+      showModal: false,
       lead_visitor_id: leadID,
     };
 
     setFormFields([...formFields, object]);
   };
 
-  const removeFields = (index) => {
+  const removeFields = (index: number) => {
     let data = [...formFields];
     data.splice(index, 1);
     setFormFields(data);
@@ -143,12 +154,13 @@ export default function AccompanyingForm() {
           <div className="bg-black opacity-75 absolute inset-0"></div>
           <div className="bg-white h-1/3 w-1/5 p-4 relative rounded-3xl">
             <div className="h-full  flex flex-col justify-center items-center rounded-3xl">
-              <img src={warningSVG} width={50} className="mb-4" />
+              <img src={warningSVG} width={50} className="mb-4" alt="warning"/>
               <img
                 src={crossSVG}
                 width={40}
                 className="absolute top-0 right-0 mt-6 mr-6"
                 onClick={toggleConfirmation}
+                alt="cross"
               />
               <p className="text-red-900 font-semibold text-center">
                 WARNING THE FORM WILL BE RESET AFTER CLICKING THE BUTTON BELOW
@@ -185,7 +197,7 @@ export default function AccompanyingForm() {
                       name="full_name"
                       placeholder="Full Name"
                       onChange={(event) => handleFormChange(event, index)}
-                      value={form.fullname}
+                      value={form.full_name}
                     />
                     <label className="font-semibold text-md pt-6 pb-2">
                       Email
@@ -207,7 +219,7 @@ export default function AccompanyingForm() {
                       type="number"
                       placeholder="Phone Number"
                       onChange={(event) => handleFormChange(event, index)}
-                      value={form.phonenumber}
+                      value={form.contact_number}
                     />
                   </div>
                   <div className="w-1/2">
@@ -216,7 +228,7 @@ export default function AccompanyingForm() {
                         <img
                           src={form.image}
                           width={360}
-                          alt="Profile Picture"
+                          alt="Profile"
                           className="p-4 border-2 border-black rounded-lg"
                         />
                         <button
@@ -233,7 +245,7 @@ export default function AccompanyingForm() {
                           <img
                             src={placeHolder}
                             width={240}
-                            alt="Profile Picture"
+                            alt="Profile"
                             className="p-4 border-2 rounded-lg"
                           />
                           <button
@@ -264,6 +276,7 @@ export default function AccompanyingForm() {
                                   src={cameraSVG}
                                   width={40}
                                   className=""
+                                  alt="Camera"
                                 ></img>
                                 Capture image
                               </button>
@@ -274,7 +287,7 @@ export default function AccompanyingForm() {
                     )}
                   </div>
                   <button className="" onClick={() => removeFields(index)}>
-                    <img src={closeSVG} width={30} />
+                    <img src={closeSVG} width={30} alt="close"/>
                   </button>
                 </div>
               </div>
@@ -292,14 +305,14 @@ export default function AccompanyingForm() {
       </form>
       {toggleActive ? (
         <button className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-black">
-          <img src={addSVG} width={50} />
+          <img src={addSVG} width={50} alt="add"/>
         </button>
       ) : (
         <button
           className="fixed bottom-4 right-4 p-4 rounded-full hover-color-change bg-amber-600 hover:bg-black transition-colors duration-300"
           onClick={addFields}
         >
-          <img src={addSVG} width={50} />
+          <img src={addSVG} width={50} alt="add"/>
         </button>
       )}
     </div>

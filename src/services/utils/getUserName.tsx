@@ -1,6 +1,10 @@
 const API = process.env.REACT_APP_API_URL;
 
-const GetUsername = async ({ username }) => {
+interface GetUsernameParams {
+  username: string;
+}
+
+const GetUsername = async ({ username }: GetUsernameParams): Promise<any> => {
     const token = localStorage.getItem("access_token");
     try {
       const response = await fetch(

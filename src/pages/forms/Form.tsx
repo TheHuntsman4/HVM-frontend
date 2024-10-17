@@ -10,6 +10,7 @@ import placeHolder from "../../assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/loader/loader";
 import bg from "../../assets/formback.png";
+import { FormValues } from "formTypes";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -38,18 +39,6 @@ export default function Mainform() {
 
 
   const { register, control, handleSubmit } = leadForm;
-  type FormValues = {
-    leadFullName: string;
-    leadEmail: string;
-    companyName: string;
-    leadPhoneNumber: string;
-    leadImage: string;
-    leadAddress1: string;
-    leadAddress2: string;
-    facultyFullName: string;
-    facultyDesignation: string;
-    department: string;
-  };
 
   // Navigation to Printing page
   const navigate = useNavigate();
@@ -85,7 +74,6 @@ export default function Mainform() {
         },
       });
       const uniqueId = response.data.unique_id;
-      console.log(uniqueId);
       navigate("/navigate", { state: { uuid: uniqueId } });
     } catch (error) {
       console.error(error);
