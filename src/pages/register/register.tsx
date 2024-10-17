@@ -3,13 +3,15 @@ import bg from "../../assets/back.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/loader/loader";
+import { FormData } from "registerformDataTypes";
 
 const API = process.env.REACT_APP_API_URL
 
-export default function Page(props) {
+
+export default function Page() {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     first_name: "",
     last_name: "",
     username: "",
@@ -20,17 +22,17 @@ export default function Page(props) {
     employee_id: "",
   });
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-    console.log(formData);
-    if (formData.password === formData.password2) {
-      setPasswordsMatch(true);
-    } else {
-      setPasswordsMatch(false);
+    if (name === "password" || name === "password2") {
+      const updatedPassword = name === "password" ? value : formData.password;
+      const updatedPassword2 = name === "password2" ? value : formData.password2;
+  
+      setPasswordsMatch(updatedPassword === updatedPassword2);
     }
   };
 
@@ -59,7 +61,6 @@ export default function Page(props) {
           "Content-Type": "application/json",
         },
       })
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     } finally {

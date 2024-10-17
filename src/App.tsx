@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
-import Login from "./pages/login/login";
-import PrintPDF from "./pages/print-pdf/PrintPDF";
-import Register from "./pages/register/register";
-import Home from "./pages/home/home";
-import Navigate from "./pages/navigate-lead/NavigateLead";
-import Mainform from "./pages/forms/Form.tsx";
-import AccompanyingForm from "./pages/forms/accompanyingForm";
-import Navbar from "./components/navbar/navbar";
-import Auth from "./services/checkAuth";
-import ExpiryStatus from "./pages/qr-verification/expiry-status.tsx"; // Ensure correct import path
+import Login from './pages/login/login';
+import PrintPDF from './pages/print-pdf/PrintPDF';
+import Register from './pages/register/register';
+import Home from './pages/home/home';
+import Navigate from './pages/navigate-lead/NavigateLead';
+import Mainform from './pages/forms/Form'; 
+import AccompanyingForm from './pages/forms/accompanyingForm';
+import Navbar from './components/navbar/navbar';
+import Auth from './services/auth/checkAuth';
+import ExpiryStatus from './pages/qr-verification/expiry-status';
 
-function App() {
+// RouteComponent type for clarity (ensures all components passed to Route are React elements)
+type RouteComponent = ReactElement | null;
+
+function App(): RouteComponent {
   return (
     <BrowserRouter>
       <Routes>
@@ -66,11 +69,10 @@ function App() {
             </>
           }
         />
-        <Route path="/expiry/:uniqueId" element={<ExpiryStatus />} /> {/* New Route */}
+        <Route path="/expiry/:uniqueId" element={<ExpiryStatus />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

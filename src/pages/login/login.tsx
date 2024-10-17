@@ -1,8 +1,9 @@
 import bg from "../../assets/back.png";
 import React from "react";
 import { useState } from "react";
-import GetUsername from "../../services/getUserName";
+import GetUsername from "../../services/utils/getUserName";
 import axios from "axios";
+import { AxiosError } from 'axios'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,9 +14,8 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const submit = async (e) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("API : ", API);
     const user = {
       username: username,
       password: password,
@@ -28,8 +28,8 @@ export default function Page() {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true 
         },
-        { withCredentials: true }
       );
       localStorage.clear();
       localStorage.setItem("current_user",user.username)
@@ -44,35 +44,39 @@ export default function Page() {
       // console.log(userData[0].full_name);
       window.location.href = "/home";
       
-    } catch (error) {
-      const statusCode = error.response.status
-      if (statusCode === 401){
-        toast.error('Wrong credentials entered', {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+          const statusCode = axiosError.response.status;
+          if (statusCode === 401) {
+              toast.error('Wrong credentials entered', {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+              });
+          } else if (statusCode === 400) {
+              toast.error('One or more required fields is empty', {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+              });
+          }
+      } else {
+          console.log('Unexpected error:', error);
       }
-      else if (statusCode===400){
-        toast.error('One or more required fields is empty', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
-      }
-      console.log(error.response.status)
     }
   };
+
   return (
     <div
       className="bg-back-login h-[100vh] bg-no-repeat bg-cover bg-center"

@@ -3,21 +3,22 @@ import bg from "../../assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import printerSVG from "../../assets/printer.svg";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { CirclesWithBar } from "react-loader-spinner";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Visitor } from "visitorTypes";
 
 const ITEMS_PER_PAGE = 15;
 const API = process.env.REACT_APP_API_URL
 
 export default function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Visitor[]>([]);
   const [Loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
   const currentUser = localStorage.getItem("current_user_fullname");
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,15 +35,15 @@ export default function Home() {
           `${API}/visitors`,
           {
             params: {
-              date: selectedDate.format("YYYY-MM-DD"),
+              date: selectedDate?.format("YYYY-MM-DD"),
             },
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
           }
         );
-
         const newData = response.data.lead_visitor.reverse();
+        
 
         if (JSON.stringify(newData) !== cachedData) {
           localStorage.setItem("cached_lead_visitor", JSON.stringify(newData));
@@ -58,8 +59,8 @@ export default function Home() {
     fetchData();
   }, [selectedDate]);
 
-  const handlePrint = (uuid) => {
-    navigate("/print", { state: { uuid: uuid } });
+  const handlePrint = (unique_id: string) => {
+    navigate("/print", { state: { uuid: unique_id } });
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +71,7 @@ export default function Home() {
   const displayedData = data.slice(startIndex, endIndex);
   const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
@@ -222,15 +223,15 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {displayedData.map((item, index) => (
+                  {displayedData.map((visitor: Visitor, index: number) => (
                     <tr
-                      key={index}
+                      key={visitor.unique_id}
                       className={index % 2 === 0 ? "bg-orange-100" : "bg-white"}
                     >
                       <td className="py-2 px-4 text-right">{index + 1}</td>
-                      <td className="py-2 px-4 ">{item.full_name}</td>
-                      <td className="py-2 px-4 ">{item.company_name}</td>
-                      <td className="py-2 px-4 text-left">{item.department}</td>
+                      <td className="py-2 px-4 ">{visitor.full_name}</td>
+                      <td className="py-2 px-4 ">{visitor.company_name}</td>
+                      <td className="py-2 px-4 text-left">{visitor.department}</td>
                       <td className="py-2 px-4">
                         <div className="text-right">
                           <div className="font-bold">
@@ -238,7 +239,7 @@ export default function Home() {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
-                            }).format(new Date(item.visiting_date))}
+                            }).format(new Date(visitor.visiting_date))}
                           </div>
                           <div className="text-sm">
                             {new Intl.DateTimeFormat("en-US", {
@@ -247,7 +248,7 @@ export default function Home() {
                               hour12: true,
                             }).format(
                               new Date(
-                                `${item.visiting_date}T${item.visiting_time}`
+                                `${visitor.visiting_date}T${visitor.visiting_time}`
                               )
                             )}
                           </div>
@@ -260,14 +261,14 @@ export default function Home() {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
-                            }).format(new Date(item.valid_till))}
+                            }).format(new Date(visitor.valid_till))}
                           </div>
                           <div className="text-sm">
                             {new Intl.DateTimeFormat("en-US", {
                               hour: "numeric",
                               minute: "numeric",
                               hour12: true,
-                            }).format(new Date(item.valid_till))}
+                            }).format(new Date(visitor.valid_till))}
                           </div>
                         </div>
                       </td>
@@ -276,7 +277,7 @@ export default function Home() {
                           src={printerSVG}
                           alt="Print"
                           width={20}
-                          onClick={() => handlePrint(item.unique_id)}
+                          onClick={() => handlePrint(visitor.unique_id)}
                         />
                       </td>
                     </tr>

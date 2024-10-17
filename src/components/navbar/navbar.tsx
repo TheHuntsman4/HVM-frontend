@@ -26,9 +26,10 @@ export default function Navbar() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
-          },
-          { withCredentials: true }
+            withCredentials: true,
+          }
         );
+
 
         console.log("logout exit");
         localStorage.removeItem("access_token");
@@ -42,10 +43,9 @@ export default function Navbar() {
     })();
   };
   useEffect(() => {
-    if (localStorage.getItem("access_token") !== null) {
-      setIsAuth(true);
-    }
-  }, [isAuth]);
+    const token = localStorage.getItem("access_token");
+    setIsAuth(token !== null);
+  }, []);
 
   return (
     <>
