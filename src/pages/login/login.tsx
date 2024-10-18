@@ -1,4 +1,4 @@
-import bg from "../../assets/back.png";
+import bg from "src/assets/back.png";
 import React from "react";
 import { useState } from "react";
 import GetUsername from "../../services/utils/getUserName";

@@ -5,13 +5,13 @@ import Webcam from "react-webcam";
 
 import Loader from "../../components/loader/loader";
 
-import placeHolder from "../../assets/placeholder.jpeg";
-import addSVG from "../../assets/add.svg";
-import closeSVG from "../../assets/close.svg";
-import cameraSVG from "../../assets/camera.svg";
-import warningSVG from "../../assets/warning.svg";
-import crossSVG from "../../assets/cross.svg";
-import bg from "../../assets/formback.png";
+import placeHolder from "src/assets/placeholder.jpeg";
+import addSVG from "src/assets/add.svg";
+import closeSVG from "src/assets/close.svg";
+import cameraSVG from "src/assets/camera.svg";
+import warningSVG from "src/assets/warning.svg";
+import crossSVG from "src/assets/cross.svg";
+import bg from "src/assets/formback.png";
 
 import { FormField } from "formFieldsTypes"; 
 

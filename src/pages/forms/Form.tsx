@@ -5,11 +5,11 @@ import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import cameraSVG from "../../assets/camera.svg";
-import placeHolder from "../../assets/placeholder.jpeg";
+import cameraSVG from "src/assets/camera.svg";
+import placeHolder from "src/assets/placeholder.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/loader/loader";
-import bg from "../../assets/formback.png";
+import bg from "src/assets/formback.png";
 import { FormValues } from "formTypes";
 
 const API = process.env.REACT_APP_API_URL;

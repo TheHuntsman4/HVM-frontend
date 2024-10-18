@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { CirclesWithBar } from "react-loader-spinner";
 import axios from "axios";
-import logoSVG from "../../assets/amritaLogo.svg";
+import logoSVG from "src/assets/amritaLogo.svg";
 import { useReactToPrint } from "react-to-print";
 import Pass from "../../components/pass/passComponent";
 import "./print.css";

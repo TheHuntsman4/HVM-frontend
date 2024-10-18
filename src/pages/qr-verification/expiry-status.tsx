@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import acceptIcon from '../../assets/accept-icon.svg'; 
-import rejectIcon from '../../assets/cross-icon.svg';
+import acceptIcon from 'src/assets/accept-icon.svg'; 
+import rejectIcon from 'src/assets/cross-icon.svg';
 
 // Extend Record<string, string | undefined> for URL params
 interface Params extends Record<string, string | undefined> {

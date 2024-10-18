@@ -4,7 +4,7 @@ import { FaHome, FaUserPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import logo from "../../assets/amritaLogo.svg";
+import logo from "src/assets/amritaLogo.svg";
 import { IoLogOut } from "react-icons/io5";
 
 const API = process.env.REACT_APP_API_URL;
