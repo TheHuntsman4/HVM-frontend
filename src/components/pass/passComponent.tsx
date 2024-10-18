@@ -1,7 +1,7 @@
   import React from "react";
   import QRCode from "react-qr-code";
-  import logoSVG from "../../assets/amritaLogo.svg";
-  import placeholderImage from "../../assets/placeholder.jpeg";
+  import logoSVG from "src/assets/amritaLogo.svg";
+  import placeholderImage from "src/assets/placeholder.jpeg";
   import { formatDateTime_validfrom } from "../../services/utils/dateFormat";
   import { PassProps } from "passTypes";
 

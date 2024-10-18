@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import bg from "../../assets/back.png";
+import bg from "src/assets/back.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import printerSVG from "../../assets/printer.svg";
+import printerSVG from "src/assets/printer.svg";
 import dayjs, { Dayjs } from 'dayjs';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";

@@ -1,8 +1,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
-import printerSVG from "../../assets/printer.svg";
-import peopleSVG from "../../assets/associates.svg";
-import bg from "../../assets/back.png";
+import printerSVG from "src/assets/printer.svg";
+import peopleSVG from "src/assets/associates.svg";
+import bg from "src/assets/back.png";
 
 export default function NavigateLead() {
   const location = useLocation();

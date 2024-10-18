@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import bg from "../../assets/back.png";
+import bg from "src/assets/back.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/loader/loader";
